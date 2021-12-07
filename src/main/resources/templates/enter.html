@@ -3,13 +3,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title th:text="${title}"></title>
-    <link rel = "stylesheet" href = "../css/enterStyle.css">
+    <link rel = "stylesheet" type="text/css" href = "../static/css/enterStyle.css" th:href="@{/css/enterStyle.css}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
 <div>
     <div class="icon">
-        <img src="../css/prof.svg">
+        <img src="/css/prof.svg">
     </div>
     <div class="inputs">
         <input type="text" placeholder="Введіть логін" class="fields">
