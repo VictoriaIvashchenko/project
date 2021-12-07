@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:text="${title}"></title>
+    <link rel = "stylesheet" type="text/css" href = "../static/css/studentStyle.css" th:href="@{/css/studentStyle.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+    <div class="info">
+        <span>
+            Яковлева
+        </span>
+        <span>
+            Катерина
+        </span>
+        <span>
+            ТІ-91
+        </span>
+        <span>
+            ТЕФ
+        </span>
+    </div>
+    <div class="exit-bttn">
+        <a href="/" >
+            Вийти
+        </a>
+    </div>
+</div>
+<div class="separator">
+    <hr>
+</div>
+<div class="sort">
+    <div class="point">
+        <div class="filler">
+            Курс
+        </div>
+        <select>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+
+    </div>
+    <div class="point">
+        <div class="filler">
+            Семестр
+        </div>
+        <select>
+            <option>1</option>
+            <option>2</option>
+        </select>
+
+    </div>
+</div>
+<div class="table">
+    <table>
+        <tr class="title-table" id="first">
+            <td colspan="1">Дисципліна</td>
+            <td colspan="1">Викладач</td>
+            <td colspan="1">Вид контролю</td>
+            <td colspan="1">Оцінка</td>
+        </tr>
+        <tr class="lines">
+            <td>Компоненти програмної інженерії</td>
+            <td>Смаковський Денис Сергійович</td>
+            <td>Екзамен</td>
+            <td>90</td>
+        </tr>
+        <tr class="lines">
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr class="lines">
+            <td></td>
+            <td></td>
+            <td> </td>
+            <td> </td>
+        </tr>
+        <tr class="lines">
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+    </tr>
+    </table>
+</div>
+<div class="avarage">
+    <span>
+Середній бал:
+    </span>
+    <span>
+        90
+    </span>
+
+</div>
+</body>
+</html>

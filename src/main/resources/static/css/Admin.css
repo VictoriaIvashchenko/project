@@ -1,0 +1,41 @@
+.out-button{
+    width: 156px;
+    height: 49px;
+    left: 1165px;
+    top: 42px;
+
+    background: #001752;
+    border-radius: 20px;
+    margin-top: -4px;
+}
+.out-button-text{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+.header-div{
+    margin-top: 46px;
+}
+.header-line{
+    border-top: 2px solid #ADC6FF;
+    width: 95%;
+}
+
+.admin-nav-button{
+    width: 400px;
+    height: 70px;
+
+    background: #001752;
+    border-radius: 20px;
+    margin-top: 56px;
+}
+.admin-nav-button-text{
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+.admin-nav-button-div{
+    display: block;
+
+}

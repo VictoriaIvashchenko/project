@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:text="${title}"></title>
+    <link rel = "stylesheet" type="text/css" href = "../static/css/teacherStyle.css" th:href="@{/css/teacherStyle.css}">
+    <link rel = "stylesheet" type="text/css" href = "../static/css/studentStyle.css" th:href="@{/css/studentStyle.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+    <div class="info">
+        <span>
+            Смаковський
+        </span>
+        <span>
+            Денис
+        </span>
+        <span>
+            Сергійович
+        </span>
+    </div>
+    <div class="exit-bttn">
+        <a href="/" >
+            Вийти
+        </a>
+    </div>
+</div>
+<div class="separator">
+    <hr>
+</div>
+<div class="group">
+    <div class="point">
+        <div class="lable">
+            Група
+        </div>
+        <select>
+            <option>ТІ-91</option>
+        </select>
+
+    </div>
+</div>
+<div class="titleGr">
+    <span>ТЕФ, ТІ-91</span>
+</div>
+<div class="infGR">
+    <span>Вид контролю:</span>
+    <span>Екзамен</span>
+</div>
+<div class="infGR">
+    <span>Дисципліна:</span>
+    <span>Компоненти програмної інженерї - 3</span>
+</div>
+<div class="marks">
+    <table>
+        <tr class="title-table" id="first">
+            <td>№</td>
+            <td class="col">ПІБ студента </td>
+            <td class="col">Оцінка</td>
+        </tr>
+        <tr class="lines">
+            <td>1</td>
+            <td class="col">Яковлева Катерина Сергіївна</td>
+            <td class="col">90</td>
+        </tr>
+        <tr class="lines">
+            <td> </td>
+            <td class="col"> </td>
+            <td class="col"> </td>
+        </tr>
+        <tr class="lines">
+            <td></td>
+            <td class="col"></td>
+            <td class="col"> </td>
+        </tr>
+        <tr class="lines">
+            <td> </td>
+            <td class="col"> </td>
+            <td class="col"> </td>
+        </tr>
+    </table>
+    <div class="choices">
+        <div class="ch-bttn">
+            <a href="#">Звіт</a>
+        </div>
+        <div class="ch-bttn">
+            <a href="#">
+                Виставити
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
