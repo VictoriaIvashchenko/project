@@ -30,4 +30,26 @@ public class AdminController {
         model.addAttribute("title", "Іформація про предмет");
         return "/Admin_teacher_page_subject_info";
     }
+
+    @GetMapping("/add")
+    public String add(Model model){
+        model.addAttribute("title", "Додати користувача");
+        return "add";
+    }
+    @GetMapping("/add_admin")
+    public String add_admin(Model model){
+        model.addAttribute("title", "Додати адміністратора");
+        return "add_admin";
+    }
+    @GetMapping("/add_student")
+    public String add_student(Model model){
+        model.addAttribute("title", "Додати студента");
+        return "add_student";
+    }
+    @GetMapping("/add_teacher")
+    public String add_teacher(Model model){
+        model.addAttribute("title", "Додати викладача");
+        return "add_teacher";
+    }
+
 }
