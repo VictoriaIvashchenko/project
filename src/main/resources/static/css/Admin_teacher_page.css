@@ -17,6 +17,11 @@
     border-radius: 20px;
     margin-top: -4px;
 }
+.out-button:hover{
+    background: #ADC6FF;
+    border: 2px solid #001752;
+    color: #001752
+}
 .out-button-text{
 
     font-family: 'Roboto', sans-serif;

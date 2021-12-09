@@ -23,12 +23,21 @@ html, body {
 .exit-bttn{
     width: 156px;
     height: 49px;
-    margin-top: -8px;
     background: #001752;
     border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #FFFFFF;
+
+}
+
+.exit-bttn:hover{
+    background: #ADC6FF;
+    border: 2px solid #001752;
+    color: #001752
 }
 .exit-bttn a {
     margin-top: auto;
