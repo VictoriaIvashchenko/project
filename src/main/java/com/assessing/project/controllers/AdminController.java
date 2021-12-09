@@ -52,4 +52,29 @@ public class AdminController {
         return "add_teacher";
     }
 
+    @GetMapping("/exams")
+    public String exams(Model model){
+        model.addAttribute("title", "Результати сесії");
+        return "exams";
+    }
+    @GetMapping("/exams_faculty")
+    public String exams_faculty(Model model){
+        model.addAttribute("title", "Результати сесії по факультету");
+        return "exams_faculty";
+    }
+    @GetMapping("/exams_speciality")
+    public String exams_speciality(Model model){
+        model.addAttribute("title", "Результати сесії по спецільності");
+        return "exams_speciality";
+    }
+    @GetMapping("/exams_course")
+    public String exams_course(Model model){
+        model.addAttribute("title", "Результати сесії по курсу");
+        return "exams_course";
+    }
+    @GetMapping("/exams_group")
+    public String exams_group(Model model){
+        model.addAttribute("title", "Результати сесії по групі");
+        return "exams_group";
+    }
 }
