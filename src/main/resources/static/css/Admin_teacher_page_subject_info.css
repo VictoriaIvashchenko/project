@@ -1,0 +1,89 @@
+h2{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+
+    color: #001752;
+}
+h3{
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: #001752;
+}
+.user-name{
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+
+    color: #001752;
+}
+.out-button{
+    width: 156px;
+    height: 49px;
+
+
+    background: #001752;
+    border-radius: 20px;
+    margin-top: -4px;
+}
+.out-button-text{
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+.header-div{
+
+    margin-top: 46px;
+}
+.header-line{
+    border-top: 2px solid #ADC6FF;
+    width: 95%;
+}
+
+.faculty-group-select-box{
+    width: 122px;
+    height: 34px;
+
+
+    border: 1px solid #001752;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+
+.marks-table-div{
+    background: #FFFFFF;
+    border: 2px solid #ADC6FF;
+    box-sizing: border-box;
+    border-radius: 20px;
+
+    margin-top: 59px;
+    max-width: 743px;
+
+}
+table{
+    max-width: 720px;
+    margin: 0 auto;
+    /*border-color: #ADC6FF;*/
+
+}
+.table>:not(:first-child) {
+    border-top: 2px solid #ADC6FF;
+}
+
+
+.table{
+    border-color: #ADC6FF;
+
+}
+tr:last-child{
+    border-color: white;
+}
+
+.mytable>tbody>tr>td, .mytable>tbody>tr>th, .mytable>thead>tr>td, .mytable>thead>tr>th {
+    padding-top: 32px;
+    padding-bottom: 27px;
+
+}

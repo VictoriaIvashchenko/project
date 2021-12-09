@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:text="${title}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel = "stylesheet" type="text/css" href = "../static/css/Admin_teacher_page_add_new_subject.css"
+          th:href="@{/css/Admin_teacher_page_add_new_subject.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container d-flex justify-content-between header-div">
+            <h1 class="user-name">Admin1</h1>
+            <button class="btn out-button out-button-text" type="button">Вийти</button>
+        </div>
+        <br class="">
+        <hr class="container header-line"/>
+    </header>
+    <section class="container">
+        <div class="text-center" style="margin-top: 80px">
+            <h2>Додавання нової дисципліни</h2>
+        </div>
+        <div class="input-data-div mx-auto">
+            <div class="d-flex justify-content-between" >
+                <h3>Назва</h3>
+                <input type="text" class="input-subject-name">
+            </div>
+            <div class="d-flex justify-content-between" style="margin-top: 37px">
+                <h3>Вид контролю</h3>
+                <select class="custom-select select-field">
+                    <option autofocus></option>
+                    <option class="text-center">Екзамен</option>
+                    <option class="text-center">Залік</option>
+                </select>
+            </div>
+            <div class="d-flex justify-content-between" style="margin-top: 37px">
+                <h3>Факультет/Інститут</h3>
+                <select class="custom-select select-field">
+                    <option autofocus></option>
+                    <option class="text-center">ТЕФ</option>
+                </select>
+            </div>
+            <div class="d-flex justify-content-between" style="margin-top: 37px">
+                <h3>Група</h3>
+                <select class="custom-select select-field">
+                    <option autofocus></option>
+                    <option class="text-center">ТІ-91</option>
+                </select>
+            </div>
+            <div class="d-flex" style="margin-top: 37px">
+                <h3>Додати групу</h3>
+                <div class="group-add-icon">
+                    <img src="akar-icons_plus.png">
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center" style="margin-top: 87px">
+            <button class="btn btn-add" type="button">Додати</button>
+        </div>
+    </section>
+</body>
+</html>

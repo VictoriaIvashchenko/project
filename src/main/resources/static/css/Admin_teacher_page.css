@@ -1,0 +1,91 @@
+.user-name{
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+
+    color: #001752;
+}
+.out-button{
+    width: 156px;
+    height: 49px;
+    left: 1165px;
+    top: 42px;
+
+    background: #001752;
+    border-radius: 20px;
+    margin-top: -4px;
+}
+.out-button-text{
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+.header-div{
+    margin-top: 46px;
+}
+.header-line{
+    border-top: 2px solid #ADC6FF;
+    width: 95%;
+}
+
+.teacher-name-input-div{
+    margin-top: 70px;
+}
+.teacher-name-input{
+    margin-left: 35px;
+    width: 194px;
+    height: 34px;
+
+
+    border: 1px solid #001752;
+    box-sizing: border-box;
+    border-radius: 5px;
+}
+.teacher-information{
+    margin-top: 97px;
+}
+.login_and_password-div{
+    margin-top: 31px;
+}
+.login_and_password-input{
+    margin-left: 20px;
+}
+.password_field{
+    margin-left: 120px;
+}
+.subjects-div{
+    margin-top: 50px;
+}
+.subjects-list{
+    margin-top: 30px;
+    list-style-type: none;
+
+}
+.subjects-list li{
+    margin-top: 21px;
+}
+.subjects-add-new{
+    margin-top: 21px;
+}
+.subjects-add-new-icon{
+    margin-left: 25px;
+    margin-top: 3px;
+}
+
+h2{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    color: #001752;
+}
+h3{
+
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: #001752;
+}
+a {
+    text-decoration: none;
+}
