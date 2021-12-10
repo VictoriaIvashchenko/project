@@ -1,15 +1,12 @@
 package com.assessing.project.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Student {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column
     private String surname;
     @Column
@@ -17,11 +14,11 @@ public class Student {
     @Column
     private String patronymic;
     @Column
-    private Long faculty_id;
+    private Integer faculty_id;
     @Column
-    private Long speciality_id;
+    private Integer speciality_id;
     @Column
-    private Long group_id;
+    private Integer group_id;
     @Column
     private Integer course;
     @Column
@@ -32,11 +29,11 @@ public class Student {
     public Student() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -64,27 +61,27 @@ public class Student {
         this.patronymic = patronymic;
     }
 
-    public Long getFaculty_id() {
+    public Integer getFaculty_id() {
         return faculty_id;
     }
 
-    public void setFaculty_id(Long faculty_id) {
+    public void setFaculty_id(Integer faculty_id) {
         this.faculty_id = faculty_id;
     }
 
-    public Long getSpeciality_id() {
+    public Integer getSpeciality_id() {
         return speciality_id;
     }
 
-    public void setSpeciality_id(Long speciality_id) {
+    public void setSpeciality_id(Integer speciality_id) {
         this.speciality_id = speciality_id;
     }
 
-    public Long getGroup_id() {
+    public Integer getGroup_id() {
         return group_id;
     }
 
-    public void setGroup_id(Long group_id) {
+    public void setGroup_id(Integer group_id) {
         this.group_id = group_id;
     }
 

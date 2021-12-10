@@ -11,6 +11,10 @@ public class TeacherController {
     public String teacher(Model model){
         model.addAttribute("title", "Інф. викладача");
         return "teacher";
-
+    }
+    @GetMapping("/teacher_report")
+    public String teacher_report(Model model){
+        model.addAttribute("title", "Інф. викладача");
+        return "Teacher_report";
     }
 }

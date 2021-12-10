@@ -1,44 +1,41 @@
 package com.assessing.project.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class SubjectTeacher {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column
-    private Long subject_id;
+    private Integer subject_id;
     @Column
-    private Long teacher_id;
+    private Integer teacher_id;
 
     public SubjectTeacher() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getSubject_id() {
+    public Integer getSubject_id() {
         return subject_id;
     }
 
-    public void setSubject_id(Long subject_id) {
+    public void setSubject_id(Integer subject_id) {
         this.subject_id = subject_id;
     }
 
-    public Long getTeacher_id() {
+    public Integer getTeacher_id() {
         return teacher_id;
     }
 
-    public void setTeacher_id(Long teacher_id) {
+    public void setTeacher_id(Integer teacher_id) {
         this.teacher_id = teacher_id;
     }
 }

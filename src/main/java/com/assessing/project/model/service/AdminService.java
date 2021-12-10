@@ -12,7 +12,7 @@ public class AdminService {
     public AdminService(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
     }
-    public Admin findById(Long id) {
+    public Admin findById(Integer id) {
         return adminRepository.getById(id);
     }
     public Admin findByLogin(String login){
