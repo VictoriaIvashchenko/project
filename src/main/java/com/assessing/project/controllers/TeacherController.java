@@ -13,7 +13,7 @@ public class TeacherController {
         return "teacher";
     }
     @GetMapping("/teacher_report")
-    public String teacher_report(Model model){
+    public String teacherReport(Model model){
         model.addAttribute("title", "Інф. викладача");
         return "Teacher_report";
     }

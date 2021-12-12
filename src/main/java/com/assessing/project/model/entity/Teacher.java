@@ -1,8 +1,10 @@
 package com.assessing.project.model.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name = "teacher")
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +19,9 @@ public class Teacher {
     private String login;
     @Column
     private String password;
+
+    @OneToMany (mappedBy = "teacher")
+    private Set<SubjectTeacher> subjectTeachers;
 
     public Teacher() {
     }

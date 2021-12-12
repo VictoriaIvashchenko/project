@@ -1,8 +1,10 @@
 package com.assessing.project.model.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name = "student")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,12 +15,15 @@ public class Student {
     private String name;
     @Column
     private String patronymic;
-    @Column
-    private Integer faculty_id;
-    @Column
-    private Integer speciality_id;
-    @Column
-    private Integer group_id;
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+    @ManyToOne
+    @JoinColumn(name = "speciality_id")
+    private Speciality speciality;
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private Group group;
     @Column
     private Integer course;
     @Column
@@ -26,6 +31,8 @@ public class Student {
     @Column
     private String password;
 
+    @OneToMany (mappedBy = "student")
+    private Set<Mark> marks;
     public Student() {
     }
 
@@ -61,28 +68,28 @@ public class Student {
         this.patronymic = patronymic;
     }
 
-    public Integer getFaculty_id() {
-        return faculty_id;
+    public Faculty getFaculty() {
+        return faculty;
     }
 
-    public void setFaculty_id(Integer faculty_id) {
-        this.faculty_id = faculty_id;
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
-    public Integer getSpeciality_id() {
-        return speciality_id;
+    public Speciality getSpeciality() {
+        return speciality;
     }
 
-    public void setSpeciality_id(Integer speciality_id) {
-        this.speciality_id = speciality_id;
+    public void setSpeciality(Speciality speciality) {
+        this.speciality = speciality;
     }
 
-    public Integer getGroup_id() {
-        return group_id;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroup_id(Integer group_id) {
-        this.group_id = group_id;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public Integer getCourse() {

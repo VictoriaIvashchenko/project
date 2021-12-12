@@ -1,19 +1,28 @@
 package com.assessing.project.model.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name = "group")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String name;
-    @Column
-    private Integer faculty_id;
-    @Column
-    private Integer speciality_id;
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+    @ManyToOne
+    @JoinColumn(name = "speciality_id")
+    private Speciality speciality;
 
+    @OneToMany (mappedBy = "group")
+    private Set<Student> students;
+
+    @OneToMany (mappedBy = "group")
+    private Set<SubjectSpeciality> subjectSpecialities;
     public Group() {
     }
 
@@ -33,19 +42,19 @@ public class Group {
         this.name = name;
     }
 
-    public Integer getFaculty_id() {
-        return faculty_id;
+    public Faculty getFaculty() {
+        return faculty;
     }
 
-    public void setFaculty_id(Integer faculty_id) {
-        this.faculty_id = faculty_id;
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
-    public Integer getSpeciality_id() {
-        return speciality_id;
+    public Speciality getSpeciality() {
+        return speciality;
     }
 
-    public void setSpeciality_id(Integer speciality_id) {
-        this.speciality_id = speciality_id;
+    public void setSpeciality(Speciality speciality) {
+        this.speciality = speciality;
     }
 }

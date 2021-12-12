@@ -3,14 +3,17 @@ package com.assessing.project.model.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "mark")
 public class Mark {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
-    private Integer student_id;
-    @Column
-    private Integer subject_sp_id;
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
+    @ManyToOne
+    @JoinColumn(name = "subject_speciality_id", nullable = false)
+    private SubjectSpeciality subject_speciality;
     @Column
     private Double value;
 
@@ -25,20 +28,20 @@ public class Mark {
         this.id = id;
     }
 
-    public Integer getStudent_id() {
-        return student_id;
+    public Student getStudent() {
+        return student;
     }
 
-    public void setStudent_id(Integer student_id) {
-        this.student_id = student_id;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public Integer getSubject_sp_id() {
-        return subject_sp_id;
+    public SubjectSpeciality getSubject_sp() {
+        return subject_speciality;
     }
 
-    public void setSubject_sp_id(Integer subject_sp_id) {
-        this.subject_sp_id = subject_sp_id;
+    public void setSubject_sp(SubjectSpeciality subject_speciality) {
+        this.subject_speciality = subject_speciality;
     }
 
     public Double getValue() {
