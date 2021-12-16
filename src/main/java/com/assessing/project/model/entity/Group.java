@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "group")
+@Table(name = "`group`")
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +21,8 @@ public class Group {
     @OneToMany (mappedBy = "group")
     private Set<Student> students;
 
-    @OneToMany (mappedBy = "group")
-    private Set<SubjectSpeciality> subjectSpecialities;
+//    @OneToMany (mappedBy = "group")
+//    private Set<SubjectSpeciality> subjectSpecialities;
     public Group() {
     }
 

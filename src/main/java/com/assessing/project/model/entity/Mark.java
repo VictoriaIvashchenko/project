@@ -12,10 +12,10 @@ public class Mark {
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
     @ManyToOne
-    @JoinColumn(name = "subject_speciality_id", nullable = false)
-    private SubjectSpeciality subject_speciality;
+    @JoinColumn(name = "subject_id", nullable = false)
+    private Subject subject;
     @Column
-    private Double value;
+    private Integer value;
 
     public Mark() {
     }
@@ -36,19 +36,19 @@ public class Mark {
         this.student = student;
     }
 
-    public SubjectSpeciality getSubject_sp() {
-        return subject_speciality;
+    public Subject getSubject() {
+        return subject;
     }
 
-    public void setSubject_sp(SubjectSpeciality subject_speciality) {
-        this.subject_speciality = subject_speciality;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
-    public Double getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 }

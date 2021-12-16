@@ -21,7 +21,7 @@ public class Teacher {
     private String password;
 
     @OneToMany (mappedBy = "teacher")
-    private Set<SubjectTeacher> subjectTeachers;
+    private Set<Subject> subjects;
 
     public Teacher() {
     }
