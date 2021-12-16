@@ -19,16 +19,16 @@ insert into `group` (id, name, faculty_id, speciality_id) values (6, 'ЛН-91', 
 insert into `group` (id, name, faculty_id, speciality_id) values (7, 'ЛА-91', 2, 4);
 insert into `group` (id, name, faculty_id, speciality_id) values (8, 'ЛА-11', 2, 4);
 
-insert into subject (id, name, teacher_id) values (1, 'Організація комп`ютерних мереж', 'екзамен', 4);
-insert into subject (id, name, teacher_id) values (2, 'Комп`ютерне моделювання та оптимізація', 'залік', 2);
-insert into subject (id, name, teacher_id) values (3, 'Методології розробки інтелектуальних комп`ютерних програм', 'залік', 5);
-insert into subject (id, name, teacher_id) values (4, 'Іноземна мова професійного спрямування', 'залік', 1);
-
 insert into teacher (id, login, name, password, patronymic, surname) values (1, 'fholwell0', 'Ірина', '8TZGouon', 'Алімівна', 'Свірепчук');
 insert into teacher (id, login, name, password, patronymic, surname) values (2, 'awildman1', 'Олексій', 'KUzS7lMP', 'Миколайович', 'Шушура');
 insert into teacher (id, login, name, password, patronymic, surname) values (3, 'sdagger2', 'Денис', 'mhkMHCfmEYt', 'Сергійович', 'Смаковський');
 insert into teacher (id, login, name, password, patronymic, surname) values (4, 'cschrieves3', 'Ірина', 'hoZefErNyS', 'Ігорівна', 'Гусєва');
 insert into teacher (id, login, name, password, patronymic, surname) values (5, 'tryburn3', 'Андрій', 'teacher', 'Петрович', 'Мусієнко');
+
+insert into subject (id, name, test_type, teacher_id) values (1, 'Організація комп`ютерних мереж', 'екзамен', 4);
+insert into subject (id, name, test_type, teacher_id) values (2, 'Комп`ютерне моделювання та оптимізація', 'залік', 2);
+insert into subject (id, name, test_type, teacher_id) values (3, 'Методології розробки інтелектуальних комп`ютерних програм', 'залік', 5);
+insert into subject (id, name, test_type, teacher_id) values (4, 'Іноземна мова професійного спрямування', 'залік', 1);
 
 insert into student (id, course, login, name, password, patronymic, surname, faculty_id, group_id, speciality_id) values (1, 3, 'lera', 'Валерія', '01', 'Ігорівна', 'Соболь', 1, 1, 1);
 insert into student (id, course, login, name, password, patronymic, surname, faculty_id, group_id, speciality_id) values (2, 3, 'katya', 'Катерина', '02', 'Сергіївна', 'Яковлева', 1, 1, 1);
@@ -58,3 +58,12 @@ insert into mark (id, value, student_id, subject_id) values (17, 85, 5, 2);
 insert into mark (id, value, student_id, subject_id) values (18, 86, 2, 1);
 insert into mark (id, value, student_id, subject_id) values (19, 93, 5, 3);
 insert into mark (id, value, student_id, subject_id) values (20, 88, 4, 4);
+
+insert into subject_group (group_id, subject_id) values (1, 1);
+insert into subject_group (group_id, subject_id) values (2, 1);
+insert into subject_group (group_id, subject_id) values (1, 2);
+insert into subject_group (group_id, subject_id) values (2, 2);
+insert into subject_group (group_id, subject_id) values (1, 3);
+insert into subject_group (group_id, subject_id) values (2, 3);
+insert into subject_group (group_id, subject_id) values (1, 4);
+insert into subject_group (group_id, subject_id) values (2, 4);

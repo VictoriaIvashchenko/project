@@ -21,4 +21,11 @@ public class TeacherService {
         value[2] = teacher.getSurname();
         return value;
     }
+    public String[]findTeacherName(Teacher teacher){
+        String[] value = new String[3];
+        value[0] = teacher.getName();
+        value[1] = teacher.getPatronymic();
+        value[2] = teacher.getSurname();
+        return value;
+    }
 }

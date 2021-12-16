@@ -21,6 +21,14 @@ public class Group {
     @OneToMany (mappedBy = "group")
     private Set<Student> students;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "subject_group",
+            joinColumns = @JoinColumn(name = "group_id"),
+            inverseJoinColumns = @JoinColumn(name = "subject_id")
+    )
+    private Set<Subject> subjects;
+
 //    @OneToMany (mappedBy = "group")
 //    private Set<SubjectSpeciality> subjectSpecialities;
     public Group() {

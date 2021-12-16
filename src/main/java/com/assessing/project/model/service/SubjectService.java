@@ -1,7 +1,9 @@
 package com.assessing.project.model.service;
 
+import com.assessing.project.model.entity.Group;
 import com.assessing.project.model.entity.Mark;
 import com.assessing.project.model.entity.Subject;
+import com.assessing.project.model.entity.Teacher;
 import com.assessing.project.model.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,4 +18,7 @@ public class SubjectService {
     }
     public String findSubjectNameByMark(Mark mark){return subjectRepository.customFindSubjectByMark(mark);}
     public String findTestTypeByMark(Mark mark){return subjectRepository.customFindTestTypeByMark(mark);}
+    public String findSubjectNameByGroupAndTeacher(Group group, Teacher teacher){
+        return subjectRepository.findSubjectByGroupsAndTeacher(group, teacher).getName();
+    }
 }
