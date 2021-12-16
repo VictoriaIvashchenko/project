@@ -16,6 +16,8 @@ public class Mark {
     private Subject subject;
     @Column
     private Integer value;
+    @Column
+    private Integer semester;
 
     public Mark() {
     }
@@ -50,5 +52,13 @@ public class Mark {
 
     public void setValue(Integer value) {
         this.value = value;
+    }
+
+    public Integer getSemester() {
+        return semester;
+    }
+
+    public void setSemester(Integer semester) {
+        this.semester = semester;
     }
 }
