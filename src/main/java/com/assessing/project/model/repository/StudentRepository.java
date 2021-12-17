@@ -8,4 +8,5 @@ import java.util.ArrayList;
 
 public interface StudentRepository extends JpaRepository<Student, Integer> {
     ArrayList<Student> findStudentsByGroup(Group group);
+//    ArrayList<Student> findStudentsBy
 }
