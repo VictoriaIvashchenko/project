@@ -1,5 +1,6 @@
 package com.assessing.project.model.repository;
 
+import com.assessing.project.model.entity.Group;
 import com.assessing.project.model.entity.Mark;
 import com.assessing.project.model.entity.Student;
 import com.assessing.project.model.entity.Subject;
@@ -18,9 +19,10 @@ public interface MarkRepository extends JpaRepository<Mark, Integer> {
     @Query("select sum(m.value) from Mark m where m.student = :#{#student} and m.semester = :#{#semester}")
     Integer findSumOfMark(@Param("student") Student student, @Param("semester") Integer semester);
 
-    @Query("select count(m) from Mark m where m.student.id = :#{#student.id} and m.semester = :#{#semester}")
+    @Query("select count(m) from Mark m where m.student.id = :#{#student.id} and m.semester = :#{#semester} and m.value is not null")
     Integer findCountOfMark(@Param("student") Student student, @Param("semester") Integer semester);
 
     Mark findMarkByStudentAndSubject(Student student, Subject subject);
-
+//    @Query("select m from Mark as m")
+//    ArrayList<Mark> findMarkByGroupAndHeightMark(@Param("group") Group group);
 }

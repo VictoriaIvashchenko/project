@@ -24,5 +24,7 @@ public class StudentService {
         value[2] = student.getSurname();
         return value;
     }
-
+    public ArrayList<Student> findStudentsByGroupAndHeightMark(Group group){
+        return studentRepository.findStudentsByGroupAndHeightMark(group);
+    }
 }
