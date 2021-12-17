@@ -2,7 +2,6 @@ package com.assessing.project.model.service;
 
 import com.assessing.project.model.entity.Group;
 import com.assessing.project.model.entity.Mark;
-import com.assessing.project.model.entity.Subject;
 import com.assessing.project.model.entity.Teacher;
 import com.assessing.project.model.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
