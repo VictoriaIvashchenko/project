@@ -23,4 +23,7 @@ public class GroupService {
     public ArrayList<String> findFacultyByTeacherGroup(Teacher teacher, Subject subject){
         return groupRepository.findFacultyByTeacherGroup(teacher, subject);
     }
+    public ArrayList<String> findGroupName(){
+        return groupRepository.findGroupName();
+    }
 }

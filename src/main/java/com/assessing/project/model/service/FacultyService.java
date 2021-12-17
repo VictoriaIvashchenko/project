@@ -23,15 +23,8 @@ public class FacultyService {
         Faculty faculty = new Faculty(name);
         facultyRepository.save(faculty);
     }
-    public ArrayList<String> getAll() {
-        Iterable<Faculty> faculties = facultyRepository.findAll();
-        ArrayList<String> names = new ArrayList<>();
-
-        for (Faculty faculty: faculties) {
-            names.add(faculty.getName());
-
-        }
-        return names;
+    public ArrayList<String> findFacultyName() {
+        return facultyRepository.findFacultyName();
 
     }
 }

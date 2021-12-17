@@ -1,8 +1,6 @@
 package com.assessing.project.controllers;
 
-import com.assessing.project.model.entity.Faculty;
 import com.assessing.project.model.entity.Group;
-import com.assessing.project.model.repository.FacultyRepository;
 import com.assessing.project.model.service.FacultyService;
 import com.assessing.project.model.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class AdminController {
@@ -101,7 +98,7 @@ public class AdminController {
     @GetMapping("/admin_report_faculty")
     public String adminReportFaculty(Model model){
         model.addAttribute("title", "Звіти по факультету");
-        ArrayList<String> faculties = facultyService.getAll();
+        ArrayList<String> faculties = facultyService.findFacultyName();
         model.addAttribute("faculties", faculties);
         return "admin_report_faculty";
     }
@@ -120,7 +117,7 @@ public class AdminController {
     @GetMapping("/admin_report_group")
     public String adminReportGroup(Model model){
         model.addAttribute("title", "Звіти по групі");
-        Iterable<Group> groups = groupService.getAll();
+        ArrayList<String> groups = groupService.findGroupName();
         model.addAttribute("groups", groups);
         return "admin_report_group";
     }
