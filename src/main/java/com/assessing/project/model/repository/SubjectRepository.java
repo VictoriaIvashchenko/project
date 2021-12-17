@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.ArrayList;
+
 public interface SubjectRepository extends JpaRepository<Subject, Integer> {
     @Query("select distinct s.name from Subject as s inner join s.marks on :#{#mark.subject.id} = s.id")
     String customFindSubjectByMark(@Param("mark") Mark mark);
@@ -16,4 +18,6 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
     String customFindTestTypeByMark(@Param("mark") Mark mark);
 
     Subject findSubjectByGroupsAndTeacher(Group group, Teacher teacher);
+
+    ArrayList<Subject> findSubjectsByTeacher(Teacher teacher);
 }

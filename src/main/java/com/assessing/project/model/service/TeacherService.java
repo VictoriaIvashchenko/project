@@ -28,4 +28,10 @@ public class TeacherService {
         value[2] = teacher.getSurname();
         return value;
     }
+    public String findTeacherLogin(Teacher teacher){
+        return teacher.getLogin();
+    }
+    public String findTeacherPassword(Teacher teacher){
+        return teacher.getPassword();
+    }
 }

@@ -1,8 +1,10 @@
 package com.assessing.project.controllers;
 
 import com.assessing.project.model.entity.Student;
+import com.assessing.project.model.repository.FacultyRepository;
 import com.assessing.project.model.repository.GroupRepository;
-import com.assessing.project.model.repository.SubjectRepository;
+import com.assessing.project.model.repository.StudentRepository;
+import com.assessing.project.model.service.SpecialityService;
 import com.assessing.project.model.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,21 +17,23 @@ import java.util.ArrayList;
 
 @Controller
 public class MainController {
-    @Autowired
-    public MainController(StudentService studentServicee, GroupRepository groupRepository, SubjectRepository subjectRepository) {
-        this.studentServicee = studentServicee;
-        this.groupRepository = groupRepository;
-        this.subjectRepository = subjectRepository;
-    }
-
-    private StudentService studentServicee;
-    private GroupRepository groupRepository;
-    private SubjectRepository subjectRepository;
+//    @Autowired
+//    public MainController(StudentService studentService, SpecialityService specialityService, StudentRepository studentRepository, GroupRepository groupRepository, FacultyRepository facultyRepository) {
+//        this.studentService = studentService;
+//        this.specialityService = specialityService;
+//        this.studentRepository = studentRepository;
+//        this.groupRepository = groupRepository;
+//        this.facultyRepository = facultyRepository;
+//    }
+//
+//    private StudentService studentService;
+//    private SpecialityService specialityService;
+//    private StudentRepository studentRepository;
+//    private GroupRepository groupRepository;
+//    private FacultyRepository facultyRepository;
     @GetMapping("/")
     public String enter(Model model) {
-        ArrayList<Student> students = studentServicee.findStudentsByGroupAndHeightMark(groupRepository.getById(1));
-        String str = students.get(0).getSurname();
-//        String str1 = students.get(1).toString();
+//        String str = specialityService.findSpecialityByStudents(studentRepository.getById(1));
 //        Teacher value = teacherService.findByMark(markRepository.getById(1));
 //        String name = value.getName();
 //        String patronymyc = value.getPatronymic();

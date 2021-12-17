@@ -1,9 +1,6 @@
 package com.assessing.project.model.repository;
 
-import com.assessing.project.model.entity.Faculty;
-import com.assessing.project.model.entity.Group;
-import com.assessing.project.model.entity.Subject;
-import com.assessing.project.model.entity.Teacher;
+import com.assessing.project.model.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +16,12 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
 
     @Query("select g.name from Group as g")
     ArrayList<String> findGroupName();
+
     Group findGroupByName(String name);
+
+    ArrayList<Group> findGroupsByFaculty(Faculty faculty);
+
+    @Query("select distinct g.name from Group as g where :#{#student.group} = g")
+    String findGroupByStudent(@Param("student") Student student);
 
 }

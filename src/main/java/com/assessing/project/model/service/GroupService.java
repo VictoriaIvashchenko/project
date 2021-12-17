@@ -1,13 +1,13 @@
 package com.assessing.project.model.service;
 
-import com.assessing.project.model.entity.Group;
-import com.assessing.project.model.entity.Subject;
-import com.assessing.project.model.entity.Teacher;
+import com.assessing.project.model.entity.*;
 import com.assessing.project.model.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class GroupService {
@@ -29,4 +29,11 @@ public class GroupService {
     public Group findGroupByName(String name){
         return groupRepository.findGroupByName(name);
     }
+    public ArrayList<Group> findGroupsByFaculty(Faculty faculty){
+        return groupRepository.findGroupsByFaculty(faculty);
+    }
+    public List<Group> findAllGroups(){
+        return groupRepository.findAll();
+    }
+    public String findGroupByStudent(Student student){return  groupRepository.findGroupByStudent(student);}
 }
