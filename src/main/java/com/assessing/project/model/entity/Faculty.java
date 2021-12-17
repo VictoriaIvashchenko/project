@@ -20,7 +20,9 @@ public class Faculty {
 
     public Faculty() {
     }
-
+    public Faculty(String name){
+        this.name = name;
+    }
     public Integer getId() {
         return id;
     }

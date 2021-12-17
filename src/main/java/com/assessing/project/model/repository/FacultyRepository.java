@@ -12,4 +12,5 @@ import java.util.ArrayList;
 public interface FacultyRepository extends JpaRepository<Faculty, Integer> {
 //    @Query("select f from Faculty as f inner join as g on g.faculty = f inner join ")
 //    ArrayList<Faculty>findFacultyByTeacher(@Param("teacher")Teacher teacher, @Param("subject")Subject subject);
+
 }
