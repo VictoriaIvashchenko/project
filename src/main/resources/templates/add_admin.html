@@ -23,31 +23,34 @@
   <a href="/add_teacher"><button class="btn-radius">Викладач</button></a>
   <a href="/add_student"><button class="btn-radius last_but">Студент</button></a>
 </div>
-<div class="form">
-  <div class="container d-flex justify-content-center form_row">
-    <label class="col-sm-2 col-form-label">Прізвище</label>
-    <input type="text" class="col-sm-4 field_style">
+<form action="/add_admin" method="post">
+  <div class="form">
+    <div class="container d-flex justify-content-center form_row">
+      <label class="col-sm-2 col-form-label">Прізвище</label>
+      <input type="text" class="col-sm-4 field_style" name="name" required="required">
+    </div>
+    <div class="container d-flex justify-content-center form_row">
+      <label class="col-sm-2 col-form-label">Ім'я</label>
+      <input type="text" class="col-sm-4 field_style" name="surname" required="required">
+    </div>
+    <div class="container d-flex justify-content-center form_row">
+      <label class="col-sm-2 col-form-label">По-батькові</label>
+      <input type="text" class="col-sm-4 field_style" name="patronymic" required="required">
+    </div>
+    <div class="container d-flex justify-content-center form_row">
+      <label class="col-sm-2 col-form-label">Логін</label>
+      <input type="text" class="col-sm-4 field_style" name="login" required="required">
+    </div>
+    <div class="container d-flex justify-content-center form_row">
+      <label class="col-sm-2 col-form-label">Пароль</label>
+      <input type="text" class="col-sm-4 field_style" name="password" required="required">
+    </div>
   </div>
-  <div class="container d-flex justify-content-center form_row">
-    <label class="col-sm-2 col-form-label">Ім'я</label>
-    <input type="text" class="col-sm-4 field_style">
+  <div class="container d-flex justify-content-center">
+    <button class="add_but" type="submit">Cтворити</button>
   </div>
-  <div class="container d-flex justify-content-center form_row">
-    <label class="col-sm-2 col-form-label">По-батькові</label>
-    <input type="text" class="col-sm-4 field_style">
-  </div>
-  <div class="container d-flex justify-content-center form_row">
-    <label class="col-sm-2 col-form-label">Логін</label>
-    <input type="text" class="col-sm-4 field_style">
-  </div>
-  <div class="container d-flex justify-content-center form_row">
-    <label class="col-sm-2 col-form-label">Пароль</label>
-    <input type="text" class="col-sm-4 field_style">
-  </div>
-</div>
-<div class="container d-flex justify-content-center">
-  <button class="add_but" type="button">Cтворити</button>
-</div>
+</form>
+
 
 </body>
 </html>
