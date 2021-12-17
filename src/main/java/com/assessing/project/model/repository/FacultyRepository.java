@@ -14,4 +14,5 @@ public interface FacultyRepository extends JpaRepository<Faculty, Integer> {
 //    ArrayList<Faculty>findFacultyByTeacher(@Param("teacher")Teacher teacher, @Param("subject")Subject subject)
     @Query("select f.name from Faculty as f")
     ArrayList<String> findFacultyName();
+    Faculty findFacultyByName(String name);
 }

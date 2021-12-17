@@ -19,4 +19,6 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
 
     @Query("select g.name from Group as g")
     ArrayList<String> findGroupName();
+    Group findGroupByName(String name);
+
 }

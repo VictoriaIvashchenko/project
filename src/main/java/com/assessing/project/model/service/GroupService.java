@@ -26,4 +26,7 @@ public class GroupService {
     public ArrayList<String> findGroupName(){
         return groupRepository.findGroupName();
     }
+    public Group findGroupByName(String name){
+        return groupRepository.findGroupByName(name);
+    }
 }

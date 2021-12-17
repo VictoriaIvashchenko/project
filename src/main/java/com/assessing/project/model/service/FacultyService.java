@@ -25,6 +25,8 @@ public class FacultyService {
     }
     public ArrayList<String> findFacultyName() {
         return facultyRepository.findFacultyName();
-
+    }
+    public Faculty findFacultyByName(String name){
+        return facultyRepository.findFacultyByName(name);
     }
 }
