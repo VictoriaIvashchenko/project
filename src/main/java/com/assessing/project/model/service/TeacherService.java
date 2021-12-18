@@ -34,4 +34,6 @@ public class TeacherService {
     public String findTeacherPassword(Teacher teacher){
         return teacher.getPassword();
     }
+    public Teacher findTeacherBySurname(String surname){return teacherRepository.findTeacherBySurname(surname);}
+    public Teacher findTeacherById(Integer id){return teacherRepository.findTeacherById(id);}
 }

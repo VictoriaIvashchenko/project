@@ -20,4 +20,9 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
     Subject findSubjectByGroupsAndTeacher(Group group, Teacher teacher);
 
     ArrayList<Subject> findSubjectsByTeacher(Teacher teacher);
+
+    @Query("select s.test_type from Subject as s where :#{#subject} = s")
+    String findTestTypeBySubject(@Param("subject") Subject subject);
+
+    Subject findSubjectByName(String name);
 }

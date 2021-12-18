@@ -25,4 +25,6 @@ public class SubjectService {
     }
     public ArrayList<Subject> findSubjectsByTeacher(Teacher teacher){return subjectRepository.findSubjectsByTeacher(teacher);}
     public String findSubjectName(Subject subject){return subject.getName();}
+    public String findTestTypeBySubject(Subject subject){return subjectRepository.findTestTypeBySubject(subject);}
+    public Subject findSubjectByName(String name){return subjectRepository.findSubjectByName(name);}
 }
