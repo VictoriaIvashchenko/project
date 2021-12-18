@@ -1,6 +1,7 @@
 package com.assessing.project.model.service;
 
 import com.assessing.project.model.entity.Faculty;
+import com.assessing.project.model.entity.Group;
 import com.assessing.project.model.repository.FacultyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,4 +30,5 @@ public class FacultyService {
     public Faculty findFacultyByName(String name){
         return facultyRepository.findFacultyByName(name);
     }
+    public Faculty findFacultyByGroup(Group group){return facultyRepository.findFacultyByGroup(group);}
 }
