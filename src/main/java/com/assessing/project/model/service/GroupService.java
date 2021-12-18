@@ -37,4 +37,5 @@ public class GroupService {
     }
     public String findGroupByStudent(Student student){return  groupRepository.findGroupByStudent(student);}
     public ArrayList<Group> findGroupsByTeacher(Teacher teacher){return groupRepository.findGroupsByTeacher(teacher);}
+    public ArrayList<Group> findGroupBySubject(Subject subject){return groupRepository.findGroupBySubject(subject);}
 }

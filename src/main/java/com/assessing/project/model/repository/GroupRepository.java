@@ -27,4 +27,7 @@ public interface GroupRepository extends JpaRepository<Group, Integer> {
     @Query("select g from Group as g inner join g.subjects as s on s.teacher = :#{#teacher}")
     ArrayList<Group> findGroupsByTeacher(@Param("teacher") Teacher teacher);
 
+    @Query("select g from Group as g inner join g.subjects as s on :#{#subject} = s")
+    ArrayList<Group> findGroupBySubject(@Param("subject") Subject subject);
+
 }

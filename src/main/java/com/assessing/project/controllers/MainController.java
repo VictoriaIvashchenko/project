@@ -1,9 +1,9 @@
 package com.assessing.project.controllers;
 
-import com.assessing.project.model.entity.Student;
-import com.assessing.project.model.repository.FacultyRepository;
-import com.assessing.project.model.repository.GroupRepository;
+import com.assessing.project.model.entity.Group;
 import com.assessing.project.model.repository.StudentRepository;
+import com.assessing.project.model.repository.SubjectRepository;
+import com.assessing.project.model.service.GroupService;
 import com.assessing.project.model.service.SpecialityService;
 import com.assessing.project.model.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +18,23 @@ import java.util.ArrayList;
 @Controller
 public class MainController {
 //    @Autowired
-//    public MainController(StudentService studentService, SpecialityService specialityService, StudentRepository studentRepository, GroupRepository groupRepository, FacultyRepository facultyRepository) {
+//    public MainController(StudentService studentService, SpecialityService specialityService, StudentRepository studentRepository, GroupService groupService, SubjectRepository subjectRepository) {
 //        this.studentService = studentService;
 //        this.specialityService = specialityService;
 //        this.studentRepository = studentRepository;
-//        this.groupRepository = groupRepository;
-//        this.facultyRepository = facultyRepository;
+//        this.groupService = groupService;
+//        this.subjectRepository = subjectRepository;
 //    }
 //
 //    private StudentService studentService;
 //    private SpecialityService specialityService;
 //    private StudentRepository studentRepository;
-//    private GroupRepository groupRepository;
-//    private FacultyRepository facultyRepository;
+//    private GroupService groupService;
+//    private SubjectRepository subjectRepository;
     @GetMapping("/")
     public String enter(Model model) {
+//        ArrayList<Group> groups = groupService.findGroupBySubject(subjectRepository.getById(1));
+//        System.out.println(groups.get(0).getName() + "   " + groups.get(1).getName());
 //        String str = specialityService.findSpecialityByStudents(studentRepository.getById(1));
 //        Teacher value = teacherService.findByMark(markRepository.getById(1));
 //        String name = value.getName();
