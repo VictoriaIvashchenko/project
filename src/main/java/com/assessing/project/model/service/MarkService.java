@@ -21,7 +21,12 @@ public class MarkService {
         return mark.getValue();
     }
     public Double findAverageMark(Student student, Integer semester){
-        return (double)markRepository.findSumOfMark(student, semester) / markRepository.findCountOfMark(student, semester);
+        Integer count = markRepository.findCountOfMark(student, semester);
+        if(count != 0){
+            return (double)markRepository.findSumOfMark(student, semester) / count;
+        }else {
+            return 0.0;
+        }
     }
     public Integer findMarkByStudentAndSubject(Student student, Subject subject){
         Mark mark = markRepository.findMarkByStudentAndSubject(student, subject);
