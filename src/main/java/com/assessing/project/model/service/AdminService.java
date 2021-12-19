@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminService {
     private AdminRepository adminRepository;
-@Autowired
+    @Autowired
     public AdminService(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
     }
@@ -18,5 +18,8 @@ public class AdminService {
     public Admin findByLogin(String login){
         return adminRepository.findAdminByLogin(login);
     }
-    public String findAdminPasswordByLogin(String login){return adminRepository.findAdminPasswordByLogin(login);}
+    public void create(String name, String surname, String patronymic, String login, String password){
+        Admin admin = new Admin(name, surname, patronymic, login, password);
+        adminRepository.save(admin);
+    }
 }

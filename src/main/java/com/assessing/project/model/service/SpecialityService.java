@@ -12,11 +12,11 @@ import java.util.List;
 @Service
 public class SpecialityService {
     private SpecialityRepository specialityRepository;
-@Autowired
-    public SpecialityService(SpecialityRepository specialityRepository) {
+    @Autowired
+    public SpecialityService(SpecialityRepository specialityRepository){
         this.specialityRepository = specialityRepository;
     }
-    public ArrayList<String> findSpecialityName(){return findSpecialityName();}
+    public ArrayList<String> findSpecialityName(){return specialityRepository.findSpecialityName();}
     public Speciality findSpecialityByName(String name){
         return specialityRepository.findSpecialityByName(name);
     }
@@ -25,5 +25,9 @@ public class SpecialityService {
     }
     public String findSpecialityByStudents(Student student){
         return specialityRepository.findSpecialityByStudent(student);
+    }
+    public void create(String name){
+        Speciality speciality = new Speciality(name);
+        specialityRepository.save(speciality);
     }
 }

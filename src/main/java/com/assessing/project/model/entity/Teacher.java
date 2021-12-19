@@ -25,6 +25,13 @@ public class Teacher {
 
     public Teacher() {
     }
+    public Teacher(String name, String surname, String patronymic, String login, String password){
+        this.name = name;
+        this.surname = surname;
+        this.patronymic = patronymic;
+        this.login = login;
+        this.password = password;
+    }
 
     public Integer getId() {
         return id;

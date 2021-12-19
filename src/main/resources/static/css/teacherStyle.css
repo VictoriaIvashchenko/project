@@ -99,3 +99,18 @@
     text-decoration-line: none;
     margin-top: 10px;
 }
+.chose-button{
+    width: 110px;
+    height: 34px;
+    left: 664px;
+    top: 214px;
+
+    background: #ADC6FF;
+    border-radius: 20px;
+    margin-left: 15px;
+}
+.chose-button-text{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: white;
+}

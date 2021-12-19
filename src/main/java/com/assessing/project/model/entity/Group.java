@@ -29,9 +29,14 @@ public class Group {
     )
     private Set<Subject> subjects;
 
-//    @OneToMany (mappedBy = "group")
+    //    @OneToMany (mappedBy = "group")
 //    private Set<SubjectSpeciality> subjectSpecialities;
     public Group() {
+    }
+    public Group(String name, Faculty faculty, Speciality speciality){
+        this.name = name;
+        this.faculty = faculty;
+        this.speciality = speciality;
     }
 
     public Integer getId() {

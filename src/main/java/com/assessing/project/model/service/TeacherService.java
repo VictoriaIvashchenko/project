@@ -9,12 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class TeacherService {
     private TeacherRepository teacherRepository;
-@Autowired
+    @Autowired
     public TeacherService(TeacherRepository teacherRepository) {
         this.teacherRepository = teacherRepository;
     }
-    public Teacher findTeacherByLogin(String login){return teacherRepository.findTeacherByLogin(login);}
-    public String findTeacherPasswordByLogin(String login){return teacherRepository.findTeacherPasswordByLogin(login);}
     public String[]findTeacherNameByMark(Mark mark){
         Teacher teacher = teacherRepository.customFindTeacherByMark(mark);
         String[] value = new String[3];
@@ -23,12 +21,17 @@ public class TeacherService {
         value[2] = teacher.getSurname();
         return value;
     }
-    public String[]findTeacherName(Teacher teacher){
+    public String findTeacherFullName(Teacher teacher){
         String[] value = new String[3];
         value[0] = teacher.getName();
         value[1] = teacher.getPatronymic();
         value[2] = teacher.getSurname();
-        return value;
+        String teacherFullName = "";
+        for (String s: value) {
+            teacherFullName += s;
+            teacherFullName += " ";
+        }
+        return teacherFullName;
     }
     public String findTeacherLogin(Teacher teacher){
         return teacher.getLogin();
@@ -36,6 +39,11 @@ public class TeacherService {
     public String findTeacherPassword(Teacher teacher){
         return teacher.getPassword();
     }
+
     public Teacher findTeacherBySurname(String surname){return teacherRepository.findTeacherBySurname(surname);}
     public Teacher findTeacherById(Integer id){return teacherRepository.findTeacherById(id);}
+    public void create(String name, String surname, String patronymic, String login, String password){
+        Teacher teacher = new Teacher(name, surname, patronymic, login, password);
+        teacherRepository.save(teacher);
+    }
 }

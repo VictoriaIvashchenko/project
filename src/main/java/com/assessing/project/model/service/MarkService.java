@@ -33,7 +33,7 @@ public class MarkService {
         if(mark == null){
             return 0;
         } else{
-          return mark.getValue();
+            return mark.getValue();
         }
     }
 }

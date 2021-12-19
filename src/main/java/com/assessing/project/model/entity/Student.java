@@ -35,6 +35,19 @@ public class Student {
     private Set<Mark> marks;
     public Student() {
     }
+    public Student(String surname, String name, String patronymic,
+                   Faculty faculty, Speciality speciality, Group group, Integer course,
+                   String login, String password){
+        this.surname = surname;
+        this.name = name;
+        this.patronymic = patronymic;
+        this.faculty = faculty;
+        this.speciality = speciality;
+        this.group = group;
+        this.course = course;
+        this.login = login;
+        this.password =password;
+    }
 
     public Integer getId() {
         return id;

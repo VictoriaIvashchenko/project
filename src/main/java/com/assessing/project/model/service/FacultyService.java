@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class FacultyService {
     private FacultyRepository facultyRepository;
-@Autowired
+    @Autowired
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
@@ -27,6 +27,7 @@ public class FacultyService {
     }
     public ArrayList<String> findFacultyName() {
         return facultyRepository.findFacultyName();
+
     }
     public Faculty findFacultyByName(String name){
         return facultyRepository.findFacultyByName(name);

@@ -20,6 +20,9 @@ public class Speciality {
 
     public Speciality() {
     }
+    public Speciality(String name){
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;

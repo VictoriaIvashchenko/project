@@ -14,15 +14,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="container d-flex justify-content-between header-div">
-            <h1 class="user-name">Admin1</h1>
-            <button class="btn out-button out-button-text" type="button">Вийти</button>
-        </div>
-        <br class="">
-        <hr class="container header-line"/>
-    </header>
-    <section class="container">
+<header>
+    <div class="container d-flex justify-content-between header-div">
+        <h1 class="user-name">Admin1</h1>
+        <button class="btn out-button out-button-text" type="button">Вийти</button>
+    </div>
+    <br class="">
+    <hr class="container header-line"/>
+</header>
+<section class="container">
+    <form>
         <div class="text-center" style="margin-top: 80px">
             <h2>Додавання нової дисципліни</h2>
         </div>
@@ -34,7 +35,6 @@
             <div class="d-flex justify-content-between" style="margin-top: 37px">
                 <h3>Вид контролю</h3>
                 <select class="custom-select select-field">
-                    <option autofocus></option>
                     <option class="text-center">Екзамен</option>
                     <option class="text-center">Залік</option>
                 </select>
@@ -63,6 +63,8 @@
         <div class="d-flex justify-content-center" style="margin-top: 87px">
             <button class="btn btn-add" type="button">Додати</button>
         </div>
-    </section>
+    </form>
+
+</section>
 </body>
 </html>

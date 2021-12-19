@@ -14,8 +14,6 @@ public class StudentService {
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
-    public Student findStudentByLogin(String login){return studentRepository.findStudentByLogin(login);}
-    public String findStudentPasswordByLogin(String login){return studentRepository.findStudentPasswordByLogin(login);}
     public Student findById(Integer id){return studentRepository.getById(id);}
     public List<Student> findAllStudents(){return studentRepository.findAll();}
     public ArrayList<Student> findByGroup(Group group){return studentRepository.findStudentsByGroup(group);}
@@ -58,4 +56,12 @@ public class StudentService {
     public Integer findCourse(Student student){
         return student.getCourse();
     }
+
+    public void create(String surname, String name, String patronymic,
+                       Faculty faculty, Speciality speciality, Group group, Integer course,
+                       String login, String password){
+        Student student = new Student(surname, name, patronymic, faculty, speciality, group, course, login, password);
+        studentRepository.save(student);
+    }
+
 }

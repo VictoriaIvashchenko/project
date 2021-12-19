@@ -32,73 +32,94 @@
 <section class="container">
     <div class="d-flex justify-content-center" style="margin-top: 100px">
         <h3>Спеціальність</h3>
-        <select class="custom-select select-group" style="margin-left: 15px">
-            <option autofocus></option>
-            <option class="text-center select-text">121</option>
-        </select>
+        <form action="/admin_report_speciality" method="post">
+            <select class="custom-select select-group" style="margin-left: 15px" name="specialityName">
+                <option autofocus value="--"></option>
+                <option class="text-center select-text" th:each="speciality:${specialities}"
+                        th:utext="${speciality}"></option>
+            </select>
+            <select class="custom-select select-group" style="margin-left: 15px" name="semester">
+                <option value="0"></option>
+                <option class="text-center select-text" value="1">1</option>
+                <option class="text-center select-text" value="2">2</option>
+
+            </select>
+            <button class="chose-button chose-button-text" type="submit">Обрати</button>
+        </form>
     </div>
 </section>
-<section class="container">
-    <div>
-        <h3 class="text-center" style="margin-top: 100px">Відмінники</h3>
-        <div>
-            <div class="marks-table-div mx-auto">
-                <table class="table mytable" >
+<section class="container" th:switch="${tables}">
+    <div th:case="'nothing'"></div>
+    <div th:case="'something'">
+        <div th:switch="${tableHeight}">
+            <div th:case="'nothing'"> <h3>Відмінників немає</h3></div>
+            <div th:case="'something'" >
+                <h3 class="text-center" style="margin-top: 100px">Відмінники</h3>
+                <div>
+                    <div class="marks-table-div mx-auto">
+                        <table class="table mytable" >
 
-                    <thead>
-                    <tr>
-                        <th class="table-text">№</th>
-                        <th class="text-center table-text">Курс</th>
-                        <th class="text-center table-text">Факультет</th>
-                        <th class="text-center table-text">Група</th>
-                        <th class="text-center table-text">ПІБ студента</th>
-                        <th class="text-center table-text">Середній бал</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th class="table-text">1</th>
-                        <th class="text-center table-text">3</th>
-                        <th class="text-center table-text">ТЕФ</th>
-                        <th class="text-center table-text">ТІ-91</th>
-                        <th class="text-center table-text">Яковлева Катерина Сергіївна</th>
-                        <th class="text-center table-text">90</th>
-                    </tr>
-                    </tbody>
-                </table>
+                            <thead>
+                            <tr>
+                                <th class="table-text">№</th>
+                                <th class="text-center table-text">Курс</th>
+                                <th class="text-center table-text">Факутьтет/Інститут</th>
+                                <th class="text-center table-text">Група</th>
+                                <th class="text-center table-text">ПІБ студента</th>
+                                <th class="text-center table-text">Средній бал</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr  th:each="student:${studentsHeight}">
+                                <th th:utext="${student.getNumber()}">1</th>
+                                <th class="text-center table-text" th:utext="${student.getCourse()}"></th>
+                                <th class="text-center table-text" th:utext="${student.getFaculty()}"></th>
+                                <th class="text-center table-text" th:utext="${student.getGroup()}"></th>
+                                <th class="text-center table-text" th:utext="${student.getStudentName()}"></th>
+                                <th class="text-center table-text" th:utext="${student.getAverageMark()}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div>
-        <h3 class="text-center" style="margin-top: 100px">Двіїшники</h3>
-        <div>
-            <div class="marks-table-div mx-auto">
-                <table class="table mytable" >
+        <div th:switch="${tableLow}">
+            <div th:case="'nothing'"><h3>Двіїшників немає</h3></div>
+            <div th:case="'something'">
+                <h3 class="text-center" style="margin-top: 100px">Двіїшники</h3>
+                <div>
+                    <div class="marks-table-div mx-auto">
+                        <table class="table mytable" >
 
-                    <thead>
-                    <tr>
-                        <th class="table-text">№</th>
-                        <th class="text-center table-text">Курс</th>
-                        <th class="text-center table-text">Факульте/Інститут</th>
-                        <th class="text-center table-text">Група</th>
-                        <th class="text-center table-text">ПІБ студента</th>
-                        <th class="text-center table-text">Середній бал</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <th class="table-text">1</th>
-                        <th class="text-center table-text">3</th>
-                        <th class="text-center table-text">ТЕФ</th>
-                        <th class="text-center table-text">ТІ-91</th>
-                        <th class="text-center table-text">НЕ Яковлева Катерина Сергіївна</th>
-                        <th class="text-center table-text">0</th>
-                    </tr>
-                    </tbody>
-                </table>
+                            <thead>
+                            <tr>
+                                <th class="table-text">№</th>
+                                <th class="text-center table-text">Курс</th>
+                                <th class="text-center table-text">Факультет/Інститут</th>
+                                <th class="text-center table-text">Група</th>
+                                <th class="text-center table-text">ПІБ студента</th>
+                                <th class="text-center table-text">Средній бал</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="student:${studentsLow}">
+                                <th th:utext="${student.getNumber()}"></th>
+                                <th class="text-center table-text" th:utext="${student.getCourse()}"></th>
+                                <th class="text-center table-text" th:utext="${student.getFaculty()}"></th>
+                                <th class="text-center table-text" th:utext="${student.getGroup()}"></th>
+                                <th class="text-center table-text" th:utext="${student.getStudentName()}"></th>
+                                <th class="text-center table-text" th:utext="${student.getAverageMark()}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
+
 </section>
 </body>
 </html>

@@ -26,45 +26,60 @@
 </div>
 <div class="container d-flex justify-content-center form_row">
   <div class="col-sm-1 col-form-label label_text">Курс</div>
-  <select class="col-sm-2 field_style">
-    <option>- -</option>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-    <option>6</option>
-  </select>
-</div>
-<div class="marks-table-div mx-auto block " id="p_tef">
-  <table class="table mytable" >
+  <form action="/exams_course" method="post">
+    <select class="col-sm-2 field_style" name="course">
+      <option>- -</option>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+      <option>6</option>
+    </select>
+    <select class="custom-select select-group" style="margin-left: 15px" name="semester">
+      <option value="0"></option>
+      <option class="text-center select-text" value="1">1</option>
+      <option class="text-center select-text" value="2">2</option>
 
-    <thead>
-    <tr>
-      <th class="num_text">№</th>
-      <th class="text-center">ПІБ студента </th>
-      <th class="text-center">Оцінка</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <th class="num_text">1</th>
-      <th class="text-center ">Яковлева Катерина Сергіївна</th>
-      <th class="text-center">90</th>
-    </tr>
-    <tr>
-      <th class="num_text">1</th>
-      <th class="text-center">Яковлева Катерина Сергіївна</th>
-      <th class="text-center">90</th>
-    </tr>
-    <tr>
-      <th class="num_text">1</th>
-      <th class="text-center">Яковлева Катерина Сергіївна</th>
-      <th class="text-center">90</th>
-    </tr>
-    </tbody>
-  </table>
+    </select>
+    <button class="chose-button chose-button-text" type="submit">Обрати</button>
+  </form>
 </div>
+<section class="container" th:switch="${table}">
+  <div th:case="'nothing'"></div>
+  <div th:case="'something'" >
+    <div th:switch="${studentsInTable}">
+      <div th:case="'nothing'"> <h2>Даних немає</h2></div>
+      <div th:case="'something'" class="marks-table-div mx-auto block " id="p_tef">
+        <table class="table mytable" >
+
+          <thead>
+          <tr>
+            <th class="num_text">№</th>
+            <th class="text-center ">Спецыальнысть</th>
+            <th class="text-center ">Факультет/Інститут</th>
+            <th class="text-center">Група</th>
+            <th class="text-center">ПІБ студента </th>
+            <th class="text-center">Оцінка</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr  th:each="student:${students}">
+            <th class="num_text" th:utext="${student.getNumber()}">1</th>
+            <th class="text-center" th:utext="${student.getSpeciality()}"></th>
+            <th class="text-center" th:utext="${student.getFaculty()}"></th>
+            <th class="text-center" th:utext="${student.getGroup()}"></th>
+            <th class="text-center" th:utext="${student.getStudentName()}"></th>
+            <th class="text-center" th:utext="${student.getAverageMark()}"></th>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</section>
 
 </body>
 </html>

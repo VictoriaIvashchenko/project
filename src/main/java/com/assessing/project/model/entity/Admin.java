@@ -21,6 +21,13 @@ public class Admin {
 
     public Admin() {
     }
+    public Admin(String name, String surname, String patronymic, String login, String password){
+        this.name = name;
+        this.surname = surname;
+        this.patronymic = patronymic;
+        this.login = login;
+        this.password = password;
+    }
 
     public Integer getId() {
         return id;
@@ -69,4 +76,11 @@ public class Admin {
     public void setPassword(String password) {
         this.password = password;
     }
+//    public static String getRandomWord(int length) {
+//        String r = "";
+//        for(int i = 0; i < length; i++) {
+//            r += (char)(Math.random() * 26 + 97);
+//        }
+//        return r;
+//    }
 }
