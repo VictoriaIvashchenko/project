@@ -24,9 +24,9 @@ public class StudentService {
     public ArrayList<Student> findByFaculty(Faculty faculty){return studentRepository.findStudentsByFaculty(faculty);}
     public String[]findStudentName(Student student){
         String[] value = new String[3];
-        value[0] = student.getName();
-        value[1] = student.getPatronymic();
-        value[2] = student.getSurname();
+        value[0] = student.getSurname();
+        value[1] = student.getName();
+        value[2] = student.getPatronymic();
         return value;
     }
     public ArrayList<Student> findStudentsByGroupAndHeightMark(Group group, Integer semester){

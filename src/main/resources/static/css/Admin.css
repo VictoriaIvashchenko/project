@@ -7,6 +7,22 @@
     background: #001752;
     border-radius: 20px;
     margin-top: -4px;
+    margin-right: 20px;
+}
+.out-button:hover{
+    background: #ADC6FF;
+    border: 2px solid #001752;
+    color: #001752
+}
+.user-name{
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+
+    color: #001752;
+    margin-left: 20px;
 }
 .out-button-text{
     font-family: 'Roboto', sans-serif;
@@ -29,10 +45,16 @@
     border-radius: 20px;
     margin-top: 56px;
 }
+.admin-nav-button:hover{
+    background: #ADC6FF;
+    border: 2px solid #001752;
+    color: #001752
+}
 .admin-nav-button-text{
 
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
+    font-size: 18px;
     color: #FFFFFF;
 }
 .admin-nav-button-div{
