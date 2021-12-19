@@ -2,6 +2,7 @@ package com.assessing.project.model.service;
 
 import com.assessing.project.model.entity.Faculty;
 import com.assessing.project.model.entity.Group;
+import com.assessing.project.model.entity.Student;
 import com.assessing.project.model.repository.FacultyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,4 +32,5 @@ public class FacultyService {
         return facultyRepository.findFacultyByName(name);
     }
     public Faculty findFacultyByGroup(Group group){return facultyRepository.findFacultyByGroup(group);}
+    public Faculty findFacultyByStudent(Student student){return  facultyRepository.findFacultyByStudent(student);}
 }
