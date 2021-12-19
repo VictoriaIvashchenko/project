@@ -2,12 +2,14 @@ package com.assessing.project.controllers;
 
 import com.assessing.project.additional.InfoForReport;
 import com.assessing.project.additional.InfoForTeacherPage;
+import com.assessing.project.config.SecurityUser;
 import com.assessing.project.model.entity.Group;
 import com.assessing.project.model.entity.Student;
 import com.assessing.project.model.entity.Subject;
 import com.assessing.project.model.entity.Teacher;
 import com.assessing.project.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +39,9 @@ public class TeacherController {
     @GetMapping("/teacher")
     public String teacher(Model model){
         model.addAttribute("title", "Інф. викладача");
+        //видобуток поточного вчителя після авторизації
+        SecurityUser curr = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Teacher currentTeacher = teacherService.findTeacherByLogin(curr.getUsername());
         Teacher teacher = teacherService.findTeacherById(1);
         ArrayList<Group> groups = groupService.findGroupsByTeacher(teacher);
         ArrayList<String> groupNames = new ArrayList<>();

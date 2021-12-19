@@ -1,5 +1,7 @@
 package com.assessing.project.controllers;
 
+import com.assessing.project.config.SecurityUser;
+import com.assessing.project.model.entity.Admin;
 import com.assessing.project.model.entity.Mark;
 import com.assessing.project.model.entity.Student;
 
@@ -9,6 +11,7 @@ import com.assessing.project.model.service.SubjectService;
 import com.assessing.project.model.service.TeacherService;
 import com.assessing.project.additional.InfoForStudentPage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +52,10 @@ public class StudentController {
 //        Double average = markService.findAverageMark(student, semester);
 //        model.addAttribute("marksTable", rows);
 //        model.addAttribute("average", average);
+
+        //видобуток поточного студента після авторизації
+        SecurityUser curr = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Student currentStudent = studentService.findStudentByLogin(curr.getUsername());
         return "student";
     }
 
