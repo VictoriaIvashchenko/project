@@ -14,6 +14,8 @@ public class StudentService {
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
+    public Student findStudentByLogin(String login){return studentRepository.findStudentByLogin(login);}
+    public String findStudentPasswordByLogin(String login){return studentRepository.findStudentPasswordByLogin(login);}
     public Student findById(Integer id){return studentRepository.getById(id);}
     public List<Student> findAllStudents(){return studentRepository.findAll();}
     public ArrayList<Student> findByGroup(Group group){return studentRepository.findStudentsByGroup(group);}

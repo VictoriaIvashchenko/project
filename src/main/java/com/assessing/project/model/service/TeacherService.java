@@ -13,6 +13,8 @@ public class TeacherService {
     public TeacherService(TeacherRepository teacherRepository) {
         this.teacherRepository = teacherRepository;
     }
+    public Teacher findTeacherByLogin(String login){return teacherRepository.findTeacherByLogin(login);}
+    public String findTeacherPasswordByLogin(String login){return teacherRepository.findTeacherPasswordByLogin(login);}
     public String[]findTeacherNameByMark(Mark mark){
         Teacher teacher = teacherRepository.customFindTeacherByMark(mark);
         String[] value = new String[3];

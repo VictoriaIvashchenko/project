@@ -11,6 +11,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.ArrayList;
 
 public interface StudentRepository extends JpaRepository<Student, Integer> {
+    Student findStudentByLogin(String login);
+    @Query("select s.password from Student as s where s.login = :#{#login}")
+    String findStudentPasswordByLogin(@Param("login") String login);
     ArrayList<Student> findStudentsByGroup(Group group);
     ArrayList<Student> findStudentsByCourse(Integer course);
     ArrayList<Student> findStudentsBySpeciality(Speciality speciality);

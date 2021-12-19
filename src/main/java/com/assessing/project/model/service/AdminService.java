@@ -18,4 +18,5 @@ public class AdminService {
     public Admin findByLogin(String login){
         return adminRepository.findAdminByLogin(login);
     }
+    public String findAdminPasswordByLogin(String login){return adminRepository.findAdminPasswordByLogin(login);}
 }
