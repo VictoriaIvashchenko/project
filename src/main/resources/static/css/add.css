@@ -172,6 +172,24 @@
     border: 2px solid #001752;
     color: #001752
 }
+.btn_class .option-button{
+    width: 250px;
+    height: 50px;
+    background: #001752;
+    border-radius: 20px;
+
+    font-family: 'Roboto', serif;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 23px;
+    color: #FFFFFF;
+    margin-left: 40px;
+}
+.btn_class .option-button:hover{
+    background: #ADC6FF;
+    border: 2px solid #001752;
+    color: #001752
+}
 a{
     text-decoration: none;
 }

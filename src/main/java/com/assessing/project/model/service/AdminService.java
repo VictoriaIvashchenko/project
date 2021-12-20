@@ -29,11 +29,11 @@ public class AdminService {
         value[0] = admin.getSurname();
         value[1] = admin.getName();
         value[2] = admin.getPatronymic();
-        String teacherFullName = "";
+        String adminFullName = "";
         for (String s: value) {
-            teacherFullName += s;
-            teacherFullName += " ";
+            adminFullName += s;
+            adminFullName += " ";
         }
-        return teacherFullName;
+        return adminFullName;
     }
 }

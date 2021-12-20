@@ -167,7 +167,24 @@ tr:last-child{
 
     color: #FFFFFF;
 }
+.btn_add_mark .set-marks-button{
+    width: 250px;
+    height: 50px;
+    background: #001752;
+    border-radius: 20px;
 
+    font-family: 'Roboto', serif;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 23px;
+    color: #FFFFFF;
+    margin-left: 40px;
+}
+.btn_add_mark .set-marks-button:hover{
+    background: #ADC6FF;
+    border: 2px solid #001752;
+    color: #001752
+}
 
 
 input::-webkit-outer-spin-button,
