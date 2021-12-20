@@ -114,3 +114,15 @@
     font-weight: 400;
     color: white;
 }
+.user-name{
+    font-family: 'Roboto', serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+
+    color: #001752;
+}
+a{
+    text-decoration: none;
+}

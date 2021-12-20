@@ -12,7 +12,7 @@
 <body>
 <header>
     <div class="container d-flex justify-content-between header-div">
-        <h1 class="user-name">Admin1</h1>
+        <a href="/admin"><h1 class="user-name">Admin1</h1></a>
         <form action="/logout" method="post">
             <button class="btn out-button out-button-text" type="submit">Вийти</button>
         </form>
@@ -27,7 +27,7 @@
         </div>
     </form>
     <div th:switch="${teacherInfo}">
-        <div th:case="'nothing'"><h2>Оберіть викладача</h2></div>
+        <div th:case="'nothing'"><h2 class="txt_nothing">Оберіть викладача</h2></div>
         <div th:case="'something'">
             <div  class="teacher-information">
                 <h2 th:utext="${teacherFullName}"></h2>
@@ -47,7 +47,7 @@
                     <h2>Дисципліни</h2>
                 </div>
                 <div th:switch="${teacherIfExistSubjects}">
-                    <div th:case="'nothing'"><h2>Немає дисциплін</h2></div>
+                    <div th:case="'nothing'"><h2 class="txt_nothing">Немає дисциплін</h2></div>
                     <div th:case="'something'">
                         <ul class="list-group subjects-list" th:each="subject:${teacherSubjectsNames}">
                             <li>

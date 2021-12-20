@@ -90,6 +90,26 @@ a {
     border: 2px solid #001752;
     color: #001752
 }
+.chose-button{
+    width: 120px;
+    height: 45px;
+    background: #001752;
+    border-radius: 20px;
+
+    font-family: 'Roboto', serif;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 23px;
+    color: #FFFFFF;
+}
+a{
+    text-decoration: none;
+}
+.chose-button:hover{
+    background: #ADC6FF;
+    border: 2px solid #001752;
+    color: #001752
+}
 .select-group{
     width: 194px;
     height: 34px;
@@ -141,4 +161,13 @@ tr:last-child{
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     color: #001752;
+}
+.t_rep{
+    margin-top: 50px;
+}
+.down_table{
+    margin-bottom: 100px;
+}
+a{
+    text-decoration: none;
 }

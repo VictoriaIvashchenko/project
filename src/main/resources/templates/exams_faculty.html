@@ -11,7 +11,7 @@
 <body>
 <header>
   <div class="container d-flex justify-content-between header-div">
-    <h1 class="user-name">Admin1</h1>
+    <a href="/admin"><h1 class="user-name">Admin1</h1></a>
     <form action="/logout" method="post">
       <button class="btn out-button out-button-text" type="submit">Вийти</button>
     </form>
@@ -26,23 +26,25 @@
   <a href="/exams_course"><button class="btn-radius">По курсу</button></a>
   <a href="/exams_group"><button class="btn-radius last_but">По групі</button></a>
 </div>
-<div class="container d-flex justify-content-center form_row">
-  <div class="col-sm-1 col-form-label label_text">Факультет</div>
+
   <form action="/exams_faculty" method="post">
-    <select class="col-sm-2 field_style" name="facultyName">
+    <div class="container d-flex justify-content-center form_row">
+    <div class="col-sm-1 col-form-label label_text">Факультет</div>
+    <select class="col-sm-2 field_style custom-select" name="facultyName">
       <option autofocus value="--"></option>
       <option class="text-center select-text" th:each="faculty:${faculties}"
               th:utext="${faculty}"></option>
     </select>
-    <select class="text-center select-text" style="margin-left: 15px" name="semester">
-      <option value="0"></option>
+      <div class="col-sm-1 col-form-label label_text label_txt_1">Семестр</div>
+    <select class=" col-sm-2 text-center select-text select-group custom-select" style="margin-left: 15px" name="semester">
+      <option value="--"></option>
       <option class="text-center select-text" value="1">1</option>
       <option class="text-center select-text" value="2">2</option>
 
     </select>
     <button class="chose-button chose-button-text" type="submit">Обрати</button>
+    </div>
   </form>
-</div>
 <section class="container" th:switch="${table}">
   <div th:case="'nothing'"></div>
   <div th:case="'something'" >

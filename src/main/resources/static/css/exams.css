@@ -108,6 +108,9 @@
     max-width: 743px;
 
 }
+a{
+    text-decoration: none;
+}
 table{
     max-width: 720px;
     margin: 0 auto;
@@ -177,3 +180,32 @@ tr:last-child{
 /*.block {*/
 /*    display: none;*/
 /*}*/
+.custom-select{
+    max-width: 150px;
+    min-width: 150px;
+    height: 30px;
+}
+.chose-button{
+    width: 150px;
+    height: 45px;
+    background: #001752;
+    border-radius: 20px;
+
+    font-family: 'Roboto', serif;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 23px;
+    color: #FFFFFF;
+    margin-left: 40px;
+}
+.chose-button:hover{
+    background: #ADC6FF;
+    border: 2px solid #001752;
+    color: #001752
+}
+.label_txt_1{
+    margin-left: 50px;
+}
+a{
+    text-decoration: none;
+}

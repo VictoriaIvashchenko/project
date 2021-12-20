@@ -9,6 +9,9 @@ h3{
     font-weight: 400;
     color: #001752;
 }
+a{
+    text-decoration: none;
+}
 .header_cont{
     width: 100%;
     flex: 1;
@@ -161,4 +164,7 @@ h3{
     padding-left: 10px;
     color: #001752;
     font-family: Roboto;
+}
+a{
+    text-decoration: none;
 }

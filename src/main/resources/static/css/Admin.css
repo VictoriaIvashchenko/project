@@ -9,6 +9,9 @@
     margin-top: -4px;
     margin-right: 20px;
 }
+a{
+    text-decoration: none;
+}
 .out-button:hover{
     background: #ADC6FF;
     border: 2px solid #001752;
@@ -60,4 +63,7 @@
 .admin-nav-button-div{
     display: block;
 
+}
+a{
+    text-decoration: none;
 }

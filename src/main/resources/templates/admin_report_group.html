@@ -12,7 +12,7 @@
 <body>
 <header>
     <div class="container d-flex justify-content-between header-div">
-        <h1 class="user-name">Admin1</h1>
+        <a href="/admin"><h1 class="user-name">Admin1</h1></a>
         <form action="/logout" method="post">
             <button class="btn out-button out-button-text" type="submit">Вийти</button>
 
@@ -28,7 +28,7 @@
 
         <a href="/admin_report_faculty"><button class="btn option-button">По факультету</button></a>
         <a href="/admin_report_speciality"><button class="btn option-button">По спеціальності</button></a>
-        <a href="/admin_report_course"><button class="btn option-button">По курсу</button></a>
+<!--        <a href="/admin_report_course"><button class="btn option-button">По курсу</button></a>-->
         <a href="/admin_report_group"><button class="btn option-button">По групі</button></a>
     </div>
 </section>
@@ -74,7 +74,7 @@
     <div th:case="'nothing'"></div>
     <div th:case="'something'">
         <div th:switch="${tableHeight}">
-            <div th:case="'nothing'"> <h3>Відмінників немає</h3></div>
+            <div th:case="'nothing'"> <h3 class="text-center  t_rep">Відмінників немає</h3></div>
             <div th:case="'something'" >
                 <h3 class="text-center" style="margin-top: 100px">Відмінники</h3>
                 <div>
@@ -85,7 +85,7 @@
                             <tr>
                                 <th class="table-text">№</th>
                                 <th class="text-center table-text">ПІБ студента</th>
-                                <th class="text-center table-text">Средній бал</th>
+                                <th class="text-center table-text">Середній бал</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -101,17 +101,17 @@
             </div>
         </div>
         <div th:switch="${tableLow}">
-            <div th:case="'nothing'"><h3>Двіїшників немає</h3></div>
+            <div th:case="'nothing'"><h3 class="text-center t_rep">Двіїшників немає</h3></div>
             <div th:case="'something'">
                 <h3 class="text-center" style="margin-top: 100px">Двіїшники</h3>
                 <div>
-                    <div class="marks-table-div mx-auto">
+                    <div class="marks-table-div mx-auto down_table">
                         <table class="table mytable" >
                             <thead>
                             <tr>
                                 <th class="table-text">№</th>
                                 <th class="text-center table-text">ПІБ студента</th>
-                                <th class="text-center table-text">Средній бал</th>
+                                <th class="text-center table-text">Середній бал</th>
                             </tr>
                             </thead>
                             <tbody>

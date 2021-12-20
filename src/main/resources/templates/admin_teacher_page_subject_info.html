@@ -13,7 +13,7 @@
 <body>
 <header>
     <div class="container d-flex justify-content-between header-div">
-        <h1 class="user-name">Admin1</h1>
+        <a href="/admin"><h1 class="user-name">Admin1</h1></a>
         <form method="post" action="/logout">
             <button class="btn out-button out-button-text" type="button">Вийти</button>
         </form>
@@ -50,7 +50,7 @@
             </div>
         </div>
     </form>
-    <a th:href="'/admin_teacher_subject_add_group/'+${subjectName}"><button>Додати групу</button></a>
+    <a th:href="'/admin_teacher_subject_add_group/'+${subjectName}"><button class="chose-button_1">Додати групу</button></a>
 </section>
 <section class="container" th:switch="${subjectGroupInfo}">
     <div th:case="'nothing'"></div>

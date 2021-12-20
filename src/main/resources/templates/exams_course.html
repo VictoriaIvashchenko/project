@@ -11,7 +11,7 @@
 <body>
 <header>
   <div class="container d-flex justify-content-between header-div">
-    <h1 class="user-name">Admin1</h1>
+    <a href="/admin"><h1 class="user-name">Admin1</h1></a>
     <form method="post" action="/logout">
       <button class="btn out-button out-button-text" type="submit">Вийти</button>
     </form>
@@ -26,11 +26,11 @@
   <a href="/exams_course"><button class="btn-radius add_t">По курсу</button></a>
   <a href="/exams_group"><button class="btn-radius last_but">По групі</button></a>
 </div>
-<div class="container d-flex justify-content-center form_row">
-  <div class="col-sm-1 col-form-label label_text">Курс</div>
   <form action="/exams_course" method="post">
-    <select class="col-sm-2 field_style" name="course">
-      <option>- -</option>
+    <div class="container d-flex justify-content-center form_row">
+    <div class="col-sm-1 col-form-label label_text">Курс</div>
+    <select class="col-sm-2 field_style custom-select" name="course">
+      <option value="0"></option>
       <option>1</option>
       <option>2</option>
       <option>3</option>
@@ -38,15 +38,16 @@
       <option>5</option>
       <option>6</option>
     </select>
-    <select class="custom-select select-group" style="margin-left: 15px" name="semester">
+    <div class="col-sm-1 col-form-label label_text label_txt_1">Семестр</div>
+    <select class=" col-sm-2 field_style custom-select select-group" style="margin-left: 15px" name="semester">
       <option value="0"></option>
       <option class="text-center select-text" value="1">1</option>
       <option class="text-center select-text" value="2">2</option>
 
     </select>
     <button class="chose-button chose-button-text" type="submit">Обрати</button>
+    </div>
   </form>
-</div>
 <section class="container" th:switch="${table}">
   <div th:case="'nothing'"></div>
   <div th:case="'something'" >
@@ -58,7 +59,7 @@
           <thead>
           <tr>
             <th class="num_text">№</th>
-            <th class="text-center ">Спецыальнысть</th>
+            <th class="text-center ">Спеціальність</th>
             <th class="text-center ">Факультет/Інститут</th>
             <th class="text-center">Група</th>
             <th class="text-center">ПІБ студента </th>
@@ -78,10 +79,7 @@
         </table>
       </div>
     </div>
-
   </div>
-
 </section>
-
 </body>
 </html>
