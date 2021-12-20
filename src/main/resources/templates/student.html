@@ -38,7 +38,7 @@
         <div class="filler">
             Семестр
         </div>
-        <form method="post" action="/student">
+        <form method="post">
 
             <select name="semester" id="semester" >
                 <option value="0"></option>
@@ -71,11 +71,11 @@
                 </thead>
                 <tbody id="marksTable">
                 <tr th:each="row:${marksTable}">
-                    <th class="table-text" th:text="${row.number}"></th>
-                    <th class="text-center table-text" th:text="${row.subjectName}"></th>
-                    <th class="text-center table-text" th:text="${row.teacherName}"></th>
-                    <th class="text-center table-text" th:text="${row.test}"></th>
-                    <th class="text-center table-text" th:text="${row.markValue}"></th>
+                    <th class="table-text" th:text="${row.getNumber()}"></th>
+                    <th class="text-center table-text" th:text="${row.getSubjectName()}"></th>
+                    <th class="text-center table-text" th:text="${row.getTeacherName()}"></th>
+                    <th class="text-center table-text" th:text="${row.getTest()}"></th>
+                    <th class="text-center table-text" th:text="${row.getMarkValue()}"></th>
                 </tr>
                 </tbody>
             </table>

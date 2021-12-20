@@ -61,25 +61,31 @@ public class StudentController {
 
     @RequestMapping(value = "/student", method = RequestMethod.POST)
     public String chooseSemester(@RequestParam("semester") Integer semester, Model model){
-        if (semester.intValue() == 0){
+        if (semester == 0){
             model.addAttribute("table", "nothing");
         }else {
             this.semester = semester;
             Student student = studentService.findById(8);
             ArrayList<Mark> marks = markService.findByStudentAndSemester(student, semester);
-            ArrayList<InfoForStudentPage> rows = new ArrayList<>();
-            int i = 0;
-            for (Mark mark: marks) {
-
-                InfoForStudentPage row = new InfoForStudentPage(i+1,teacherService.findTeacherNameByMark(mark),
-                        subjectService.findSubjectNameByMark(mark), subjectService.findTestTypeByMark(mark), markService.findMarkValue(mark));
-                rows.add(row);
-                i++;
+            if (marks.size() == 0){
+                model.addAttribute("table", "nothing");
             }
-            Double average = markService.findAverageMark(student, semester);
-            model.addAttribute("marksTable", rows);
-            model.addAttribute("average", average);
-            model.addAttribute("table", "something");
+            else {
+                ArrayList<InfoForStudentPage> rows = new ArrayList<>();
+                int i = 0;
+                for (Mark mark: marks) {
+
+                    InfoForStudentPage row = new InfoForStudentPage(i+1,teacherService.findTeacherNameByMark(mark),
+                            subjectService.findSubjectNameByMark(mark), subjectService.findTestTypeByMark(mark), markService.findMarkValue(mark));
+                    rows.add(row);
+                    i++;
+                }
+                Double average = markService.findAverageMark(student, semester);
+                model.addAttribute("marksTable", rows);
+                model.addAttribute("average", average);
+                model.addAttribute("table", "something");
+            }
+
         }
 
         return "student";
