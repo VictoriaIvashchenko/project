@@ -143,11 +143,11 @@ public class AdminController {
         model.addAttribute("specialities", specialities);
         return "admin_report_speciality";
     }
-    @GetMapping("/admin_report_course")
-    public String adminReportCourse(Model model){
-        model.addAttribute("title", "Звіти по курсу");
-        return "admin_report_course";
-    }
+//    @GetMapping("/admin_report_course")
+//    public String adminReportCourse(Model model){
+//        model.addAttribute("title", "Звіти по курсу");
+//        return "admin_report_course";
+//    }
     @GetMapping("/admin_report_group")
     public String adminReportGroup(Model model){
         model.addAttribute("title", "Звіти по групі");
@@ -425,69 +425,69 @@ public class AdminController {
         }
         return "admin_report_group";
     }
-    @PostMapping("/admin_report_course")
-    public String adminReportCoursePost(@RequestParam("course") Integer course,
-                                        @RequestParam("semester") Integer semester, Model model){
-        //Потом убрать когда будет получение студентов по курсу
-        Group group = groupService.findGroupByName(groupService.findGroupByStudent(studentService.findById(1)));
-
-        if (course == 0 || semester == 0) {
-            model.addAttribute("tables", "nothing");
-        }
-        else {
-            model.addAttribute("tables", "something");
-            ArrayList<Student> studentsHeight = studentService.findStudentsByGroupAndHeightMark(group, semester);
-            ArrayList<Student> studentsLow = studentService.findStudentsByGroupAndLowestMark(group, semester);
-
-            if (studentsHeight.size()==0){
-                model.addAttribute("tableHeight", "nothing");
-            }
-            else {
-
-
-                ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
-                int i = 1;
-                for (Student student: studentsHeight) {
-                    InfoForReport infoStudentHeight = new InfoForReport(i,
-                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
-                            specialityService.findSpecialityByStudents(student), studentService.findStudentName(student),
-                            groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
-                    if (infoStudentHeight.getAverageMark() != 0.0){
-                        infoStudentsHeight.add(infoStudentHeight);
-                    }
-                    i++;
-                }
-                if(infoStudentsHeight.size() != 0){
-                    model.addAttribute("studentsHeight", infoStudentsHeight);
-                    model.addAttribute("tableHeight", "something");
-
-                }else {
-                    model.addAttribute("tableHeight", "nothing");
-                }
-
-            }
-            if (studentsLow.size()==0){
-                model.addAttribute("tableLow", "nothing");
-            }
-            else {
-                model.addAttribute("tableLow", "something");
-                ArrayList<InfoForReport> infoStudentsLow = new ArrayList<>();
-
-                int i = 1;
-                for (Student student: studentsLow) {
-                    InfoForReport infoStudentLow = new InfoForReport(i,
-                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
-                            specialityService.findSpecialityByStudents(student), studentService.findStudentName(student),
-                            groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
-
-                    infoStudentsLow.add(infoStudentLow);
-                    i++;
-                }
-                model.addAttribute("studentsLow", infoStudentsLow);
-            }
-        }
-        return "admin_report_course";
-    }
+//    @PostMapping("/admin_report_course")
+//    public String adminReportCoursePost(@RequestParam("course") Integer course,
+//                                        @RequestParam("semester") Integer semester, Model model){
+//        //Потом убрать когда будет получение студентов по курсу
+//        Group group = groupService.findGroupByName(groupService.findGroupByStudent(studentService.findById(1)));
+//
+//        if (course == 0 || semester == 0) {
+//            model.addAttribute("tables", "nothing");
+//        }
+//        else {
+//            model.addAttribute("tables", "something");
+//            ArrayList<Student> studentsHeight = studentService.f
+//            ArrayList<Student> studentsLow = studentService.findStudentsByGroupAndLowestMark(group, semester);
+//
+//            if (studentsHeight.size()==0){
+//                model.addAttribute("tableHeight", "nothing");
+//            }
+//            else {
+//
+//
+//                ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
+//                int i = 1;
+//                for (Student student: studentsHeight) {
+//                    InfoForReport infoStudentHeight = new InfoForReport(i,
+//                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
+//                            specialityService.findSpecialityByStudents(student), studentService.findStudentName(student),
+//                            groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
+//                    if (infoStudentHeight.getAverageMark() != 0.0){
+//                        infoStudentsHeight.add(infoStudentHeight);
+//                    }
+//                    i++;
+//                }
+//                if(infoStudentsHeight.size() != 0){
+//                    model.addAttribute("studentsHeight", infoStudentsHeight);
+//                    model.addAttribute("tableHeight", "something");
+//
+//                }else {
+//                    model.addAttribute("tableHeight", "nothing");
+//                }
+//
+//            }
+//            if (studentsLow.size()==0){
+//                model.addAttribute("tableLow", "nothing");
+//            }
+//            else {
+//                model.addAttribute("tableLow", "something");
+//                ArrayList<InfoForReport> infoStudentsLow = new ArrayList<>();
+//
+//                int i = 1;
+//                for (Student student: studentsLow) {
+//                    InfoForReport infoStudentLow = new InfoForReport(i,
+//                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
+//                            specialityService.findSpecialityByStudents(student), studentService.findStudentName(student),
+//                            groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
+//
+//                    infoStudentsLow.add(infoStudentLow);
+//                    i++;
+//                }
+//                model.addAttribute("studentsLow", infoStudentsLow);
+//            }
+//        }
+//        return "admin_report_course";
+//    }
     @PostMapping("/exams_faculty")
     public String examsFacultyPost(@RequestParam("facultyName") String facultyName,
                                    @RequestParam("semester") Integer semester, Model model){

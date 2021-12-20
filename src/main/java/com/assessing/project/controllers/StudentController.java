@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class StudentController {
@@ -30,6 +31,7 @@ public class StudentController {
     TeacherService teacherService;
     @Autowired
     SubjectService subjectService;
+    Student student = new Student();
 
     @GetMapping("/student")
     public String student(Model model){
@@ -56,6 +58,7 @@ public class StudentController {
         //видобуток поточного студента після авторизації
         SecurityUser curr = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Student currentStudent = studentService.findStudentByLogin(curr.getUsername());
+        student = currentStudent;
         return "student";
     }
 
@@ -65,16 +68,16 @@ public class StudentController {
             model.addAttribute("table", "nothing");
         }else {
             this.semester = semester;
-            Student student = studentService.findById(8);
-            ArrayList<Mark> marks = markService.findByStudentAndSemester(student, semester);
+            List<Mark> marks = markService.findByStudentAndSemester(student, semester);
             if (marks.size() == 0){
                 model.addAttribute("table", "nothing");
+                System.out.println("nothing");
             }
             else {
                 ArrayList<InfoForStudentPage> rows = new ArrayList<>();
                 int i = 0;
                 for (Mark mark: marks) {
-
+                    System.out.println(subjectService.findSubjectNameByMark(mark));
                     InfoForStudentPage row = new InfoForStudentPage(i+1,teacherService.findTeacherNameByMark(mark),
                             subjectService.findSubjectNameByMark(mark), subjectService.findTestTypeByMark(mark), markService.findMarkValue(mark));
                     rows.add(row);

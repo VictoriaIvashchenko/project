@@ -39,10 +39,11 @@ public class TeacherController {
     @GetMapping("/teacher")
     public String teacher(Model model){
         model.addAttribute("title", "Інф. викладача");
+
         //видобуток поточного вчителя після авторизації
         SecurityUser curr = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Teacher currentTeacher = teacherService.findTeacherByLogin(curr.getUsername());
-        Teacher teacher = teacherService.findTeacherById(1);
+        teacher = currentTeacher;
         ArrayList<Group> groups = groupService.findGroupsByTeacher(teacher);
         ArrayList<String> groupNames = new ArrayList<>();
         for (Group group: groups) {
@@ -56,12 +57,12 @@ public class TeacherController {
     @GetMapping("/teacher_report")
     public String teacherReport(Model model){
         model.addAttribute("title", "Інф. викладача");
+        System.out.println(teacherService.findTeacherFullName(teacher));
         return "teacher_report";
     }
     @GetMapping("/teacher_report_subject")
     public String teacherReportSubject(Model model){
         model.addAttribute("title", "Звіти викладача по предмету");
-        teacher = teacherService.findTeacherById(1);
         ArrayList<Subject> subjects = subjectService.findSubjectsByTeacher(teacher);
         ArrayList<String> subjectNames = new ArrayList<>();
         for (Subject subject: subjects) {
@@ -73,7 +74,6 @@ public class TeacherController {
     @GetMapping("/teacher_report_group")
     public String teacherReportGroup(Model model){
         model.addAttribute("title", "Звіти викладача по группі");
-        teacher = teacherService.findTeacherById(1);
         ArrayList<Group> groups = groupService.findGroupsByTeacher(teacher);
         ArrayList<String> groupNames = new ArrayList<>();
         for (Group group: groups) {
@@ -85,7 +85,6 @@ public class TeacherController {
 
     @PostMapping("/teacher")
     public String getGroup(@RequestParam("groupName") String groupName, Model model){
-        Teacher teacher = teacherService.findTeacherById(1);
         ArrayList<Group> groups = groupService.findGroupsByTeacher(teacher);
         ArrayList<String> groupNames = new ArrayList<>();
         for (Group group: groups) {
@@ -121,7 +120,7 @@ public class TeacherController {
     }
     @PostMapping("/teacher_report_subject")
     public String teacherReportSubjectPost(@RequestParam("subjectName") String subjectName, Model model){
-        teacher = teacherService.findTeacherById(1);
+
         ArrayList<Subject> subjects = subjectService.findSubjectsByTeacher(teacher);
         ArrayList<String> subjectNames = new ArrayList<>();
         for (Subject subject: subjects) {
@@ -191,7 +190,7 @@ public class TeacherController {
     }
     @PostMapping("/teacher_report_group")
     public String teacherReportGroupPost(@RequestParam("groupName") String groupName, Model model){
-        teacher = teacherService.findTeacherById(1);
+
         ArrayList<Group> groups = groupService.findGroupsByTeacher(teacher);
         ArrayList<String> groupNames = new ArrayList<>();
         for (Group group: groups) {
@@ -252,7 +251,6 @@ public class TeacherController {
     }
     @GetMapping("/teacher_set_marks/{groupName}")
     public String teacherSetMarks(@PathVariable(value = "groupName") String groupName, Model model){
-        Teacher teacher = teacherService.findTeacherById(1);
         model.addAttribute("title", "Виставлення оцінок");
         Group group = groupService.findGroupByName(groupName);
         String faculty = facultyService.findFacultyName(facultyService.findFacultyByGroup(group));
@@ -269,14 +267,17 @@ public class TeacherController {
             rows.add(row);
         }
 
-        model.addAttribute("group", groupName);
-        model.addAttribute("testType", testType);
-        model.addAttribute("faculty", faculty);
-        model.addAttribute("subject", subject);
+        model.addAttribute("groupName", groupName);
+//        model.addAttribute("testType", testType);
+//        model.addAttribute("faculty", faculty);
+//        model.addAttribute("subject", subject);
         model.addAttribute("marksTable", rows);
         return "teacher_set_marks";
     }
-//    @PostMapping("/teacher_set_marks")
-//    public String teacherSetMarksPost(@RequestParam )
+    @PostMapping("/teacher_set_marks/{groupName}")
+    public String teacherSetMarksPost(@PathVariable(value = "groupName") String groupName, @RequestParam("mark") Integer mark, Model model){
+        System.out.println(mark);
+        return "redirect:/teacher";
+    }
 
 }
