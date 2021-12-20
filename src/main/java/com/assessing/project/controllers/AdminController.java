@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class AdminController {
@@ -628,11 +629,30 @@ public class AdminController {
         for (Group group: groups) {
             groupNames.add(groupService.findGroupName(group));
         }
+        model.addAttribute("title", "Дисціпліна");
         model.addAttribute("groups", groupNames);
         model.addAttribute("subjectName", subjectName);
         return "admin_teacher_page_subject_info";
     }
-    @PostMapping("/admin_teacher_page_subject_info/{subjectName}")
+    @GetMapping("/admin_teacher_subject_add_group/{subjectName}")
+    public String adminTeacherPageSubjectAddGroup(@PathVariable(value = "subjectName") String subjectName, Model model){
+        List<Group> groups = groupService.findAllGroups();
+        ArrayList<String> groupNames = new ArrayList<>();
+        for (Group group: groups) {
+            groupNames.add(groupService.findGroupName(group));
+        }
+        model.addAttribute("title", "Додати групу");
+        model.addAttribute("groups", groupNames);
+        model.addAttribute("subjectName", subjectName);
+        return "admin_teacher_subject_add_group";
+    }
+    @PostMapping("/admin_teacher_subject_add_group/{subjectName}")
+    public String adminTeacherPageSubjectAddGroupPost(@PathVariable(value = "subjectName") String subjectName,
+                                                      @RequestParam("groupName") String groupName, Model model){
+        System.out.println(groupName);
+        return "redirect:/admin_teacher_page_subject_info/{subjectName}";
+    }
+    @PostMapping("admin_teacher_page_subject_info")
     public String adminTeacherPageSubjectInfoPost(@PathVariable(value = "subjectName") String subjectName,
                                                   @RequestParam("groupName") String groupName, Model model){
         System.out.println(subjectName);

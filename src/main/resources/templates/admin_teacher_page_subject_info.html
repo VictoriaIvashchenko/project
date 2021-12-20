@@ -50,6 +50,7 @@
             </div>
         </div>
     </form>
+    <a th:href="'/admin_teacher_subject_add_group/'+${subjectName}"><button>Додати групу</button></a>
 </section>
 <section class="container" th:switch="${subjectGroupInfo}">
     <div th:case="'nothing'"></div>
