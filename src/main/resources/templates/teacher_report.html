@@ -13,7 +13,7 @@
 <body>
 <header>
     <div class="container d-flex justify-content-between header-div">
-        <a href="/teacher"><h1 class="user-name">Cмаковський Денис Сергійович</h1></a>
+        <a href="/teacher"><h1 class="user-name" th:text="${teacherName}"></h1></a>
         <form method="post" action="/logout">
             <button class="btn out-button out-button-text" type="submit">Вийти</button>
         </form>
