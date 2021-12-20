@@ -181,18 +181,18 @@ public class AdminController {
         return "adddata_group";
     }
     @PostMapping("/adddata_faculty")
-    public String addFaculty(@RequestParam String name, Model model){
+    public String addFaculty(@RequestParam("name") String name, Model model){
         facultyService.create(name);
         return "redirect:/adddata";
     }
     @PostMapping("/adddata_speciality")
-    public String addSpeciality(@RequestParam String name, Model model){
+    public String addSpeciality(@RequestParam("name") String name, Model model){
         specialityService.create(name);
         return "redirect:/adddata";
     }
     @PostMapping("/adddata_group")
-    public String addGroup(@RequestParam String name, @RequestParam String facultyName,
-                           @RequestParam String specialityName, Model model){
+    public String addGroup(@RequestParam("name") String name, @RequestParam("facultyName") String facultyName,
+                           @RequestParam("specialityName") String specialityName, Model model){
 
         groupService.create(name, facultyService.findFacultyByName(facultyName),
                 specialityService.findSpecialityByName(specialityName));
