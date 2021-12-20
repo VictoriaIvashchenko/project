@@ -35,6 +35,7 @@ public class AdminController {
     MarkService markService;
     @Autowired
     SubjectService subjectService;
+    Admin admin = new Admin();
 
     @GetMapping("/admin")
     public String admin(Model model){
@@ -42,12 +43,15 @@ public class AdminController {
         //видобуток поточного адміністратора після авторизації
         SecurityUser curr = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Admin currentAdmin = adminService.findByLogin(curr.getUsername());
+        admin = currentAdmin;
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "admin";
     }
 
     @GetMapping("/admin_teacher_page")
     public String adminTeacherPage(Model model){
         model.addAttribute("title", "Сторінка інформаці про викладача");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "admin_teacher_page";
     }
 
@@ -55,23 +59,27 @@ public class AdminController {
     public String adminAddSubject(@PathVariable("teacherNameAddNew") String teacherName, Model model){
         model.addAttribute("title", "Додати новий предмет");
         model.addAttribute("teacherNameAddNew", teacherName);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "admin_teacher_page_add_new_subject";
     }
 
     @GetMapping("/admin_teacher_page_subject_info")
     public String adminInfoSubject(Model model){
         model.addAttribute("title", "Іформація про предмет");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "admin_teacher_page_subject_info";
     }
 
     @GetMapping("/add")
     public String add(Model model){
         model.addAttribute("title", "Додати користувача");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "add";
     }
     @GetMapping("/add_admin")
     public String addAdmin(Model model){
         model.addAttribute("title", "Додати адміністратора");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "add_admin";
     }
 
@@ -85,17 +93,20 @@ public class AdminController {
         model.addAttribute("groups", groups);
         ArrayList<String> specialities = specialityService.findSpecialityName();
         model.addAttribute("specialities", specialities);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "add_student";
     }
     @GetMapping("/add_teacher")
     public String addTeacher(Model model){
         model.addAttribute("title", "Додати викладача");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "add_teacher";
     }
 
     @GetMapping("/exams")
     public String exams(Model model){
         model.addAttribute("title", "Результати сесії");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "exams";
     }
     @GetMapping("/exams_faculty")
@@ -103,6 +114,7 @@ public class AdminController {
         model.addAttribute("title", "Результати сесії по факультету");
         ArrayList<String> faculties = facultyService.findFacultyName();
         model.addAttribute("faculties", faculties);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "exams_faculty";
     }
     @GetMapping("/exams_speciality")
@@ -110,11 +122,13 @@ public class AdminController {
         model.addAttribute("title", "Результати сесії по спецільності");
         ArrayList<String> specialities = specialityService.findSpecialityName();
         model.addAttribute("specialities", specialities);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "exams_speciality";
     }
     @GetMapping("/exams_course")
     public String examsCourse(Model model){
         model.addAttribute("title", "Результати сесії по курсу");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "exams_course";
     }
     @GetMapping("/exams_group")
@@ -122,6 +136,7 @@ public class AdminController {
         model.addAttribute("title", "Результати сесії по групі");
         ArrayList<String> groups = groupService.findGroupName();
         model.addAttribute("groups", groups);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "exams_group";
     }
     @GetMapping("/admin_report")
@@ -133,6 +148,7 @@ public class AdminController {
     public String adminReportFaculty(Model model){
         model.addAttribute("title", "Звіти по факультету");
         ArrayList<String> faculties = facultyService.findFacultyName();
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         model.addAttribute("faculties", faculties);
         return "admin_report_faculty";
     }
@@ -141,34 +157,35 @@ public class AdminController {
         model.addAttribute("title", "Звіти по спецільності");
         ArrayList<String> specialities = specialityService.findSpecialityName();
         model.addAttribute("specialities", specialities);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "admin_report_speciality";
     }
-//    @GetMapping("/admin_report_course")
-//    public String adminReportCourse(Model model){
-//        model.addAttribute("title", "Звіти по курсу");
-//        return "admin_report_course";
-//    }
+
     @GetMapping("/admin_report_group")
     public String adminReportGroup(Model model){
         model.addAttribute("title", "Звіти по групі");
         ArrayList<String> groups = groupService.findGroupName();
         model.addAttribute("groups", groups);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "admin_report_group";
     }
     @GetMapping("/adddata")
     public String adddata(Model model){
         model.addAttribute("title", "Додати дані");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "adddata";
     }
     @GetMapping("/adddata_faculty")
     public String adddataFaculty(Model model){
         model.addAttribute("title", "Додати новий факультет");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "adddata_faculty";
     }
 
     @GetMapping("/adddata_speciality")
     public String adddataSpeciality(Model model){
         model.addAttribute("title", "Додати нову спеціальність");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "adddata_speciality";
     }
 
@@ -180,12 +197,13 @@ public class AdminController {
         model.addAttribute("faculties", faculties);
         ArrayList<String> specialities = specialityService.findSpecialityName();
         model.addAttribute("specialities", specialities);
-
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "adddata_group";
     }
     @PostMapping("/adddata_faculty")
     public String addFaculty(@RequestParam("name") String name, Model model){
         facultyService.create(name);
+
         return "redirect:/adddata";
     }
     @PostMapping("/adddata_speciality")
@@ -199,7 +217,6 @@ public class AdminController {
 
         groupService.create(name, facultyService.findFacultyByName(facultyName),
                 specialityService.findSpecialityByName(specialityName));
-
         return "redirect:/adddata";
     }
 
@@ -240,12 +257,14 @@ public class AdminController {
         Teacher teacher = teacherService.findTeacherBySurname(teacherName);
         System.out.println(teacherService.findTeacherFullName(teacher));
         subjectService.create(name, testType, teacher);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "admin_teacher_page";
     }
     @PostMapping("/admin_report_faculty")
     public String adminReportFacultyPost(@RequestParam("facultyName") String facultyName,
                                          @RequestParam("semester") Integer semester, Model model){
         ArrayList<String> faculties = facultyService.findFacultyName();
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         model.addAttribute("faculties", faculties);
         Faculty faculty = facultyService.findFacultyByName(facultyName);
         if (facultyName.equals("--")) {
@@ -307,6 +326,7 @@ public class AdminController {
     public String adminReportSpecialityPost(@RequestParam("specialityName") String specialityName,
                                             @RequestParam("semester") Integer semester, Model model){
         ArrayList<String> specialities = specialityService.findSpecialityName();
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         model.addAttribute("specialities", specialities);
         Speciality speciality = specialityService.findSpecialityByName(specialityName);
         if (specialityName.equals("--") || semester == 0) {
@@ -371,6 +391,7 @@ public class AdminController {
     public String adminReportGroupPost(@RequestParam("groupName") String groupName,
                                        @RequestParam("semester") Integer semester, Model model){
         ArrayList<String> groups = groupService.findGroupName();
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         model.addAttribute("groups", groups);
         Group group = groupService.findGroupByName(groupName);
         if (groupName.equals("--") || semester == 0) {
@@ -425,73 +446,12 @@ public class AdminController {
         }
         return "admin_report_group";
     }
-//    @PostMapping("/admin_report_course")
-//    public String adminReportCoursePost(@RequestParam("course") Integer course,
-//                                        @RequestParam("semester") Integer semester, Model model){
-//        //Потом убрать когда будет получение студентов по курсу
-//        Group group = groupService.findGroupByName(groupService.findGroupByStudent(studentService.findById(1)));
 //
-//        if (course == 0 || semester == 0) {
-//            model.addAttribute("tables", "nothing");
-//        }
-//        else {
-//            model.addAttribute("tables", "something");
-//            ArrayList<Student> studentsHeight = studentService.f
-//            ArrayList<Student> studentsLow = studentService.findStudentsByGroupAndLowestMark(group, semester);
-//
-//            if (studentsHeight.size()==0){
-//                model.addAttribute("tableHeight", "nothing");
-//            }
-//            else {
-//
-//
-//                ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
-//                int i = 1;
-//                for (Student student: studentsHeight) {
-//                    InfoForReport infoStudentHeight = new InfoForReport(i,
-//                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
-//                            specialityService.findSpecialityByStudents(student), studentService.findStudentName(student),
-//                            groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
-//                    if (infoStudentHeight.getAverageMark() != 0.0){
-//                        infoStudentsHeight.add(infoStudentHeight);
-//                    }
-//                    i++;
-//                }
-//                if(infoStudentsHeight.size() != 0){
-//                    model.addAttribute("studentsHeight", infoStudentsHeight);
-//                    model.addAttribute("tableHeight", "something");
-//
-//                }else {
-//                    model.addAttribute("tableHeight", "nothing");
-//                }
-//
-//            }
-//            if (studentsLow.size()==0){
-//                model.addAttribute("tableLow", "nothing");
-//            }
-//            else {
-//                model.addAttribute("tableLow", "something");
-//                ArrayList<InfoForReport> infoStudentsLow = new ArrayList<>();
-//
-//                int i = 1;
-//                for (Student student: studentsLow) {
-//                    InfoForReport infoStudentLow = new InfoForReport(i,
-//                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
-//                            specialityService.findSpecialityByStudents(student), studentService.findStudentName(student),
-//                            groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
-//
-//                    infoStudentsLow.add(infoStudentLow);
-//                    i++;
-//                }
-//                model.addAttribute("studentsLow", infoStudentsLow);
-//            }
-//        }
-//        return "admin_report_course";
-//    }
     @PostMapping("/exams_faculty")
     public String examsFacultyPost(@RequestParam("facultyName") String facultyName,
                                    @RequestParam("semester") Integer semester, Model model){
         ArrayList<String> faculties = facultyService.findFacultyName();
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         model.addAttribute("faculties", faculties);
         Faculty faculty = facultyService.findFacultyByName(facultyName);
         if (facultyName.equals("--") || semester == 0) {
@@ -525,6 +485,7 @@ public class AdminController {
     public String examsSpecialityPost(@RequestParam("specialityName") String specialityName,
                                       @RequestParam("semester") Integer semester, Model model){
         ArrayList<String> specialities = specialityService.findSpecialityName();
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         model.addAttribute("specialities", specialities);
         Speciality speciality = specialityService.findSpecialityByName(specialityName);
         if (specialityName.equals("--") || semester == 0) {
@@ -558,7 +519,7 @@ public class AdminController {
     @PostMapping("/exams_course")
     public String examsCoursePost(@RequestParam("course") Integer course,
                                   @RequestParam("semester") Integer semester, Model model){
-
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         if (course == 0 || semester == 0) {
             model.addAttribute("table", "nothing");
         }
@@ -590,7 +551,7 @@ public class AdminController {
     @PostMapping("/exams_group")
     public String examsCoursePost(@RequestParam("groupName") String groupName,
                                   @RequestParam("semester") Integer semester, Model model){
-
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         ArrayList<String> groups = groupService.findGroupName();
         model.addAttribute("groups", groups);
         Group group = groupService.findGroupByName(groupName);
@@ -620,7 +581,7 @@ public class AdminController {
     }
     @PostMapping("/admin_teacher_page")
     public String adminTeacherPagePost(@RequestParam("teacherName") String teacherName, Model model){
-
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         String[] teacherSurname = teacherName.split("\\s");
         Teacher teacher = teacherService.findTeacherBySurname(teacherSurname[0]);
         if ( teacher == null){
@@ -653,6 +614,7 @@ public class AdminController {
 
     @GetMapping("/admin_teacher_subject_add_group/{subjectName}")
     public String adminTeacherPageSubjectAddGroup(@PathVariable(value = "subjectName") String subjectName, Model model){
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         List<Group> groups = groupService.findAllGroups();
         ArrayList<String> groupNames = new ArrayList<>();
         for (Group group: groups) {
@@ -667,10 +629,12 @@ public class AdminController {
     public String adminTeacherPageSubjectAddGroupPost(@PathVariable(value = "subjectName") String subjectName,
                                                       @RequestParam("groupName") String groupName, Model model){
         System.out.println(groupName);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "redirect:/admin_teacher_page_subject_info/{subjectName}";
     }
     @GetMapping("/admin_teacher_page_subject_info/{subjectName}")
     public String adminTeacherPageSubjectInfo(@PathVariable(value = "subjectName") String subjectName, Model model){
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         ArrayList<Group> groups = groupService.findGroupBySubject(subjectService.findSubjectByName(subjectName));
         ArrayList<String> groupNames = new ArrayList<>();
         for (Group group: groups) {
@@ -685,6 +649,7 @@ public class AdminController {
     public String adminTeacherPageSubjectInfoPost(@PathVariable(value = "subjectName") String subjectName,
                                                   @RequestParam("groupName") String groupName, Model model){
         System.out.println(subjectName);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         model.addAttribute("subjectName", subjectName);
         ArrayList<Group> groups = groupService.findGroupBySubject(subjectService.findSubjectByName(subjectName));
         ArrayList<String> groupNames = new ArrayList<>();
