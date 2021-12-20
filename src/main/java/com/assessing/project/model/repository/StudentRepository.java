@@ -20,7 +20,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     ArrayList<Student> findStudentsByFaculty(Faculty faculty);
 
 //    ArrayList<Student> findStudentsBy
-    @Query("select s from Student as s inner join s.group as g on g = :#{#group} where 90 <= " +
+    @Query("select s from Student as s inner join s.group as g on g = :#{#group} where 95 <= " +
         "all(select m.value from Mark as m where m.student = s and m.semester = :#{#semester})")
     ArrayList<Student> findStudentsByGroupAndHeightMark(@Param("group") Group group, @Param("semester") Integer semester);
 
@@ -28,7 +28,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
             "any(select m.value from Mark as m where m.student = s and m.semester = :#{#semester})")
     ArrayList<Student> findStudentsByGroupAndLowestMark(@Param("group") Group group, @Param("semester") Integer semester);
 
-    @Query("select s from Student as s inner join s.faculty as f on f = :#{#faculty} where 90 <= " +
+    @Query("select s from Student as s inner join s.faculty as f on f = :#{#faculty} where 95 <= " +
             "all(select m.value from Mark as m where m.student = s and m.semester = :#{#semester})")
     ArrayList<Student> findStudentsByFacultyAndHeightMark(@Param("faculty") Faculty faculty, @Param("semester") Integer semester);
 
@@ -36,7 +36,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
             "any(select m.value from Mark as m where m.student = s and m.semester = :#{#semester})")
     ArrayList<Student> findStudentsByFacultyAndLowestMark(@Param("faculty") Faculty faculty, @Param("semester") Integer semester);
 
-    @Query("select s from Student as s inner join s.speciality as sp on sp = :#{#speciality} where 90 <= " +
+    @Query("select s from Student as s inner join s.speciality as sp on sp = :#{#speciality} where 95 <= " +
             "all(select m.value from Mark as m where m.student = s and m.semester = :#{#semester})")
     ArrayList<Student> findStudentsBySpecialityAndHeightMark(@Param("speciality") Speciality speciality, @Param("semester") Integer semester);
 
@@ -44,7 +44,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
             "any(select m.value from Mark as m where m.student = s and m.semester = :#{#semester})")
     ArrayList<Student> findStudentsBySpecialityAndLowestMark(@Param("speciality") Speciality speciality, @Param("semester") Integer semester);
 
-    @Query("select distinct s from Student as s inner join s.marks as m on m.semester = :#{#semester} where 90 <= " +
+    @Query("select distinct s from Student as s inner join s.marks as m on m.semester = :#{#semester} where 95 <= " +
             "all(select m.value from Mark as m where m.student = s)")
     ArrayList<Student> findStudentsBySemesterAndHeightMark(@Param("semester") Integer semester);
 
