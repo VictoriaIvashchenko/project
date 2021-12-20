@@ -6,6 +6,7 @@ import com.assessing.project.model.entity.*;
 import com.assessing.project.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -205,7 +206,7 @@ public class AdminController {
                                @RequestParam("patronymic") String patronymic, @RequestParam("login") String login,
                                @RequestParam("password") String password, Model model){
 
-        adminService.create(name, surname, patronymic, login, password);
+        adminService.create(name, surname, patronymic, login, new BCryptPasswordEncoder(12).encode(password));
         return"redirect:/add";
     }
     @PostMapping("/add_teacher")
@@ -213,7 +214,7 @@ public class AdminController {
                                  @RequestParam("patronymic") String patronymic, @RequestParam("login") String login,
                                  @RequestParam("password") String password, Model model){
 
-        teacherService.create(surname, name, patronymic, login, password);
+        teacherService.create(surname, name, patronymic, login, new BCryptPasswordEncoder(12).encode(password));
         return"redirect:/add";
     }
     @PostMapping("/add_student")
@@ -225,11 +226,13 @@ public class AdminController {
 
 
         studentService.create(surname, name, patronymic, facultyService.findFacultyByName(facultyName),
-                specialityService.findSpecialityByName(specialityName),groupService.findGroupByName(groupName),course, login, password);
+                specialityService.findSpecialityByName(specialityName),groupService.findGroupByName(groupName),course,
+                login, new BCryptPasswordEncoder(12).encode(password));
         return"redirect:/add";
     }
     @PostMapping("/admin_report_faculty")
-    public String adminReportFacultyPost(@RequestParam("facultyName") String facultyName,@RequestParam("semester") Integer semester, Model model){
+    public String adminReportFacultyPost(@RequestParam("facultyName") String facultyName,
+                                         @RequestParam("semester") Integer semester, Model model){
         ArrayList<String> faculties = facultyService.findFacultyName();
         model.addAttribute("faculties", faculties);
         Faculty faculty = facultyService.findFacultyByName(facultyName);
@@ -283,7 +286,8 @@ public class AdminController {
         return "admin_report_faculty";
     }
     @PostMapping("/admin_report_speciality")
-    public String adminReportSpecialityPost(@RequestParam("specialityName") String specialityName, @RequestParam("semester") Integer semester, Model model){
+    public String adminReportSpecialityPost(@RequestParam("specialityName") String specialityName,
+                                            @RequestParam("semester") Integer semester, Model model){
         ArrayList<String> specialities = specialityService.findSpecialityName();
         model.addAttribute("specialities", specialities);
         Speciality speciality = specialityService.findSpecialityByName(specialityName);
@@ -292,7 +296,8 @@ public class AdminController {
         }
         else {
             model.addAttribute("tables", "something");
-            ArrayList<Student> studentsHeight = studentService.findStudentsBySpecialityAndHeightMark(speciality, semester);
+            ArrayList<Student> studentsHeight =
+                    studentService.findStudentsBySpecialityAndHeightMark(speciality, semester);
 
 
             ArrayList<Student> studentsLow = studentService.findStudentsBySpecialityAndLowestMark(speciality,semester);
@@ -305,8 +310,9 @@ public class AdminController {
                 ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
                 int i = 1;
                 for (Student student: studentsHeight) {
-                    InfoForReport infoStudentHeight = new InfoForReport(i, facultyService.findFacultyName(facultyService.findFacultyByStudent(student)), studentService.findCourse(student),
-                            studentService.findStudentName(student),
+                    InfoForReport infoStudentHeight = new InfoForReport(i,
+                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
+                            studentService.findCourse(student), studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
 
                     infoStudentsHeight.add(infoStudentHeight);
@@ -324,8 +330,9 @@ public class AdminController {
 
                 int i = 1;
                 for (Student student: studentsLow) {
-                    InfoForReport infoStudentLow = new InfoForReport(i, facultyService.findFacultyName(facultyService.findFacultyByStudent(student)), studentService.findCourse(student),
-                            studentService.findStudentName(student),
+                    InfoForReport infoStudentLow = new InfoForReport(i,
+                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
+                            studentService.findCourse(student), studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
                     infoStudentsLow.add(infoStudentLow);
                     i++;
@@ -336,7 +343,8 @@ public class AdminController {
         return "admin_report_speciality";
     }
     @PostMapping("/admin_report_group")
-    public String adminReportGroupPost(@RequestParam("groupName") String groupName, @RequestParam("semester") Integer semester, Model model){
+    public String adminReportGroupPost(@RequestParam("groupName") String groupName,
+                                       @RequestParam("semester") Integer semester, Model model){
         ArrayList<String> groups = groupService.findGroupName();
         model.addAttribute("groups", groups);
         Group group = groupService.findGroupByName(groupName);
@@ -375,7 +383,8 @@ public class AdminController {
 
                 int i = 1;
                 for (Student student: studentsLow) {
-                    InfoForReport infoStudentLow = new InfoForReport(i, studentService.findStudentName(student), markService.findAverageMark(student, semester));
+                    InfoForReport infoStudentLow = new InfoForReport(i, studentService.findStudentName(student),
+                            markService.findAverageMark(student, semester));
                     infoStudentsLow.add(infoStudentLow);
                     i++;
                 }
@@ -385,7 +394,8 @@ public class AdminController {
         return "admin_report_group";
     }
     @PostMapping("/admin_report_course")
-    public String adminReportCoursePost(@RequestParam("course") Integer course, @RequestParam("semester") Integer semester, Model model){
+    public String adminReportCoursePost(@RequestParam("course") Integer course,
+                                        @RequestParam("semester") Integer semester, Model model){
         //Потом убрать когда будет получение студентов по курсу
         Group group = groupService.findGroupByName(groupService.findGroupByStudent(studentService.findById(8)));
         if (course == 0 || semester == 0) {
@@ -405,8 +415,10 @@ public class AdminController {
                 ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
                 int i = 1;
                 for (Student student: studentsHeight) {
-                    InfoForReport infoStudentHeight = new InfoForReport(i, facultyService.findFacultyName(facultyService.findFacultyByStudent(student)), specialityService.findSpecialityByStudents(student),
-                            studentService.findStudentName(student), groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
+                    InfoForReport infoStudentHeight = new InfoForReport(i,
+                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
+                            specialityService.findSpecialityByStudents(student), studentService.findStudentName(student),
+                            groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
 
                     infoStudentsHeight.add(infoStudentHeight);
                     i++;
@@ -423,8 +435,10 @@ public class AdminController {
 
                 int i = 1;
                 for (Student student: studentsLow) {
-                    InfoForReport infoStudentLow = new InfoForReport(i, facultyService.findFacultyName(facultyService.findFacultyByStudent(student)), specialityService.findSpecialityByStudents(student),
-                            studentService.findStudentName(student), groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
+                    InfoForReport infoStudentLow = new InfoForReport(i,
+                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
+                            specialityService.findSpecialityByStudents(student), studentService.findStudentName(student),
+                            groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
 
                     infoStudentsLow.add(infoStudentLow);
                     i++;
@@ -435,7 +449,8 @@ public class AdminController {
         return "admin_report_course";
     }
     @PostMapping("/exams_faculty")
-    public String examsFacultyPost(@RequestParam("facultyName") String facultyName,@RequestParam("semester") Integer semester, Model model){
+    public String examsFacultyPost(@RequestParam("facultyName") String facultyName,
+                                   @RequestParam("semester") Integer semester, Model model){
         ArrayList<String> faculties = facultyService.findFacultyName();
         model.addAttribute("faculties", faculties);
         Faculty faculty = facultyService.findFacultyByName(facultyName);
@@ -467,7 +482,8 @@ public class AdminController {
         return "exams_faculty";
     }
     @PostMapping("/exams_speciality")
-    public String examsSpecialityPost(@RequestParam("specialityName") String specialityName,@RequestParam("semester") Integer semester, Model model){
+    public String examsSpecialityPost(@RequestParam("specialityName") String specialityName,
+                                      @RequestParam("semester") Integer semester, Model model){
         ArrayList<String> specialities = specialityService.findSpecialityName();
         model.addAttribute("specialities", specialities);
         Speciality speciality = specialityService.findSpecialityByName(specialityName);
@@ -486,8 +502,9 @@ public class AdminController {
                 ArrayList<InfoForReport> infoStudents = new ArrayList<>();
                 int i = 1;
                 for (Student student: students) {
-                    InfoForReport infoStudent = new InfoForReport(i, facultyService.findFacultyName(facultyService.findFacultyByStudent(student)), studentService.findCourse(student),
-                            studentService.findStudentName(student),
+                    InfoForReport infoStudent = new InfoForReport(i,
+                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
+                            studentService.findCourse(student), studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
 
                     infoStudents.add(infoStudent);
@@ -499,7 +516,8 @@ public class AdminController {
         return "exams_speciality";
     }
     @PostMapping("/exams_course")
-    public String examsCoursePost(@RequestParam("course") Integer course,@RequestParam("semester") Integer semester, Model model){
+    public String examsCoursePost(@RequestParam("course") Integer course,
+                                  @RequestParam("semester") Integer semester, Model model){
 
         if (course == 0 || semester == 0) {
             model.addAttribute("table", "nothing");
@@ -515,8 +533,10 @@ public class AdminController {
                 ArrayList<InfoForReport> infoStudents = new ArrayList<>();
                 int i = 1;
                 for (Student student: students) {
-                    InfoForReport infoStudent = new InfoForReport(i, facultyService.findFacultyName(facultyService.findFacultyByStudent(student)), specialityService.findSpecialityByStudents(student),
-                            studentService.findStudentName(student), groupService.findGroupByStudent(student),
+                    InfoForReport infoStudent = new InfoForReport(i,
+                            facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
+                            specialityService.findSpecialityByStudents(student), studentService.findStudentName(student),
+                            groupService.findGroupByStudent(student),
                             markService.findAverageMark(student, semester));
                     infoStudents.add(infoStudent);
                     i++;
@@ -528,7 +548,8 @@ public class AdminController {
     }
 
     @PostMapping("/exams_group")
-    public String examsCoursePost(@RequestParam("groupName") String groupName,@RequestParam("semester") Integer semester, Model model){
+    public String examsCoursePost(@RequestParam("groupName") String groupName,
+                                  @RequestParam("semester") Integer semester, Model model){
 
         ArrayList<String> groups = groupService.findGroupName();
         model.addAttribute("groups", groups);
@@ -629,7 +650,8 @@ public class AdminController {
             int i = 1;
             for (Student student: students) {
                 InfoForReport infoStudent = new InfoForReport(i,
-                        studentService.findStudentName(student), markService.findMarkByStudentAndSubject(student, subjectService.findSubjectByName(subjectName)));
+                        studentService.findStudentName(student), markService.findMarkByStudentAndSubject(student,
+                        subjectService.findSubjectByName(subjectName)));
                 infoStudents.add(infoStudent);
                 i++;
             }
