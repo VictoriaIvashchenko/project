@@ -1,6 +1,7 @@
 package com.assessing.project.model.service;
 
 import com.assessing.project.model.entity.Admin;
+import com.assessing.project.model.entity.Teacher;
 import com.assessing.project.model.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,17 @@ public class AdminService {
     public void create(String name, String surname, String patronymic, String login, String password){
         Admin admin = new Admin(name, surname, patronymic, login, password);
         adminRepository.save(admin);
+    }
+    public String findAdminFullName(Admin admin){
+        String[] value = new String[3];
+        value[0] = admin.getSurname();
+        value[1] = admin.getName();
+        value[2] = admin.getPatronymic();
+        String teacherFullName = "";
+        for (String s: value) {
+            teacherFullName += s;
+            teacherFullName += " ";
+        }
+        return teacherFullName;
     }
 }

@@ -18,16 +18,16 @@ public class TeacherService {
     public String[]findTeacherNameByMark(Mark mark){
         Teacher teacher = teacherRepository.customFindTeacherByMark(mark);
         String[] value = new String[3];
-        value[0] = teacher.getName();
-        value[1] = teacher.getPatronymic();
-        value[2] = teacher.getSurname();
+        value[0] = teacher.getSurname();
+        value[1] = teacher.getName();
+        value[2] = teacher.getPatronymic();
         return value;
     }
     public String findTeacherFullName(Teacher teacher){
         String[] value = new String[3];
-        value[0] = teacher.getName();
-        value[1] = teacher.getPatronymic();
-        value[2] = teacher.getSurname();
+        value[0] = teacher.getSurname();
+        value[1] = teacher.getName();
+        value[2] = teacher.getPatronymic();
         String teacherFullName = "";
         for (String s: value) {
             teacherFullName += s;
