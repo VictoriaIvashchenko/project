@@ -5,10 +5,7 @@ import com.assessing.project.model.entity.Admin;
 import com.assessing.project.model.entity.Mark;
 import com.assessing.project.model.entity.Student;
 
-import com.assessing.project.model.service.MarkService;
-import com.assessing.project.model.service.StudentService;
-import com.assessing.project.model.service.SubjectService;
-import com.assessing.project.model.service.TeacherService;
+import com.assessing.project.model.service.*;
 import com.assessing.project.additional.InfoForStudentPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +28,10 @@ public class StudentController {
     TeacherService teacherService;
     @Autowired
     SubjectService subjectService;
+    @Autowired
+    FacultyService facultyService;
+    @Autowired
+    GroupService groupService;
     Student student = new Student();
 
     @GetMapping("/student")
@@ -59,11 +60,21 @@ public class StudentController {
         SecurityUser curr = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Student currentStudent = studentService.findStudentByLogin(curr.getUsername());
         student = currentStudent;
+        String[] studentName = studentService.findStudentName(student);
+        model.addAttribute("surname", studentName[0]);
+        model.addAttribute("name", studentName[1]);
+        model.addAttribute("facultyName", facultyService.findFacultyName(facultyService.findFacultyByStudent(student)));
+        model.addAttribute("groupName", groupService.findGroupByStudent(student));
         return "student";
     }
 
     @RequestMapping(value = "/student", method = RequestMethod.POST)
     public String chooseSemester(@RequestParam("semester") Integer semester, Model model){
+        String[] studentName = studentService.findStudentName(student);
+        model.addAttribute("surname", studentName[0]);
+        model.addAttribute("name", studentName[1]);
+        model.addAttribute("facultyName", facultyService.findFacultyName(facultyService.findFacultyByStudent(student)));
+        model.addAttribute("groupName", groupService.findGroupByStudent(student));
         if (semester == 0){
             model.addAttribute("table", "nothing");
         }else {
@@ -71,7 +82,7 @@ public class StudentController {
             List<Mark> marks = markService.findByStudentAndSemester(student, semester);
             if (marks.size() == 0){
                 model.addAttribute("table", "nothing");
-                System.out.println("nothing");
+//                System.out.println("nothing");
             }
             else {
                 ArrayList<InfoForStudentPage> rows = new ArrayList<>();
