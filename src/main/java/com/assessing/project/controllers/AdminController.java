@@ -201,27 +201,27 @@ public class AdminController {
     }
 
     @PostMapping("/add_admin")
-    public String addAdminPOST(@RequestParam String name, @RequestParam String surname,
-                               @RequestParam String patronymic, @RequestParam String login,
-                               @RequestParam String password, Model model){
+    public String addAdminPOST(@RequestParam("name") String name, @RequestParam("surname") String surname,
+                               @RequestParam("patronymic") String patronymic, @RequestParam("login") String login,
+                               @RequestParam("password") String password, Model model){
 
         adminService.create(name, surname, patronymic, login, password);
         return"redirect:/add";
     }
     @PostMapping("/add_teacher")
     public String addTeacherPOST(@RequestParam("name") String name, @RequestParam("surname") String surname,
-                                 @RequestParam("patronomic") String patronymic, @RequestParam("login") String login,
+                                 @RequestParam("patronymic") String patronymic, @RequestParam("login") String login,
                                  @RequestParam("password") String password, Model model){
 
         teacherService.create(surname, name, patronymic, login, password);
         return"redirect:/add";
     }
     @PostMapping("/add_student")
-    public String addStudentPOST(@RequestParam String name, @RequestParam String surname,
-                                 @RequestParam String patronymic,@RequestParam String groupName,
-                                 @RequestParam String facultyName, @RequestParam String specialityName,
-                                 @RequestParam Integer course, @RequestParam String login,
-                                 @RequestParam String password, Model model){
+    public String addStudentPOST(@RequestParam("name") String name, @RequestParam("surname") String surname,
+                                 @RequestParam("patronymic") String patronymic,@RequestParam("groupName") String groupName,
+                                 @RequestParam("facultyName") String facultyName, @RequestParam("specialityName") String specialityName,
+                                 @RequestParam("course") Integer course, @RequestParam("login") String login,
+                                 @RequestParam("password") String password, Model model){
 
 
         studentService.create(surname, name, patronymic, facultyService.findFacultyByName(facultyName),
