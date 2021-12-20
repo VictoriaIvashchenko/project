@@ -120,7 +120,7 @@ public class TeacherController {
         return "teacher";
     }
     @PostMapping("/teacher_report_subject")
-    public String teacherReportSubjectPost(@RequestParam() String subjectName, Model model){
+    public String teacherReportSubjectPost(@RequestParam("subjectName") String subjectName, Model model){
         teacher = teacherService.findTeacherById(1);
         ArrayList<Subject> subjects = subjectService.findSubjectsByTeacher(teacher);
         ArrayList<String> subjectNames = new ArrayList<>();

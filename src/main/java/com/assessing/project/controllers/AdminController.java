@@ -50,9 +50,10 @@ public class AdminController {
         return "admin_teacher_page";
     }
 
-    @GetMapping("/admin_teacher_page_add_new_subject")
-    public String adminAddSubject(Model model){
+    @GetMapping("/admin_teacher_page_add_new_subject/{teacherNameAddNew}")
+    public String adminAddSubject(@PathVariable("teacherNameAddNew") String teacherName, Model model){
         model.addAttribute("title", "Додати новий предмет");
+        model.addAttribute("teacherNameAddNew", teacherName);
         return "admin_teacher_page_add_new_subject";
     }
 
@@ -229,6 +230,16 @@ public class AdminController {
                 specialityService.findSpecialityByName(specialityName),groupService.findGroupByName(groupName),course,
                 login, new BCryptPasswordEncoder(12).encode(password));
         return"redirect:/add";
+    }
+    @PostMapping("/admin_teacher_page_add_new_subject/{teacherNameAddNew}")
+    public String adminAddSubjectPost(@PathVariable("teacherNameAddNew") String teacherName,
+                                      @RequestParam("name") String name, @RequestParam("testType") String testType,
+                                      Model model){
+        model.addAttribute("title", "Додати новий предмет");
+        Teacher teacher = teacherService.findTeacherBySurname(teacherName);
+        System.out.println(teacherService.findTeacherFullName(teacher));
+        subjectService.create(name, testType, teacher);
+        return "admin_teacher_page";
     }
     @PostMapping("/admin_report_faculty")
     public String adminReportFacultyPost(@RequestParam("facultyName") String facultyName,
@@ -587,7 +598,7 @@ public class AdminController {
             model.addAttribute("teacherInfo", "nothing");
         }
         else {
-
+            model.addAttribute("teacherNameAddNew", teacherSurname[0]);
             model.addAttribute("teacherInfo", "something");
             String teacherFullName = teacherService.findTeacherFullName(teacher);
             String teacherLogin = teacherService.findTeacherLogin(teacher);

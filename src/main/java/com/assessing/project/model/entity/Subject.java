@@ -30,7 +30,11 @@ public class Subject {
 
     public Subject() {
     }
-
+    public Subject(String name, String test_type, Teacher teacher){
+        this.name = name;
+        this.test_type = test_type;
+        this.teacher = teacher;
+    }
     public Integer getId() {
         return id;
     }

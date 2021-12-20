@@ -27,4 +27,8 @@ public class SubjectService {
     public String findSubjectName(Subject subject){return subject.getName();}
     public String findTestTypeBySubject(Subject subject){return subjectRepository.findTestTypeBySubject(subject);}
     public Subject findSubjectByName(String name){return subjectRepository.findSubjectByName(name);}
+    public void create(String name, String testType, Teacher teacher){
+        Subject subject = new Subject(name, testType, teacher);
+        subjectRepository.save(subject);
+    }
 }
