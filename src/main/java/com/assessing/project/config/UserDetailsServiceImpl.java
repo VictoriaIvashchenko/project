@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Qualifier("userDetailsServiceImpl")
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService{
 
     private final AdminRepository adminRepository;
     private final StudentRepository studentRepository;
@@ -54,9 +54,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return SecurityUser.fromAdmin(adm);
         }
 
-        else {
+        if(teach != null){
             return  SecurityUser.fromTeacher(teach);
         }
+        return null;
+
 
     }
 
