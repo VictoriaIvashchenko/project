@@ -261,8 +261,6 @@ public class AdminController {
                 model.addAttribute("tableHeight", "nothing");
             }
             else {
-
-                model.addAttribute("tableHeight", "something");
                 ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
                 int i = 1;
                 for (Student student: studentsHeight) {
@@ -270,10 +268,18 @@ public class AdminController {
                             specialityService.findSpecialityByStudents(student),studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
 
-                    infoStudentsHeight.add(infoStudentHeight);
+                    if (infoStudentHeight.getAverageMark() != 0.0){
+                        infoStudentsHeight.add(infoStudentHeight);
+                    }
                     i++;
                 }
-                model.addAttribute("studentsHeight", infoStudentsHeight);
+                if(infoStudentsHeight.size() != 0){
+                    model.addAttribute("studentsHeight", infoStudentsHeight);
+                    model.addAttribute("tableHeight", "something");
+
+                }else {
+                    model.addAttribute("tableHeight", "nothing");
+                }
 
             }
             if (studentsLow.size()==0){
@@ -318,7 +324,6 @@ public class AdminController {
             }
             else {
 
-                model.addAttribute("tableHeight", "something");
                 ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
                 int i = 1;
                 for (Student student: studentsHeight) {
@@ -327,10 +332,18 @@ public class AdminController {
                             studentService.findCourse(student), studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
 
-                    infoStudentsHeight.add(infoStudentHeight);
+                    if (infoStudentHeight.getAverageMark() != 0.0){
+                        infoStudentsHeight.add(infoStudentHeight);
+                    }
                     i++;
                 }
-                model.addAttribute("studentsHeight", infoStudentsHeight);
+                if(infoStudentsHeight.size() != 0){
+                    model.addAttribute("studentsHeight", infoStudentsHeight);
+                    model.addAttribute("tableHeight", "something");
+
+                }else {
+                    model.addAttribute("tableHeight", "nothing");
+                }
 
             }
             if (studentsLow.size()==0){
@@ -373,17 +386,24 @@ public class AdminController {
             }
             else {
 
-                model.addAttribute("tableHeight", "something");
                 ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
                 int i = 1;
                 for (Student student: studentsHeight) {
                     InfoForReport infoStudentHeight = new InfoForReport(i,
                             studentService.findStudentName(student), markService.findAverageMark(student, semester));
 
-                    infoStudentsHeight.add(infoStudentHeight);
+                    if (infoStudentHeight.getAverageMark() != 0.0){
+                        infoStudentsHeight.add(infoStudentHeight);
+                    }
                     i++;
                 }
-                model.addAttribute("studentsHeight", infoStudentsHeight);
+                if(infoStudentsHeight.size() != 0){
+                    model.addAttribute("studentsHeight", infoStudentsHeight);
+                    model.addAttribute("tableHeight", "something");
+
+                }else {
+                    model.addAttribute("tableHeight", "nothing");
+                }
 
             }
             if (studentsLow.size()==0){
@@ -409,7 +429,8 @@ public class AdminController {
     public String adminReportCoursePost(@RequestParam("course") Integer course,
                                         @RequestParam("semester") Integer semester, Model model){
         //Потом убрать когда будет получение студентов по курсу
-        Group group = groupService.findGroupByName(groupService.findGroupByStudent(studentService.findById(8)));
+        Group group = groupService.findGroupByName(groupService.findGroupByStudent(studentService.findById(1)));
+
         if (course == 0 || semester == 0) {
             model.addAttribute("tables", "nothing");
         }
@@ -423,7 +444,7 @@ public class AdminController {
             }
             else {
 
-                model.addAttribute("tableHeight", "something");
+
                 ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
                 int i = 1;
                 for (Student student: studentsHeight) {
@@ -431,11 +452,18 @@ public class AdminController {
                             facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
                             specialityService.findSpecialityByStudents(student), studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
-
-                    infoStudentsHeight.add(infoStudentHeight);
+                    if (infoStudentHeight.getAverageMark() != 0.0){
+                        infoStudentsHeight.add(infoStudentHeight);
+                    }
                     i++;
                 }
-                model.addAttribute("studentsHeight", infoStudentsHeight);
+                if(infoStudentsHeight.size() != 0){
+                    model.addAttribute("studentsHeight", infoStudentsHeight);
+                    model.addAttribute("tableHeight", "something");
+
+                }else {
+                    model.addAttribute("tableHeight", "nothing");
+                }
 
             }
             if (studentsLow.size()==0){
@@ -622,18 +650,7 @@ public class AdminController {
         }
         return "admin_teacher_page";
     }
-    @GetMapping("/admin_teacher_page_subject_info/{subjectName}")
-    public String adminTeacherPageSubjectInfo(@PathVariable(value = "subjectName") String subjectName, Model model){
-        ArrayList<Group> groups = groupService.findGroupBySubject(subjectService.findSubjectByName(subjectName));
-        ArrayList<String> groupNames = new ArrayList<>();
-        for (Group group: groups) {
-            groupNames.add(groupService.findGroupName(group));
-        }
-        model.addAttribute("title", "Дисціпліна");
-        model.addAttribute("groups", groupNames);
-        model.addAttribute("subjectName", subjectName);
-        return "admin_teacher_page_subject_info";
-    }
+
     @GetMapping("/admin_teacher_subject_add_group/{subjectName}")
     public String adminTeacherPageSubjectAddGroup(@PathVariable(value = "subjectName") String subjectName, Model model){
         List<Group> groups = groupService.findAllGroups();
@@ -652,7 +669,19 @@ public class AdminController {
         System.out.println(groupName);
         return "redirect:/admin_teacher_page_subject_info/{subjectName}";
     }
-    @PostMapping("admin_teacher_page_subject_info")
+    @GetMapping("/admin_teacher_page_subject_info/{subjectName}")
+    public String adminTeacherPageSubjectInfo(@PathVariable(value = "subjectName") String subjectName, Model model){
+        ArrayList<Group> groups = groupService.findGroupBySubject(subjectService.findSubjectByName(subjectName));
+        ArrayList<String> groupNames = new ArrayList<>();
+        for (Group group: groups) {
+            groupNames.add(groupService.findGroupName(group));
+        }
+        model.addAttribute("title", "Дисціпліна");
+        model.addAttribute("groups", groupNames);
+        model.addAttribute("subjectName", subjectName);
+        return "admin_teacher_page_subject_info";
+    }
+    @PostMapping("/admin_teacher_page_subject_info/{subjectName}")
     public String adminTeacherPageSubjectInfoPost(@PathVariable(value = "subjectName") String subjectName,
                                                   @RequestParam("groupName") String groupName, Model model){
         System.out.println(subjectName);
@@ -683,6 +712,7 @@ public class AdminController {
                 InfoForReport infoStudent = new InfoForReport(i,
                         studentService.findStudentName(student), markService.findMarkByStudentAndSubject(student,
                         subjectService.findSubjectByName(subjectName)));
+
                 infoStudents.add(infoStudent);
                 i++;
             }

@@ -147,17 +147,25 @@ public class TeacherController {
                 model.addAttribute("tableHeight", "nothing");
             }
             else {
-                model.addAttribute("tableHeight", "something");
+
                 ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
                 int i = 1;
                 for (Student student: studentsHeight) {
                     InfoForReport infoStudentHeight = new InfoForReport(i, studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, 1));
 
-                    infoStudentsHeight.add(infoStudentHeight);
+                    if (infoStudentHeight.getAverageMark() != 0.0){
+                        infoStudentsHeight.add(infoStudentHeight);
+                    }
                     i++;
                 }
-                model.addAttribute("studentsHeight", infoStudentsHeight);
+                if(infoStudentsHeight.size() != 0){
+                    model.addAttribute("studentsHeight", infoStudentsHeight);
+                    model.addAttribute("tableHeight", "something");
+
+                }else {
+                    model.addAttribute("tableHeight", "nothing");
+                }
 
             }
             if (studentsLow.size()==0){
@@ -201,16 +209,25 @@ public class TeacherController {
                 model.addAttribute("tableHeight", "nothing");
             }
             else {
-                model.addAttribute("tableHeight", "something");
+
                 ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
                 int i = 1;
                 for (Student student: studentsHeight) {
                     InfoForReport infoStudentHeight = new InfoForReport(i, studentService.findStudentName(student), markService.findAverageMark(student, 1));
-                    infoStudentsHeight.add(infoStudentHeight);
+                    if (infoStudentHeight.getAverageMark() != 0.0){
+                        infoStudentsHeight.add(infoStudentHeight);
+                    }
 
                     i++;
                 }
-                model.addAttribute("studentsHeight", infoStudentsHeight);
+                if(infoStudentsHeight.size() != 0){
+                    model.addAttribute("studentsHeight", infoStudentsHeight);
+                    model.addAttribute("tableHeight", "something");
+
+                }else {
+                    model.addAttribute("tableHeight", "nothing");
+                }
+
 
             }
             if (studentsLow.size()==0){
