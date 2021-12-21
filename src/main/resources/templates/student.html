@@ -11,18 +11,10 @@
 <body>
 <div class="header">
     <div class="info">
-        <span th:text="${surname}">
-            Яковлева
-        </span>
-        <span th:text="${name}">
-            Катерина
-        </span>
-        <span th:text="${groupName}">
-            ТІ-91
-        </span>
-        <span th:text="${facultyName}">
-            ТЕФ
-        </span>
+        <span th:text="${surname}"></span>
+        <span th:text="${name}"></span>
+        <span th:text="${groupName}"></span>
+        <span th:text="${facultyName}"></span>
     </div>
     <form action="/logout" method="post">
         <a><button class="exit-bttn" type="submit">Вийти</button></a>
@@ -33,13 +25,9 @@
     <hr>
 </div>
 <div class="sort">
-
     <div class="point">
-        <div class="filler">
-            Семестр
-        </div>
+        <div class="filler">Семестр</div>
         <form method="post">
-
             <select name="semester" id="semester" >
                 <option value="0"></option>
                 <option value="1">1</option>
@@ -47,8 +35,6 @@
             </select>
             <button class="chose-button chose-button-text" type="submit">Обрати</button>
         </form>
-
-
     </div>
 </div>
 <div th:switch="${table}">

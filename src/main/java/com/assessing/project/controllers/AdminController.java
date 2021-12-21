@@ -142,6 +142,7 @@ public class AdminController {
     @GetMapping("/admin_report")
     public String adminReport(Model model){
         model.addAttribute("title", "Звіти");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "admin_report";
     }
     @GetMapping("/admin_report_faculty")
@@ -287,7 +288,7 @@ public class AdminController {
                             specialityService.findSpecialityByStudents(student),studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
 
-                    if (infoStudentHeight.getAverageMark() != 0.0){
+                    if (infoStudentHeight.getAverageMarkNumber() != 0.0){
                         infoStudentsHeight.add(infoStudentHeight);
                     }
                     i++;
@@ -352,7 +353,7 @@ public class AdminController {
                             studentService.findCourse(student), studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
 
-                    if (infoStudentHeight.getAverageMark() != 0.0){
+                    if (infoStudentHeight.getAverageMarkNumber() != 0.0){
                         infoStudentsHeight.add(infoStudentHeight);
                     }
                     i++;
@@ -413,7 +414,7 @@ public class AdminController {
                     InfoForReport infoStudentHeight = new InfoForReport(i,
                             studentService.findStudentName(student), markService.findAverageMark(student, semester));
 
-                    if (infoStudentHeight.getAverageMark() != 0.0){
+                    if (infoStudentHeight.getAverageMarkNumber() != 0.0){
                         infoStudentsHeight.add(infoStudentHeight);
                     }
                     i++;

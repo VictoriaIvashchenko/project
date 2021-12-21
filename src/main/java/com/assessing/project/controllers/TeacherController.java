@@ -1,5 +1,7 @@
 package com.assessing.project.controllers;
 
+import com.assessing.project.additional.Getting;
+import com.assessing.project.additional.GettingWrapper;
 import com.assessing.project.additional.InfoForReport;
 import com.assessing.project.additional.InfoForTeacherPage;
 import com.assessing.project.config.SecurityUser;
@@ -9,13 +11,11 @@ import com.assessing.project.model.entity.Subject;
 import com.assessing.project.model.entity.Teacher;
 import com.assessing.project.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -163,7 +163,7 @@ public class TeacherController {
                     InfoForReport infoStudentHeight = new InfoForReport(i, studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, 1));
 
-                    if (infoStudentHeight.getAverageMark() != 0.0){
+                    if (infoStudentHeight.getAverageMarkNumber() != 0.0){
                         infoStudentsHeight.add(infoStudentHeight);
                     }
                     i++;
@@ -224,7 +224,7 @@ public class TeacherController {
                 int i = 1;
                 for (Student student: studentsHeight) {
                     InfoForReport infoStudentHeight = new InfoForReport(i, studentService.findStudentName(student), markService.findAverageMark(student, 1));
-                    if (infoStudentHeight.getAverageMark() != 0.0){
+                    if (infoStudentHeight.getAverageMarkNumber() != 0.0){
                         infoStudentsHeight.add(infoStudentHeight);
                     }
 
@@ -279,19 +279,20 @@ public class TeacherController {
                     markService.findMarkByStudentAndSubject(students.get(i), subjectService.findSubjectByName(subject)));
             rows.add(row);
         }
-
         model.addAttribute("groupName", groupName);
 //        model.addAttribute("testType", testType);
 //        model.addAttribute("faculty", faculty);
 //        model.addAttribute("subject", subject);
         model.addAttribute("marksTable", rows);
+        GettingWrapper wrapper = new GettingWrapper();
+        model.addAttribute("wrapper", wrapper);
         return "teacher_set_marks";
     }
     @PostMapping("/teacher_set_marks/{groupName}")
-    public String teacherSetMarksPost(@PathVariable(value = "groupName") String groupName, @RequestParam("mark") Integer mark, Model model){
+    public String teacherSetMarksPost(@PathVariable(value = "groupName") String groupName, @ModelAttribute GettingWrapper wrapper, Model model){
         String teacherName = teacherService.findTeacherFullName(teacher);
         model.addAttribute("teacherName", teacherName);
-        System.out.println(mark);
+
         return "redirect:/teacher";
     }
 

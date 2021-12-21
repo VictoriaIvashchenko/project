@@ -18,8 +18,6 @@ import java.util.List;
 
 @Controller
 public class StudentController {
-
-    Integer semester = 1;
     @Autowired
     StudentService studentService;
     @Autowired
@@ -39,8 +37,7 @@ public class StudentController {
         model.addAttribute("title", "Інф. студента");
         //видобуток поточного студента після авторизації
         SecurityUser curr = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Student currentStudent = studentService.findStudentByLogin(curr.getUsername());
-        student = currentStudent;
+        student = studentService.findStudentByLogin(curr.getUsername());
         String[] studentName = studentService.findStudentName(student);
         model.addAttribute("surname", studentName[0]);
         model.addAttribute("name", studentName[1]);
@@ -59,11 +56,9 @@ public class StudentController {
         if (semester == 0){
             model.addAttribute("table", "nothing");
         }else {
-            this.semester = semester;
             List<Mark> marks = markService.findByStudentAndSemester(student, semester);
             if (marks.size() == 0){
                 model.addAttribute("table", "nothing");
-//                System.out.println("nothing");
             }
             else {
                 ArrayList<InfoForStudentPage> rows = new ArrayList<>();
@@ -77,12 +72,10 @@ public class StudentController {
                 }
                 Double average = markService.findAverageMark(student, semester);
                 model.addAttribute("marksTable", rows);
-                model.addAttribute("average", average);
+                model.addAttribute("average", String.format(average.toString(), ".2f"));
                 model.addAttribute("table", "something");
             }
-
         }
-
         return "student";
 
     }

@@ -36,7 +36,7 @@
 <!--            <h3>Компоненти програмної інженерї - 3</h3>-->
 <!--        </div>-->
 <!--    </div>-->
-<form th:action="'/teacher_set_marks/'+${groupName}" th:object="" method="post">
+    <form th:action="'/teacher_set_marks/'+${groupName}" th:object="${wrapper}" method="post">
     <div class="marks-table-div mx-auto" style="margin-top: 80px">
         <table class="table mytable" >
             <thead>
@@ -47,21 +47,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="student:${marksTable}" th:object="">
-                <form th:action="'/teacher_set_marks/'+${groupName}" th:object="" method="post">
-
-                <th class="table-text" th:utext="${student.getNumber()}"></th>
-                <th class="text-center table-text" th:utext="${student.getStudentName()}">Яковлева Катерина Сергіївна</th>
-                <th class="text-center" >
-                    <input  class="table-text" type="number"  max="100" min="0"  th:value="${student.getMark()}" >
-                </th>
-                </form>
+            <tr th:each="student:${marksTable}">
+<!--                <form th:action="'/teacher_set_marks/'+${groupName}" th:object="${wrapper}" method="post">-->
+                    <th class="table-text" th:utext="${student.getNumber()}" ></th>
+                    <th class="text-center table-text" th:utext="${student.getStudentName()}" th:field="*{marksTable[_$]}"></th>
+                    <th class="text-center" th:field="*{studentMark}">
+                        <input  class="table-text" type="number"  max="100" min="0"  th:value="${student.getMark()}" name="mark">
+                    </th>
+<!--                </form>-->
             </tr>
             </tbody>
         </table>
     </div>
     <div class="d-grid justify-content-center btn_add_mark" style="margin-top: 55px">
-        <button class="btn set-marks-button set-marks-button-text">Виставити</button>
+<!--        <input type="submit" value="Виставити">-->
+        <button class="btn set-marks-button set-marks-button-text" type="submit">Виставити</button>
     </div>
 </form>
 </section>

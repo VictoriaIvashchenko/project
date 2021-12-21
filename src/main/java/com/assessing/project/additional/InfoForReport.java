@@ -120,7 +120,10 @@ public class InfoForReport {
         return group;
     }
 
-    public Double getAverageMark() {
+    public String getAverageMark() {
+        return String.format(averageMark.toString(), ".2f");
+    }
+    public Double getAverageMarkNumber() {
         return averageMark;
     }
 }

@@ -27,6 +27,7 @@ public class InfoForStudentPage {
         return markValue;
     }
 
+
     public InfoForStudentPage(Integer number, String[] teacherName, String subjectName, String test, Integer markValue){
         this.number = number;
         String teacherNameString = "";
