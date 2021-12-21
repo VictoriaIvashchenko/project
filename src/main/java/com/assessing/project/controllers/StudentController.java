@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class StudentController {
                 }
                 Double average = markService.findAverageMark(student, semester);
                 model.addAttribute("marksTable", rows);
-                model.addAttribute("average", String.format(average.toString(), ".2f"));
+                model.addAttribute("average", new DecimalFormat("#.##").format(average));
                 model.addAttribute("table", "something");
             }
         }

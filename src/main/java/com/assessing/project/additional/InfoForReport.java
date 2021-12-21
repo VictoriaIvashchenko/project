@@ -1,5 +1,7 @@
 package com.assessing.project.additional;
 
+import java.text.DecimalFormat;
+
 public class InfoForReport {
     private Integer number;
     private String student;
@@ -121,7 +123,7 @@ public class InfoForReport {
     }
 
     public String getAverageMark() {
-        return String.format(averageMark.toString(), ".2f");
+        return new DecimalFormat("#.##").format(averageMark);
     }
     public Double getAverageMarkNumber() {
         return averageMark;
