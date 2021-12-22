@@ -3,6 +3,7 @@ package com.assessing.project.model.service;
 import com.assessing.project.model.entity.*;
 import com.assessing.project.model.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,12 @@ public class StudentService {
     }
     public ArrayList<Student> findStudentsBySemesterAndLowestMark(Integer semester){
         return studentRepository.findStudentsBySemesterAndLowestMark(semester);
+    }
+    public ArrayList<Student> findStudentsByGroupAndTeacherAndHeightMark(Group group, Teacher teacher){
+        return studentRepository.findStudentsByGroupAndTeacherAndHeightMark(group, teacher);
+    }
+    public ArrayList<Student> findStudentsByGroupAndTeacherAndLowestMark(Group group, Teacher teacher){
+        return studentRepository.findStudentsByGroupAndTeacherAndLowestMark(group, teacher);
     }
     public Integer findCourse(Student student){
         return student.getCourse();
