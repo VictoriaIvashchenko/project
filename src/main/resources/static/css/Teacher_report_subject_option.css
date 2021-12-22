@@ -187,3 +187,7 @@ a{
 .txt_decor{
     text-decoration: none;
 }
+.custom-select{
+    max-width: 200px;
+    min-width: 200px;
+}

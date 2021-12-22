@@ -1,7 +1,6 @@
 package com.assessing.project.model.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Set;
 
 @Entity
@@ -24,9 +23,6 @@ public class Subject {
 
     @ManyToMany(mappedBy = "subjects")
     private Set<Group> groups;
-
-//    @OneToMany (mappedBy = "subject")
-//    private Set<SubjectTeacher> subjectTeachers;
 
     public Subject() {
     }

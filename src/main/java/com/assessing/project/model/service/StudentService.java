@@ -20,7 +20,9 @@ public class StudentService {
     public List<Student> findAllStudents(){return studentRepository.findAll();}
     public ArrayList<Student> findByGroup(Group group){return studentRepository.findStudentsByGroup(group);}
     public ArrayList<Student> findByCourse(Integer course){return studentRepository.findStudentsByCourse(course);}
-    public ArrayList<Student> findBySpeciality(Speciality speciality){return studentRepository.findStudentsBySpeciality(speciality);}
+    public ArrayList<Student> findBySpeciality(Speciality speciality){
+        return studentRepository.findStudentsBySpeciality(speciality);
+    }
     public ArrayList<Student> findByFaculty(Faculty faculty){return studentRepository.findStudentsByFaculty(faculty);}
     public String[]findStudentName(Student student){
         String[] value = new String[3];
