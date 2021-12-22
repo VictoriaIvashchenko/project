@@ -18,7 +18,7 @@ public interface MarkRepository extends JpaRepository<Mark, Integer> {
 
     @Query("select count(m) from Mark m where m.student.id = :#{#student.id} and m.semester = :#{#semester} and m.value is not null")
     Integer findCountOfMark(@Param("student") Student student, @Param("semester") Integer semester);
-
+    Mark findMarkByStudentAndSubjectAndSemester(Student student, Subject subject, Integer semester);
     Mark findMarkByStudentAndSubject(Student student, Subject subject);
     ArrayList<Mark> findMarksBySubject(Subject subject);
 

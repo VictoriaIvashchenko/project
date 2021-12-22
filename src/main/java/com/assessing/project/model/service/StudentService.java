@@ -76,6 +76,20 @@ public class StudentService {
     public ArrayList<Student> findStudentsBySubjectAndLowestMark(Subject subject){
         return studentRepository.findStudentsBySubjectAndLowestMark(subject);
     }
+    public ArrayList<Student> findStudentsBySubjectAndSemesterAndHeightMark(Subject subject, Integer semester){
+        return studentRepository.findStudentsBySubjectAndSemesterAndHeightMark(subject, semester);
+    }
+    public  ArrayList<Student> findStudentsBySubjectAndSemesterAndLowestMark(Subject subject, Integer semester){
+        return studentRepository.findStudentsBySubjectAndSemesterAndLowestMark(subject, semester);
+    }
+    public ArrayList<Student> findStudentsByGroupAndTeacherAndSemesterAndHeightMark(Group group, Teacher teacher,
+                                                                             Integer semester){
+        return studentRepository.findStudentsByGroupAndTeacherAndSemesterAndHeightMark(group, teacher, semester);
+    }
+    public ArrayList<Student> findStudentsByGroupAndTeacherAndSemesterAndLowestMark(Group group, Teacher teacher,
+                                                                                    Integer semester){
+        return studentRepository.findStudentsByGroupAndTeacherAndSemesterAndLowestMark(group, teacher, semester);
+    }
     public Integer findCourse(Student student){
         return student.getCourse();
     }

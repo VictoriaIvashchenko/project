@@ -23,6 +23,9 @@ public class MarkService {
     public Mark findMarkByStudentAndTeacher(Student student, Teacher teacher){
         return markRepository.findMarkByStudentAndTeacher(student, teacher);
     }
+    public Mark findMarkByStudentAndSubjectAndSemester(Student student, Subject subject, Integer semester){
+        return markRepository.findMarkByStudentAndSubjectAndSemester(student, subject, semester);
+    }
     public Integer markGetIntegerValue(Mark mark){
         if(mark == null){
             return 0;

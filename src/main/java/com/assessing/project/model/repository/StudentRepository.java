@@ -73,4 +73,29 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
 
     @Query("select distinct s from Student as s inner join s.marks as m on m.subject = :#{#subject} and m.value < 60")
     ArrayList<Student> findStudentsBySubjectAndLowestMark(@Param("subject") Subject subject);
+
+    @Query("select distinct s from Student as s inner join s.marks as m on m.subject = :#{#subject} and m.value >= 95" +
+            "and m.semester = :#{#semester}")
+    ArrayList<Student> findStudentsBySubjectAndSemesterAndHeightMark(@Param("subject") Subject subject,
+                                                                     @Param("semester") Integer semester);
+
+    @Query("select distinct s from Student as s inner join s.marks as m on m.subject = :#{#subject} and m.value < 60" +
+            "and m.semester = :#{#semester}")
+    ArrayList<Student> findStudentsBySubjectAndSemesterAndLowestMark(@Param("subject") Subject subject,
+                                                                     @Param("semester") Integer semester);
+
+    @Query("select s from Student as s inner join s.group as g on g = :#{#group} where 95 <= " +
+            "all(select m.value from Mark as m where m.student = s and m.subject.teacher = :#{#teacher}" +
+            " and m.semester = :#{#semester})")
+    ArrayList<Student> findStudentsByGroupAndTeacherAndSemesterAndHeightMark(@Param("group") Group group,
+                                                                             @Param("teacher") Teacher teacher,
+                                                                             @Param("semester") Integer semester);
+
+    @Query("select s from Student as s inner join s.group as g on g = :#{#group} where 60 > " +
+            "any(select m.value from Mark as m where m.student = s and m.subject.teacher = :#{#teacher}" +
+            " and m.semester = :#{#semester})")
+    ArrayList<Student> findStudentsByGroupAndTeacherAndSemesterAndLowestMark(@Param("group") Group group,
+                                                                             @Param("teacher") Teacher teacher,
+                                                                             @Param("semester") Integer semester);
+
 }
