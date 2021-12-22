@@ -67,11 +67,10 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     ArrayList<Student> findStudentsByGroupAndTeacherAndLowestMark(@Param("group") Group group,
                                                                   @Param("teacher") Teacher teacher);
 
-    @Query("select distinct s from Student as s inner join s.marks as m where 95 <= " +
-            "all(select m.value from Mark as m where m.subject = :#{#subject})")
+
+    @Query("select distinct s from Student as s inner join s.marks as m on m.subject = :#{#subject} and m.value >= 95")
     ArrayList<Student> findStudentsBySubjectAndHeightMark(@Param("subject") Subject subject);
 
-    @Query("select distinct s from Student as s inner join s.marks as m where 60 > " +
-            "all(select m.value from Mark as m where m.subject = :#{#subject})")
+    @Query("select distinct s from Student as s inner join s.marks as m on m.subject = :#{#subject} and m.value < 60")
     ArrayList<Student> findStudentsBySubjectAndLowestMark(@Param("subject") Subject subject);
 }
