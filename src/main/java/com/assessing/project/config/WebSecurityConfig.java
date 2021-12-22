@@ -17,13 +17,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.sql.DataSource;
+
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsService;
 
+    private final UserDetailsService userDetailsService;
 
     @Autowired
     public WebSecurityConfig(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
@@ -32,7 +32,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
                 .csrf().disable().authorizeRequests()
                     .antMatchers("/").permitAll()
@@ -43,8 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                       "/admin_report_speciality", "/Admin_teacher_page", "/Admin_teacher_page_add_new_subject",
                       "/Admin_teacher_page_subject_info", "/exams", "/exams_course", "/exams_faculty", "/exams_group",
                       "/exams_speciality").hasAuthority("ADMIN")
-                    .antMatchers("/teacher","/Teacher_report", "/Teacher_report_group_option",
-                            "/Teacher_report_subject_option").hasAuthority("TEACHER")
+                    .antMatchers("/teacher","/teacher_report", "/teacher_report_group",
+                            "/teacher_report_subject", "/teacher_set_marks").hasAuthority("TEACHER")
                 .anyRequest()
                     .authenticated().and()
                 .formLogin()
@@ -69,10 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
-
-
     }
-
 
     @Bean
     protected DaoAuthenticationProvider daoAuthenticationProvider(){
