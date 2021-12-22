@@ -20,6 +20,9 @@ public class MarkService {
     public ArrayList<Mark> findMarksByGroupAndTeacher(Group group, Teacher teacher){
         return markRepository.findMarksByGroupAndTeacher(group, teacher);
     }
+    public Mark findMarkByStudentAndTeacher(Student student, Teacher teacher){
+        return markRepository.findMarkByStudentAndTeacher(student, teacher);
+    }
     public ArrayList<Mark> findByStudentAndSemester(Student student, Integer semester){return markRepository.findMarksByStudentAndSemester(student, semester);}
     public Integer findMarkValue(Mark mark){
         return mark.getValue();

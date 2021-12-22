@@ -34,6 +34,9 @@ public class StudentService {
         value[2] = student.getPatronymic();
         return value;
     }
+    public String findStudentLogin(Student student){
+        return student.getLogin();
+    }
     public ArrayList<Student> findStudentsByGroupAndHeightMark(Group group, Integer semester){
         return studentRepository.findStudentsByGroupAndHeightMark(group, semester);
     }

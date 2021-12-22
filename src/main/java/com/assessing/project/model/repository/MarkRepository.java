@@ -26,6 +26,12 @@ public interface MarkRepository extends JpaRepository<Mark, Integer> {
             ":#{#group} = st.group")
     ArrayList<Mark> findMarksByGroupAndTeacher(@Param("group") Group group,
                                                @Param("teacher") Teacher teacher);
+
+    @Query("select m from Mark as m inner join m.subject as s on :#{#teacher} = s.teacher inner join m.student as st on " +
+            ":#{#student} = st")
+    Mark findMarkByStudentAndTeacher(@Param("student") Student student,
+                                               @Param("teacher") Teacher teacher);
+
 //    @Query("select m from Mark as m")
 //    ArrayList<Mark> findMarkByGroupAndHeightMark(@Param("group") Group group);
 }

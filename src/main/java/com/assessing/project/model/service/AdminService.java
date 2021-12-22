@@ -36,4 +36,7 @@ public class AdminService {
         }
         return adminFullName;
     }
+    public String findAdminLogin(Admin admin){
+        return admin.getLogin();
+    }
 }

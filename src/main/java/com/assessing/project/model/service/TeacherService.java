@@ -1,5 +1,6 @@
 package com.assessing.project.model.service;
 
+import com.assessing.project.model.entity.Admin;
 import com.assessing.project.model.entity.Mark;
 import com.assessing.project.model.entity.Teacher;
 import com.assessing.project.model.repository.TeacherRepository;
