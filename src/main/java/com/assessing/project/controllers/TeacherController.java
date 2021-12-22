@@ -4,10 +4,7 @@ import com.assessing.project.additional.GettingWrapper;
 import com.assessing.project.additional.InfoForReport;
 import com.assessing.project.additional.InfoForTeacherPage;
 import com.assessing.project.config.SecurityUser;
-import com.assessing.project.model.entity.Group;
-import com.assessing.project.model.entity.Student;
-import com.assessing.project.model.entity.Subject;
-import com.assessing.project.model.entity.Teacher;
+import com.assessing.project.model.entity.*;
 import com.assessing.project.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -105,22 +102,23 @@ public class TeacherController {
         }else {
             Group group = groupService.findGroupByName(groupName);
             String faculty = facultyService.findFacultyName(facultyService.findFacultyByGroup(group));
-            String subject = subjectService.findSubjectNameByGroupAndTeacher(group, teacher);
+            Subject subject = subjectService.findSubjectNameByGroupAndTeacher(group, teacher);
             ArrayList<Student> students = studentService.findByGroup(group);
 
-            String testType = subjectService.findTestTypeBySubject(subjectService.findSubjectByName(subject));
+            String testType = subjectService.findTestTypeBySubject(subjectService.findSubjectByName(subjectService.findSubjectName(subject)));
             ArrayList<InfoForTeacherPage> rows = new ArrayList<>();
 
             for (int i = 0; i < students.size(); i++) {
                 InfoForTeacherPage row = new InfoForTeacherPage(i + 1,
                         studentService.findStudentName(students.get(i)),
-                        markService.findMarkByStudentAndSubject(students.get(i), subjectService.findSubjectByName(subject)));
+                        markService.markGetIntegerValue(markService.findMarkByStudentAndSubject(students.get(i),
+                                subjectService.findSubjectByName(subjectService.findSubjectName(subject)))));
                 rows.add(row);
             }
             model.addAttribute("group", groupName);
             model.addAttribute("testType", testType);
             model.addAttribute("faculty", faculty);
-            model.addAttribute("subject", subject);
+            model.addAttribute("subject", subjectService.findSubjectName(subject));
             model.addAttribute("marksTable", rows);
             model.addAttribute("table", "something");
             model.addAttribute("groupNameBtn", groupName);
@@ -142,18 +140,14 @@ public class TeacherController {
         }
         else {
             model.addAttribute("tables", "something");
-            ArrayList<Group> groups = groupService.findGroupBySubject(subjectService.findSubjectByName(subjectName));
-            ArrayList<Student> studentsHeight = new ArrayList<>();
-            for (Group group: groups) {
-                studentsHeight.addAll(studentService.findStudentsByGroupAndHeightMark(group,1));
-            }
+            ArrayList<Student> studentsHeight = studentService.findStudentsBySubjectAndHeightMark(subjectService.findSubjectByName(subjectName));
 
-            ArrayList<Student> studentsLow = new ArrayList<>();
-            for (Group group: groups) {
-                studentsLow.addAll(studentService.findStudentsByGroupAndLowestMark(group,1));
-            }
+
+            ArrayList<Student> studentsLow = studentService.findStudentsBySubjectAndLowestMark(subjectService.findSubjectByName(subjectName));
+
             if (studentsHeight.size()==0){
                 model.addAttribute("tableHeight", "nothing");
+                System.out.println("nothing");
             }
             else {
 
@@ -161,9 +155,11 @@ public class TeacherController {
                 int i = 1;
                 for (Student student: studentsHeight) {
                     InfoForReport infoStudentHeight = new InfoForReport(i, studentService.findStudentName(student),
-                            groupService.findGroupByStudent(student), markService.findMarkByStudentAndSubject(student, subjectService.findSubjectByName(subjectName)));
+                            groupService.findGroupByStudent(student),
+                            markService.markGetIntegerValue(markService.findMarkByStudentAndSubject(student,
+                                    subjectService.findSubjectByName(subjectName))));
 
-                    if (infoStudentHeight.getAverageMarkNumber() != 0.0){
+                    if (infoStudentHeight.getMark() != 0){
                         infoStudentsHeight.add(infoStudentHeight);
                     }
                     i++;
@@ -179,6 +175,7 @@ public class TeacherController {
             }
             if (studentsLow.size()==0){
                 model.addAttribute("tableLow", "nothing");
+                System.out.println("nothing");
             }
             else {
                 model.addAttribute("tableLow", "something");
@@ -187,7 +184,7 @@ public class TeacherController {
                 int i = 1;
                 for (Student student: studentsLow) {
                     InfoForReport infoStudentLow = new InfoForReport(i, studentService.findStudentName(student),
-                            groupService.findGroupByStudent(student), markService.findMarkByStudentAndTeacher(student, teacher));
+                            groupService.findGroupByStudent(student), markService.markGetIntegerValue(markService.findMarkByStudentAndTeacher(student, teacher)));
                     infoStudentsLow.add(infoStudentLow);
                     i++;
                 }
@@ -213,8 +210,9 @@ public class TeacherController {
         }
         else {
             model.addAttribute("tables", "something");
-            ArrayList<Student> studentsHeight = studentService.findStudentsByGroupAndHeightMark(groupService.findGroupByName(groupName),1);
-            ArrayList<Student> studentsLow = studentService.findStudentsByGroupAndLowestMark(groupService.findGroupByName(groupName),1);
+            //поменять на метод получения по группе и преполавателю
+            ArrayList<Student> studentsHeight = studentService.findStudentsByGroupAndTeacherAndHeightMark(groupService.findGroupByName(groupName),teacher);
+            ArrayList<Student> studentsLow = studentService.findStudentsByGroupAndTeacherAndLowestMark(groupService.findGroupByName(groupName),teacher);
             if (studentsHeight.size()==0){
                 model.addAttribute("tableHeight", "nothing");
             }
@@ -223,8 +221,8 @@ public class TeacherController {
                 ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
                 int i = 1;
                 for (Student student: studentsHeight) {
-                    InfoForReport infoStudentHeight = new InfoForReport(i, studentService.findStudentName(student), markService.findAverageMark(student, 1));
-                    if (infoStudentHeight.getAverageMarkNumber() != 0.0){
+                    InfoForReport infoStudentHeight = new InfoForReport(i, studentService.findStudentName(student), markService.markGetIntegerValue(markService.findMarkByStudentAndTeacher(student, teacher)));
+                    if (infoStudentHeight.getMark() != 0){
                         infoStudentsHeight.add(infoStudentHeight);
                     }
 
@@ -250,7 +248,7 @@ public class TeacherController {
                 int i = 1;
                 for (Student student: studentsLow) {
                     InfoForReport infoStudentLow = new InfoForReport(i, studentService.findStudentName(student),
-                            markService.findAverageMark(student, 1));
+                            markService.markGetIntegerValue(markService.findMarkByStudentAndTeacher(student, teacher)));
                     infoStudentsLow.add(infoStudentLow);
                     i++;
                 }
@@ -267,16 +265,17 @@ public class TeacherController {
         model.addAttribute("title", "Виставлення оцінок");
         Group group = groupService.findGroupByName(groupName);
         String faculty = facultyService.findFacultyName(facultyService.findFacultyByGroup(group));
-        String subject = subjectService.findSubjectNameByGroupAndTeacher(group, teacher);
+        Subject subject = subjectService.findSubjectNameByGroupAndTeacher(group, teacher);
         ArrayList<Student> students = studentService.findByGroup(group);
 
-        String testType = subjectService.findTestTypeBySubject(subjectService.findSubjectByName(subject));
+        String testType = subjectService.findTestTypeBySubject(subjectService.findSubjectByName(subjectService.findSubjectName(subject)));
         ArrayList<InfoForTeacherPage> rows = new ArrayList<>();
 
         for (int i = 0; i < students.size(); i++) {
             InfoForTeacherPage row = new InfoForTeacherPage(i + 1,
                     studentService.findStudentName(students.get(i)),
-                    markService.findMarkByStudentAndSubject(students.get(i), subjectService.findSubjectByName(subject)));
+                    markService.markGetIntegerValue(markService.findMarkByStudentAndSubject(students.get(i),
+                            subjectService.findSubjectByName(subjectService.findSubjectName(subject)))));
             rows.add(row);
         }
         model.addAttribute("groupName", groupName);
@@ -290,15 +289,25 @@ public class TeacherController {
     }
     @PostMapping("/teacher_set_marks/{groupName}")
     public String teacherSetMarksPost(@PathVariable(value = "groupName") String groupName,
-                                      Model model, @RequestParam("studentMark") ArrayList<Integer> studentName){
+                                      Model model, @RequestParam("studentMark") ArrayList<Integer> marks){
         String teacherName = teacherService.findTeacherFullName(teacher);
         model.addAttribute("teacherName", teacherName);
         Group group = groupService.findGroupByName(groupName);
+        Subject subject = subjectService.findSubjectNameByGroupAndTeacher(group, teacher);
         ArrayList<Student> students = studentService.findByGroup(group);
-        for (Student student:students ) {
-            System.out.println(studentService.findStudentName(student)[0]);
+        for (int i = 0; i<marks.size();i++) {
+            Mark mark = markService.findMarkByStudentAndTeacher(students.get(i), teacher);
+            if ( mark == null){
+                //семестр получать както надо
+//                markService.create(students.get(i),subject , marks.get(i), 1);
+                System.out.println("Оцінку створено");
+            }
+            else {
+                mark.setValue(marks.get(i));
+                markService.update(mark);
+                System.out.println("Оцінку змінено");
+            }
         }
-        System.out.println(studentName);
         return "redirect:/teacher";
     }
 

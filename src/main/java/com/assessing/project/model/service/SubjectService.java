@@ -20,8 +20,8 @@ public class SubjectService {
     }
     public String findSubjectNameByMark(Mark mark){return subjectRepository.customFindSubjectByMark(mark);}
     public String findTestTypeByMark(Mark mark){return subjectRepository.customFindTestTypeByMark(mark);}
-    public String findSubjectNameByGroupAndTeacher(Group group, Teacher teacher){
-        return subjectRepository.findSubjectByGroupsAndTeacher(group, teacher).getName();
+    public Subject findSubjectNameByGroupAndTeacher(Group group, Teacher teacher){
+        return subjectRepository.findSubjectByGroupsAndTeacher(group, teacher);
     }
     public ArrayList<Subject> findSubjectsByTeacher(Teacher teacher){return subjectRepository.findSubjectsByTeacher(teacher);}
     public String findSubjectName(Subject subject){return subject.getName();}

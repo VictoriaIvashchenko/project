@@ -678,8 +678,8 @@ public class AdminController {
             int i = 1;
             for (Student student: students) {
                 InfoForReport infoStudent = new InfoForReport(i,
-                        studentService.findStudentName(student), markService.findMarkByStudentAndSubject(student,
-                        subjectService.findSubjectByName(subjectName)));
+                        studentService.findStudentName(student), markService.markGetIntegerValue(markService.findMarkByStudentAndSubject(student,
+                        subjectService.findSubjectByName(subjectName))));
 
                 infoStudents.add(infoStudent);
                 i++;

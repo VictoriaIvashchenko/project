@@ -20,8 +20,10 @@ public class MarkService {
     public ArrayList<Mark> findMarksByGroupAndTeacher(Group group, Teacher teacher){
         return markRepository.findMarksByGroupAndTeacher(group, teacher);
     }
-    public Integer findMarkByStudentAndTeacher(Student student, Teacher teacher){
-        Mark mark = markRepository.findMarkByStudentAndTeacher(student, teacher);
+    public Mark findMarkByStudentAndTeacher(Student student, Teacher teacher){
+        return markRepository.findMarkByStudentAndTeacher(student, teacher);
+    }
+    public Integer markGetIntegerValue(Mark mark){
         if(mark == null){
             return 0;
         } else{
@@ -40,12 +42,14 @@ public class MarkService {
             return 0.0;
         }
     }
-    public Integer findMarkByStudentAndSubject(Student student, Subject subject){
-        Mark mark = markRepository.findMarkByStudentAndSubject(student, subject);
-        if(mark == null){
-            return 0;
-        } else{
-            return mark.getValue();
-        }
+    public Mark findMarkByStudentAndSubject(Student student, Subject subject){
+        return markRepository.findMarkByStudentAndSubject(student, subject);
+    }
+    public void create(Student student, Subject subject, Integer value, Integer semester){
+        Mark mark = new Mark(student, subject, value, semester);
+        markRepository.save(mark);
+    }
+    public void update(Mark mark){
+        markRepository.save(mark);
     }
 }

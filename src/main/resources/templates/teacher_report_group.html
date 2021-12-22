@@ -68,7 +68,7 @@
                         <tr th:each="student:${studentsHeight}">
                             <th th:utext="${student.getNumber()}"></th>
                             <th class="text-center " th:utext="${student.getStudentName()}"></th>
-                            <th class="text-center table-text" th:utext="${student.getAverageMark()}"></th>
+                            <th class="text-center table-text" th:utext="${student.getMark()}"></th>
                         </tr>
                         </tbody>
                     </table>
@@ -95,7 +95,7 @@
                         <tr th:each="student:${studentsLow}">
                             <th th:utext="${student.getNumber()}"></th>
                             <th class="text-center " th:utext="${student.getStudentName()}"></th>
-                            <th class="text-center table-text" th:utext="${student.getAverageMark()}"></th>
+                            <th class="text-center table-text" th:utext="${student.getMark()}"></th>
                         </tr>
                         </tbody>
                     </table>

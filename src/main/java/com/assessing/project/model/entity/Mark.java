@@ -21,7 +21,12 @@ public class Mark {
 
     public Mark() {
     }
-
+    public Mark(Student student, Subject subject, Integer value, Integer semester){
+        this.student = student;
+        this.value = value;
+        this.subject = subject;
+        this.semester = semester;
+    }
     public Integer getId() {
         return id;
     }
