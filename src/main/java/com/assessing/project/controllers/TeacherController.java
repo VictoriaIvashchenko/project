@@ -1,6 +1,5 @@
 package com.assessing.project.controllers;
 
-import com.assessing.project.additional.Getting;
 import com.assessing.project.additional.GettingWrapper;
 import com.assessing.project.additional.InfoForReport;
 import com.assessing.project.additional.InfoForTeacherPage;
@@ -11,13 +10,14 @@ import com.assessing.project.model.entity.Subject;
 import com.assessing.project.model.entity.Teacher;
 import com.assessing.project.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class TeacherController {
@@ -289,10 +289,16 @@ public class TeacherController {
         return "teacher_set_marks";
     }
     @PostMapping("/teacher_set_marks/{groupName}")
-    public String teacherSetMarksPost(@PathVariable(value = "groupName") String groupName, @ModelAttribute GettingWrapper wrapper, Model model){
+    public String teacherSetMarksPost(@PathVariable(value = "groupName") String groupName,
+                                      Model model, @RequestParam("studentMark") ArrayList<Integer> studentName){
         String teacherName = teacherService.findTeacherFullName(teacher);
         model.addAttribute("teacherName", teacherName);
-
+        Group group = groupService.findGroupByName(groupName);
+        ArrayList<Student> students = studentService.findByGroup(group);
+        for (Student student:students ) {
+            System.out.println(studentService.findStudentName(student)[0]);
+        }
+        System.out.println(studentName);
         return "redirect:/teacher";
     }
 

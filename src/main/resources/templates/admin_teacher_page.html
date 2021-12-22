@@ -22,15 +22,17 @@
 <section class="container">
     <form action="/admin_teacher_page" method="post">
         <div class="d-flex teacher-name-input-div">
-            <h3>Викладач: </h3>
+            <h3>Студент: </h3>
             <input class="teacher-name-input" name="teacherName">
         </div>
     </form>
     <div th:switch="${teacherInfo}">
         <div th:case="'nothing'"><h2 class="txt_nothing">Оберіть викладача</h2></div>
+
         <div th:case="'something'">
             <div  class="teacher-information">
                 <h2 th:utext="${teacherFullName}"></h2>
+                <a th:href="'/edit_teacher/'+${teacherFullName}"><button>Реданувати дані</button></a>
                 <div class="d-flex login_and_password-div">
                     <div class="d-flex">
                         <h3>Логін:</h3>

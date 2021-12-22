@@ -36,7 +36,7 @@
 <!--            <h3>Компоненти програмної інженерї - 3</h3>-->
 <!--        </div>-->
 <!--    </div>-->
-    <form th:action="'/teacher_set_marks/'+${groupName}" th:object="${wrapper}" method="post">
+    <form th:action="'/teacher_set_marks/'+${groupName}"  method="post">
     <div class="marks-table-div mx-auto" style="margin-top: 80px">
         <table class="table mytable" >
             <thead>
@@ -50,9 +50,9 @@
             <tr th:each="student:${marksTable}">
 <!--                <form th:action="'/teacher_set_marks/'+${groupName}" th:object="${wrapper}" method="post">-->
                     <th class="table-text" th:utext="${student.getNumber()}" ></th>
-                    <th class="text-center table-text" th:utext="${student.getStudentName()}" th:field="*{marksTable[_$]}"></th>
-                    <th class="text-center" th:field="*{studentMark}">
-                        <input  class="table-text" type="number"  max="100" min="0"  th:value="${student.getMark()}" name="mark">
+                    <th class="text-center table-text" th:text="${student.getStudentName()}"></th>
+                    <th class="text-center">
+                        <input  class="table-text" type="number"  max="100" min="0"  th:value="${student.getMark()}"  name="studentMark">
                     </th>
 <!--                </form>-->
             </tr>

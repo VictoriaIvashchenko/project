@@ -1,6 +1,7 @@
 package com.assessing.project.controllers;
 
 import com.assessing.project.additional.InfoForReport;
+import com.assessing.project.additional.InfoForStudentPage;
 import com.assessing.project.config.SecurityUser;
 import com.assessing.project.model.entity.*;
 import com.assessing.project.model.service.*;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -688,5 +690,166 @@ public class AdminController {
 
         return "admin_teacher_page_subject_info";
     }
+    @GetMapping("/edit_teacher/{teacherFullName}")
+    public String editTeacher(@PathVariable(value="teacherFullName") String teacherFullName, Model model){
+        model.addAttribute("teacherFullName", teacherFullName);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+        model.addAttribute("title", "Редагування даних викладача");
+        String[] teacher = teacherFullName.split("\\s");
+        model.addAttribute("teacherName", teacherFullName);
+//        Teacher teacher = teacherService.findTeacherBySurname(teacherSurname[0]);
+
+        String teacherLogin = teacherService.findTeacherLogin(teacherService.findTeacherBySurname(teacher[0]));
+        String teacherPassword = teacherService.findTeacherPassword(teacherService.findTeacherBySurname(teacher[0]));
+
+        model.addAttribute("name", teacher[1]);
+        model.addAttribute("surname", teacher[0]);
+        model.addAttribute("patronymic", teacher[2]);
+        model.addAttribute("login", teacherLogin);
+        model.addAttribute("password", teacherPassword);
+        return "edit_teacher";
+    }
+    @PostMapping("/edit_teacher/{teacherFullName}")
+    public String editTeacherPost(@PathVariable(value="teacherFullName") String teacherFullName,@RequestParam("name") String name,
+                                  @RequestParam("surname") String surname, @RequestParam("patronymic") String patronymic,
+                                  @RequestParam("login") String login, @RequestParam("password") String password, Model model){
+        System.out.println(name);
+        System.out.println(surname);
+        return "redirect:/admin_teacher_page";
+    }
+    @GetMapping("/admin_student_page")
+    public String adminStudentPage(Model model){
+        model.addAttribute("title", "Сторінка інформаці про студента");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+        return "admin_student_page";
+    }
+    @PostMapping("/admin_student_page")
+    public String adminStudentPagePost( @RequestParam("studentName") String studentName, Model model){
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+
+        //Для пошуку студента потрібно додати метод у сервіс
+        Student student = studentService.findStudentByLogin("lera");
+        if ( student == null){
+            model.addAttribute("studentInfo", "nothing");
+        }
+
+        else {
+
+            model.addAttribute("studentInfo", "something");
+            String[] studentFullName = studentService.findStudentName(student);
+            String  studentFullNameString = "";
+            for (String s:studentFullName) {
+                studentFullNameString += s ;
+                studentFullNameString += " " ;
+            }
+            //додати методи у сервіс
+            String studentLogin = "login";
+            String studentPassword = "password";
+            model.addAttribute("studentFullName", studentFullNameString);
+            model.addAttribute("studentLogin", studentLogin);
+            model.addAttribute("studentPassword", studentPassword);
+
+            String facultyName = facultyService.findFacultyName(facultyService.findFacultyByStudent(student));
+            String specialityName = specialityService.findSpecialityByStudents(student);
+            String groupName = groupService.findGroupByStudent(student);
+            Integer course = studentService.findCourse(student);
+
+            model.addAttribute("facultyName", facultyName);
+            model.addAttribute("specialityName", specialityName);
+            model.addAttribute("course", course);
+            model.addAttribute("groupName", groupName);
+
+            List<Mark> marks1 = markService.findByStudentAndSemester(student, 1);
+            if (marks1.size() == 0){
+                model.addAttribute("table1", "nothing");
+            }
+            else {
+                ArrayList<InfoForStudentPage> rows = new ArrayList<>();
+                int i = 0;
+                for (Mark mark: marks1) {
+                    System.out.println(subjectService.findSubjectNameByMark(mark));
+                    InfoForStudentPage row = new InfoForStudentPage(i+1,teacherService.findTeacherNameByMark(mark),
+                            subjectService.findSubjectNameByMark(mark), subjectService.findTestTypeByMark(mark), markService.findMarkValue(mark));
+                    rows.add(row);
+                    i++;
+                }
+                Double average = markService.findAverageMark(student, 1);
+                model.addAttribute("marksTable1", rows);
+                model.addAttribute("average1", new DecimalFormat("#.##").format(average));
+                model.addAttribute("table1", "something");
+            }
+            List<Mark> marks2 = markService.findByStudentAndSemester(student, 1);
+            if (marks2.size() == 0){
+                model.addAttribute("table2", "nothing");
+            }
+            else {
+                ArrayList<InfoForStudentPage> rows = new ArrayList<>();
+                int i = 0;
+                for (Mark mark: marks2) {
+                    System.out.println(subjectService.findSubjectNameByMark(mark));
+                    InfoForStudentPage row = new InfoForStudentPage(i+1,teacherService.findTeacherNameByMark(mark),
+                            subjectService.findSubjectNameByMark(mark), subjectService.findTestTypeByMark(mark), markService.findMarkValue(mark));
+                    rows.add(row);
+                    i++;
+                }
+                Double average = markService.findAverageMark(student, 1);
+                model.addAttribute("marksTable2", rows);
+                model.addAttribute("average2", new DecimalFormat("#.##").format(average));
+                model.addAttribute("table2", "something");
+            }
+        }
+        return "admin_student_page";
+    }
+    @GetMapping("/edit_student/{studentFullName}")
+    public String editStudent(@PathVariable(value="studentFullName") String teacherFullName, Model model){
+        model.addAttribute("teacherFullName", teacherFullName);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+        model.addAttribute("title", "Редагування даних студента");
+        ArrayList<String> faculties = facultyService.findFacultyName();
+        model.addAttribute("faculties", faculties);
+        ArrayList<String> groups = groupService.findGroupName();
+        model.addAttribute("groups", groups);
+        ArrayList<String> specialities = specialityService.findSpecialityName();
+        model.addAttribute("specialities", specialities);
+        Student student = studentService.findStudentByLogin("lera");
+
+        String[] studentFullName = studentService.findStudentName(student);
+        String  studentFullNameString = "";
+        for (String s:studentFullName) {
+            studentFullNameString += s ;
+            studentFullNameString += " " ;
+        }
+
+
+        String studentLogin = "login";
+        String studentPassword = "password";
+        model.addAttribute("studentFullName", studentFullNameString);
+
+
+        String facultyName = facultyService.findFacultyName(facultyService.findFacultyByStudent(student));
+        String specialityName = specialityService.findSpecialityByStudents(student);
+        String groupName = groupService.findGroupByStudent(student);
+        Integer course = studentService.findCourse(student);
+
+        model.addAttribute("facultyCurrent", facultyName);
+        model.addAttribute("specialityCurrent", specialityName);
+        model.addAttribute("courseCurrent", course);
+        model.addAttribute("groupCurrent", groupName);
+        model.addAttribute("name", studentFullName[1]);
+        model.addAttribute("surname", studentFullName[0]);
+        model.addAttribute("patronymic", studentFullName[2]);
+        model.addAttribute("login", studentLogin);
+        model.addAttribute("password", studentPassword);
+        return "edit_student";
+    }
+    @PostMapping("/edit_student/{studentFullName}")
+    public String editStudentPost(@PathVariable(value="studentFullName") String teacherFullName,@RequestParam("name") String name,
+                                  @RequestParam("surname") String surname, @RequestParam("patronymic") String patronymic,
+                                  @RequestParam("login") String login, @RequestParam("password") String password, Model model){
+        System.out.println(name);
+        System.out.println(surname);
+        return "redirect:/admin_student_page";
+    }
+
 
 }
