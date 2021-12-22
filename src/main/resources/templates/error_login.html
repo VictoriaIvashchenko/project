@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ua">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Помилка входу</title>
+    <link rel = "stylesheet" type="text/css" href = "../static/css/error_login.css" th:href="@{/css/error_login.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+<div>
+    <div class="errpng">
+        <img src="/css/errimage.png" height="400">
+    </div>
+    <div>
+<span class="errtext">
+    <div>
+        Упс!
+    </div>
+    Сталася помилка!
+</span>
+        <span class="errtext2">
+            Неправильний пароль чи логін
+        </span>
+
+    </div>
+    <div>
+        <button type="submit" class="but">
+            <a href="/">Повернутись</a>
+        </button>
+    </div>
+</div>
+</body>
+</html>

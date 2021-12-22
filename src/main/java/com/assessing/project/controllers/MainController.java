@@ -43,6 +43,10 @@ public class MainController {
         model.addAttribute("title", "Вхід");
         return "enter";
     }
+    @GetMapping("/error_login")
+    public String error(Model model) {
+        return "error_login";
+    }
 
     @PostMapping("/")
     public String authorisation(@RequestParam String login, @RequestParam String password, Model model){
