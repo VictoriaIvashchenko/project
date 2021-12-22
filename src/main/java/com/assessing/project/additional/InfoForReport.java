@@ -40,6 +40,19 @@ public class InfoForReport {
         this.averageMark = averageMark;
 
     }
+    public InfoForReport(Integer number, String[] studentName, String group, Integer mark) {
+        this.number = number;
+        String studentNameString = "";
+        for (String s: studentName) {
+            studentNameString += s;
+            studentNameString += " ";
+        }
+        this.student = studentNameString;
+
+        this.group = group;
+        this.mark = mark;
+
+    }
     public InfoForReport(Integer number, String[] studentName, Integer mark) {
         this.number = number;
         String studentNameString = "";

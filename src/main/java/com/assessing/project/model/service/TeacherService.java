@@ -51,4 +51,10 @@ public class TeacherService {
         Teacher teacher = new Teacher(name, surname, patronymic, login, password);
         teacherRepository.save(teacher);
     }
+    public void update(Teacher teacher){
+        teacherRepository.save(teacher);
+    }
+    public void delete(Teacher teacher){
+        teacherRepository.delete(teacher);
+    }
 }

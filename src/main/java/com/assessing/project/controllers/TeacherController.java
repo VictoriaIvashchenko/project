@@ -161,7 +161,7 @@ public class TeacherController {
                 int i = 1;
                 for (Student student: studentsHeight) {
                     InfoForReport infoStudentHeight = new InfoForReport(i, studentService.findStudentName(student),
-                            groupService.findGroupByStudent(student), markService.findAverageMark(student, 1));
+                            groupService.findGroupByStudent(student), markService.findMarkByStudentAndSubject(student, subjectService.findSubjectByName(subjectName)));
 
                     if (infoStudentHeight.getAverageMarkNumber() != 0.0){
                         infoStudentsHeight.add(infoStudentHeight);
@@ -187,7 +187,7 @@ public class TeacherController {
                 int i = 1;
                 for (Student student: studentsLow) {
                     InfoForReport infoStudentLow = new InfoForReport(i, studentService.findStudentName(student),
-                            groupService.findGroupByStudent(student), markService.findAverageMark(student, 1));
+                            groupService.findGroupByStudent(student), markService.findMarkByStudentAndTeacher(student, teacher));
                     infoStudentsLow.add(infoStudentLow);
                     i++;
                 }

@@ -73,5 +73,11 @@ public class StudentService {
         Student student = new Student(surname, name, patronymic, faculty, speciality, group, course, login, password);
         studentRepository.save(student);
     }
+    public void update(Student student){
+        studentRepository.save(student);
+    }
+    public void delete(Student student){
+        studentRepository.delete(student);
+    }
 
 }

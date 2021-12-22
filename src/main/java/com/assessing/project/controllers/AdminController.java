@@ -706,15 +706,23 @@ public class AdminController {
         model.addAttribute("surname", teacher[0]);
         model.addAttribute("patronymic", teacher[2]);
         model.addAttribute("login", teacherLogin);
-        model.addAttribute("password", teacherPassword);
+        model.addAttribute("password", "");
         return "edit_teacher";
     }
     @PostMapping("/edit_teacher/{teacherFullName}")
     public String editTeacherPost(@PathVariable(value="teacherFullName") String teacherFullName,@RequestParam("name") String name,
                                   @RequestParam("surname") String surname, @RequestParam("patronymic") String patronymic,
                                   @RequestParam("login") String login, @RequestParam("password") String password, Model model){
-        System.out.println(name);
-        System.out.println(surname);
+        String[] teacherFullNameArr = teacherFullName.split("\\s");
+        Teacher teacher = teacherService.findTeacherBySurname(teacherFullNameArr[0]);
+        teacher.setSurname(surname);
+        teacher.setName(name);
+        teacher.setPatronymic(patronymic);
+        teacher.setLogin(login);
+        if (!password.equals("")){
+            teacher.setPassword(password);
+        }
+        teacherService.update(teacher);
         return "redirect:/admin_teacher_page";
     }
     @GetMapping("/admin_student_page")
@@ -744,10 +752,10 @@ public class AdminController {
             }
             //додати методи у сервіс
             String studentLogin = "login";
-            String studentPassword = "password";
+
             model.addAttribute("studentFullName", studentFullNameString);
             model.addAttribute("studentLogin", studentLogin);
-            model.addAttribute("studentPassword", studentPassword);
+
 
             String facultyName = facultyService.findFacultyName(facultyService.findFacultyByStudent(student));
             String specialityName = specialityService.findSpecialityByStudents(student);
@@ -820,36 +828,62 @@ public class AdminController {
             studentFullNameString += " " ;
         }
 
-
+        //метод получения логина студента
         String studentLogin = "login";
-        String studentPassword = "password";
         model.addAttribute("studentFullName", studentFullNameString);
 
 
         String facultyName = facultyService.findFacultyName(facultyService.findFacultyByStudent(student));
         String specialityName = specialityService.findSpecialityByStudents(student);
         String groupName = groupService.findGroupByStudent(student);
-        Integer course = studentService.findCourse(student);
+//        Integer course = studentService.findCourse(student);
 
+        int[] courses = new int[]{1, 2, 3, 4, 5,6};
+        model.addAttribute("courses", courses);
         model.addAttribute("facultyCurrent", facultyName);
         model.addAttribute("specialityCurrent", specialityName);
-        model.addAttribute("courseCurrent", course);
+        model.addAttribute("courseCurrent", 1);
         model.addAttribute("groupCurrent", groupName);
         model.addAttribute("name", studentFullName[1]);
         model.addAttribute("surname", studentFullName[0]);
         model.addAttribute("patronymic", studentFullName[2]);
         model.addAttribute("login", studentLogin);
-        model.addAttribute("password", studentPassword);
         return "edit_student";
     }
     @PostMapping("/edit_student/{studentFullName}")
-    public String editStudentPost(@PathVariable(value="studentFullName") String teacherFullName,@RequestParam("name") String name,
-                                  @RequestParam("surname") String surname, @RequestParam("patronymic") String patronymic,
-                                  @RequestParam("login") String login, @RequestParam("password") String password, Model model){
-        System.out.println(name);
-        System.out.println(surname);
+    public String editStudentPost(@PathVariable(value="studentFullName") String teacherFullName,@RequestParam("name") String name, @RequestParam("surname") String surname,
+                                  @RequestParam("patronymic") String patronymic,@RequestParam("groupName") String groupName,
+                                  @RequestParam("facultyName") String facultyName, @RequestParam("specialityName") String specialityName,
+                                  @RequestParam("course") Integer course, @RequestParam("login") String login,
+                                  @RequestParam("password") String password, Model model){
+        Student student = studentService.findStudentByLogin("lera");
+        student.setSurname(surname);
+        student.setName(name);
+        student.setPatronymic(patronymic);
+        student.setFaculty(facultyService.findFacultyByName(facultyName));
+        student.setCourse(course);
+        student.setSpeciality(specialityService.findSpecialityByName(specialityName));
+        student.setGroup(groupService.findGroupByName(groupName));
+        student.setLogin(login);
+        if (!password.isEmpty()){
+            student.setPassword(password);
+        }
+        studentService.update(student);
         return "redirect:/admin_student_page";
     }
-
+    @PostMapping("/admin_student_page/{studentFullName}/delete")
+    public String deleteStudent(@PathVariable("studentFullName") String studentFullName){
+//        Student student = studentService.findStudentByLogin("lera");
+//        studentService.delete(student);
+        System.out.println("Студента видалено");
+        return "admin_student_page";
+    }
+    @PostMapping("/admin_teacher_page/{teacherFullName}/delete")
+    public String deleteTeacher(@PathVariable("teacherFullName") String teacherFullName){
+        Teacher teacher = teacherService.findTeacherBySurname("П");
+        teacherService.delete(teacher);
+        System.out.println("Викладача видалено");
+        return "admin_teacher_page";
+    }
 
 }

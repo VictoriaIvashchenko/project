@@ -22,7 +22,7 @@
 <section class="container">
     <form action="/admin_student_page" method="post">
         <div class="d-flex teacher-name-input-div">
-            <h3>Викладач: </h3>
+            <h3>Студент: </h3>
             <input class="teacher-name-input" name="studentName">
         </div>
     </form>
@@ -33,6 +33,9 @@
             <div  class="teacher-information">
                 <h2 th:utext="${studentFullName}"></h2>
                 <a th:href="'/edit_student/'+${sudentFullName}"><button>Реданувати дані</button></a>
+                <form th:action="'/admin_student_page/'+${sudentFullName}+'/delete'" method="post">
+                    <button type="submit">Видалити дані</button>
+                </form>
                 <div>
                     <h2 th:text="${facultyName}"></h2>
                     <h2 th:text="${specialityName}"></h2>
