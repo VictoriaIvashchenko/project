@@ -88,7 +88,7 @@ public class TeacherController {
     }
 
     @PostMapping("/teacher")
-    public String getGroup(@RequestParam("groupName") String groupName, Model model){
+    public String getGroup(@RequestParam("groupName") String groupName, @RequestParam("semester") Integer semester, Model model){
         String teacherName = teacherService.findTeacherFullName(teacher);
         model.addAttribute("teacherName", teacherName);
         ArrayList<Group> groups = groupService.findGroupsByTeacher(teacher);
@@ -97,22 +97,23 @@ public class TeacherController {
             groupNames.add(groupService.findGroupName(group));
         }
         model.addAttribute("groups", groupNames);
-        if (groupName.equals("--")){
+        if (groupName.equals("--")|| semester == 0){
             model.addAttribute("table", "nothing");
         }else {
             Group group = groupService.findGroupByName(groupName);
             String faculty = facultyService.findFacultyName(facultyService.findFacultyByGroup(group));
             Subject subject = subjectService.findSubjectNameByGroupAndTeacher(group, teacher);
             ArrayList<Student> students = studentService.findByGroup(group);
-
+            // получение оценок по семестру
             String testType = subjectService.findTestTypeBySubject(subjectService.findSubjectByName(subjectService.findSubjectName(subject)));
             ArrayList<InfoForTeacherPage> rows = new ArrayList<>();
 
             for (int i = 0; i < students.size(); i++) {
+                // получение оценок по семестру
                 InfoForTeacherPage row = new InfoForTeacherPage(i + 1,
                         studentService.findStudentName(students.get(i)),
-                        markService.markGetIntegerValue(markService.findMarkByStudentAndSubject(students.get(i),
-                                subjectService.findSubjectByName(subjectService.findSubjectName(subject)))));
+                        markService.markGetIntegerValue(markService.findMarkByStudentAndSubjectAndSemester(students.get(i),
+                                subjectService.findSubjectByName(subjectService.findSubjectName(subject)),semester)));
                 rows.add(row);
             }
             model.addAttribute("group", groupName);
@@ -122,11 +123,12 @@ public class TeacherController {
             model.addAttribute("marksTable", rows);
             model.addAttribute("table", "something");
             model.addAttribute("groupNameBtn", groupName);
+            model.addAttribute("semester", semester);
         }
         return "teacher";
     }
     @PostMapping("/teacher_report_subject")
-    public String teacherReportSubjectPost(@RequestParam("subjectName") String subjectName, Model model){
+    public String teacherReportSubjectPost(@RequestParam("subjectName") String subjectName, @RequestParam("semester") Integer semester, Model model){
         String teacherName = teacherService.findTeacherFullName(teacher);
         model.addAttribute("teacherName", teacherName);
         ArrayList<Subject> subjects = subjectService.findSubjectsByTeacher(teacher);
@@ -140,10 +142,11 @@ public class TeacherController {
         }
         else {
             model.addAttribute("tables", "something");
-            ArrayList<Student> studentsHeight = studentService.findStudentsBySubjectAndHeightMark(subjectService.findSubjectByName(subjectName));
+            //+ по семестру
+            ArrayList<Student> studentsHeight = studentService.findStudentsBySubjectAndSemesterAndHeightMark(subjectService.findSubjectByName(subjectName), semester);
 
 
-            ArrayList<Student> studentsLow = studentService.findStudentsBySubjectAndLowestMark(subjectService.findSubjectByName(subjectName));
+            ArrayList<Student> studentsLow = studentService.findStudentsBySubjectAndSemesterAndLowestMark(subjectService.findSubjectByName(subjectName), semester);
 
             if (studentsHeight.size()==0){
                 model.addAttribute("tableHeight", "nothing");
@@ -196,7 +199,7 @@ public class TeacherController {
         return "teacher_report_subject";
     }
     @PostMapping("/teacher_report_group")
-    public String teacherReportGroupPost(@RequestParam("groupName") String groupName, Model model){
+    public String teacherReportGroupPost(@RequestParam("groupName") String groupName, @RequestParam("semester") Integer semester, Model model){
         String teacherName = teacherService.findTeacherFullName(teacher);
         model.addAttribute("teacherName", teacherName);
         ArrayList<Group> groups = groupService.findGroupsByTeacher(teacher);
@@ -210,9 +213,8 @@ public class TeacherController {
         }
         else {
             model.addAttribute("tables", "something");
-            //поменять на метод получения по группе и преполавателю
-            ArrayList<Student> studentsHeight = studentService.findStudentsByGroupAndTeacherAndHeightMark(groupService.findGroupByName(groupName),teacher);
-            ArrayList<Student> studentsLow = studentService.findStudentsByGroupAndTeacherAndLowestMark(groupService.findGroupByName(groupName),teacher);
+            ArrayList<Student> studentsHeight = studentService.findStudentsByGroupAndTeacherAndSemesterAndHeightMark(groupService.findGroupByName(groupName),teacher, semester);
+            ArrayList<Student> studentsLow = studentService.findStudentsByGroupAndTeacherAndSemesterAndLowestMark(groupService.findGroupByName(groupName),teacher, semester);
             if (studentsHeight.size()==0){
                 model.addAttribute("tableHeight", "nothing");
             }
@@ -258,8 +260,9 @@ public class TeacherController {
         }
         return "teacher_report_group";
     }
-    @GetMapping("/teacher_set_marks/{groupName}")
-    public String teacherSetMarks(@PathVariable(value = "groupName") String groupName, Model model){
+    @GetMapping("/teacher_set_marks/{groupName}/{semester}")
+    public String teacherSetMarks(@PathVariable(value = "groupName") String groupName,
+                                  @PathVariable(value = "semester") Integer semester, Model model){
         String teacherName = teacherService.findTeacherFullName(teacher);
         model.addAttribute("teacherName", teacherName);
         model.addAttribute("title", "Виставлення оцінок");
@@ -274,8 +277,9 @@ public class TeacherController {
         for (int i = 0; i < students.size(); i++) {
             InfoForTeacherPage row = new InfoForTeacherPage(i + 1,
                     studentService.findStudentName(students.get(i)),
-                    markService.markGetIntegerValue(markService.findMarkByStudentAndSubject(students.get(i),
-                            subjectService.findSubjectByName(subjectService.findSubjectName(subject)))));
+                    markService.markGetIntegerValue(markService.findMarkByStudentAndSubjectAndSemester(students.get(i),
+                            subjectService.findSubjectByName(subjectService.findSubjectName(subject)),semester)));
+            //по студенту предмету и семестру
             rows.add(row);
         }
         model.addAttribute("groupName", groupName);
@@ -287,8 +291,8 @@ public class TeacherController {
         model.addAttribute("wrapper", wrapper);
         return "teacher_set_marks";
     }
-    @PostMapping("/teacher_set_marks/{groupName}")
-    public String teacherSetMarksPost(@PathVariable(value = "groupName") String groupName,
+    @PostMapping("/teacher_set_marks/{groupName}/{semester}")
+    public String teacherSetMarksPost(@PathVariable(value = "groupName") String groupName, @PathVariable(value = "semester") Integer semester,
                                       Model model, @RequestParam("studentMark") ArrayList<Integer> marks){
         String teacherName = teacherService.findTeacherFullName(teacher);
         model.addAttribute("teacherName", teacherName);
@@ -296,10 +300,11 @@ public class TeacherController {
         Subject subject = subjectService.findSubjectNameByGroupAndTeacher(group, teacher);
         ArrayList<Student> students = studentService.findByGroup(group);
         for (int i = 0; i<marks.size();i++) {
-            Mark mark = markService.findMarkByStudentAndTeacher(students.get(i), teacher);
+
+            Mark mark = markService.findMarkByStudentAndSubjectAndSemester(students.get(i), subject, semester);
             if ( mark == null){
-                //семестр получать както надо
-//                markService.create(students.get(i),subject , marks.get(i), 1);
+
+                markService.create(students.get(i),subject , marks.get(i), semester);
                 System.out.println("Оцінку створено");
             }
             else {

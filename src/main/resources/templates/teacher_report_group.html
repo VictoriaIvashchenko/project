@@ -40,6 +40,11 @@
                 <option autofocus value="--">--</option>
                 <option class="text-center" th:each="group: ${groups}" th:utext="${group}"></option>
             </select>
+                <select class="custom-select select-f-and-g" name="semester">
+                    <option autofocus value="0"></option>
+                    <option class="text-center select-text" value="1">1</option>
+                    <option class="text-center select-text" value="2">2</option>
+                </select>
             <button class="chose-button chose-button-text" type="submit">Обрати</button>
             </div>
         </form>

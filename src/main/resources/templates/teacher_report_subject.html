@@ -36,10 +36,15 @@
         <form method="post">
             <div class="d-flex justify-content-center" style="margin-top: 100px">
                 <h3>Дисципліна</h3>
-            <select class="custom-select" name="subjectName">
-                <option autofocus value="--">--</option>
-                <option class="text-center" th:each="subject: ${subjects}" th:utext="${subject}"></option>
-            </select>
+                <select class="custom-select" name="subjectName">
+                    <option autofocus value="--">--</option>
+                    <option class="text-center" th:each="subject: ${subjects}" th:utext="${subject}"></option>
+                </select>
+                <select class="custom-select select-f-and-g" name="semester">
+                    <option autofocus value="0"></option>
+                    <option class="text-center select-text" value="1">1</option>
+                    <option class="text-center select-text" value="2">2</option>
+                </select>
             <button class="chose-button chose-button-text" type="submit">Обрати</button>
             </div>
         </form>

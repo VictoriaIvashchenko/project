@@ -41,10 +41,11 @@
                             <option autofocus value="--"></option>
                             <option class="text-center select-text" th:each="group:${groups}" th:utext="${group}"></option>
                         </select>
-                        <select class="custom-select select-f-and-g" name="groupName">
+                        <h3>Семестр</h3>
+                        <select class="custom-select select-f-and-g" name="semester">
                             <option autofocus value="0"></option>
-                            <option class="text-center select-text">1</option>
-                            <option class="text-center select-text">2</option>
+                            <option class="text-center select-text" value="1">1</option>
+                            <option class="text-center select-text" value="2">2</option>
                         </select>
                         <button class="chose-button chose-button-text" type="submit">Обрати</button>
                     </form>
@@ -98,7 +99,7 @@
             </table>
         </div>
         <div class="d-grid justify-content-center btn_add_mark" style="margin-top: 55px">
-            <a  th:href="'/teacher_set_marks/'+ ${groupNameBtn}" ><button class="btn set-marks-button set-marks-button-text">Виставити оцінки</button></a>
+            <a  th:href="'/teacher_set_marks/'+ ${groupNameBtn}+'/'+${semester}" ><button class="btn set-marks-button set-marks-button-text">Виставити оцінки</button></a>
         </div>
     </div>
 
