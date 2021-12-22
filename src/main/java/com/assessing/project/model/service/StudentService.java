@@ -23,6 +23,9 @@ public class StudentService {
     public ArrayList<Student> findBySpeciality(Speciality speciality){
         return studentRepository.findStudentsBySpeciality(speciality);
     }
+    public Student findStudentBySurnameAndName(String surname, String name){
+        return studentRepository.findStudentBySurnameAndName(surname, name);
+    }
     public ArrayList<Student> findByFaculty(Faculty faculty){return studentRepository.findStudentsByFaculty(faculty);}
     public String[]findStudentName(Student student){
         String[] value = new String[3];

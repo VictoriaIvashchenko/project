@@ -1,9 +1,6 @@
 package com.assessing.project.model.repository;
 
-import com.assessing.project.model.entity.Group;
-import com.assessing.project.model.entity.Mark;
-import com.assessing.project.model.entity.Student;
-import com.assessing.project.model.entity.Subject;
+import com.assessing.project.model.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,6 +20,12 @@ public interface MarkRepository extends JpaRepository<Mark, Integer> {
     Integer findCountOfMark(@Param("student") Student student, @Param("semester") Integer semester);
 
     Mark findMarkByStudentAndSubject(Student student, Subject subject);
+    ArrayList<Mark> findMarksBySubject(Subject subject);
+
+    @Query("select m from Mark as m inner join m.subject as s on :#{#teacher} = s.teacher inner join m.student as st on " +
+            ":#{#group} = st.group")
+    ArrayList<Mark> findMarksByGroupAndTeacher(@Param("group") Group group,
+                                               @Param("teacher") Teacher teacher);
 //    @Query("select m from Mark as m")
 //    ArrayList<Mark> findMarkByGroupAndHeightMark(@Param("group") Group group);
 }

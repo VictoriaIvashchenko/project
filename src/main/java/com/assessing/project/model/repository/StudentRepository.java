@@ -15,6 +15,7 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     @Query("select s.password from Student as s where s.login = :#{#login}")
     String findStudentPasswordByLogin(@Param("login") String login);
     ArrayList<Student> findStudentsByGroup(Group group);
+    Student findStudentBySurnameAndName(String surname, String name);
     ArrayList<Student> findStudentsByCourse(Integer course);
     ArrayList<Student> findStudentsBySpeciality(Speciality speciality);
     ArrayList<Student> findStudentsByFaculty(Faculty faculty);

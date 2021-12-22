@@ -41,7 +41,9 @@ public class TeacherService {
     public String findTeacherPassword(Teacher teacher){
         return teacher.getPassword();
     }
-
+    public Teacher findTeacherBySurnameAndName(String surname, String name){
+        return teacherRepository.findTeacherBySurnameAndName(surname, name);
+    }
     public Teacher findTeacherBySurname(String surname){return teacherRepository.findTeacherBySurname(surname);}
     public Teacher findTeacherById(Integer id){return teacherRepository.findTeacherById(id);}
     public void create(String name, String surname, String patronymic, String login, String password){
