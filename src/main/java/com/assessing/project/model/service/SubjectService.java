@@ -31,4 +31,7 @@ public class SubjectService {
         Subject subject = new Subject(name, testType, teacher);
         subjectRepository.save(subject);
     }
+    public void update(Subject subject){
+        subjectRepository.save(subject);
+    }
 }

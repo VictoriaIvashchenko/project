@@ -38,7 +38,16 @@ public class Group {
         this.faculty = faculty;
         this.speciality = speciality;
     }
+    public Set<Subject> getSubjects() {
+        return subjects;
+    }
 
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
+    }
+    public void addSubjects(Subject subject) {
+        this.subjects.add(subject);
+    }
     public Integer getId() {
         return id;
     }

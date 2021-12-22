@@ -37,6 +37,8 @@ public class AdminController {
     MarkService markService;
     @Autowired
     SubjectService subjectService;
+    @Autowired
+    SubjectGroupService subjectGroupService;
     Admin admin = new Admin();
 
     @GetMapping("/admin")
@@ -631,8 +633,10 @@ public class AdminController {
     @PostMapping("/admin_teacher_subject_add_group/{subjectName}")
     public String adminTeacherPageSubjectAddGroupPost(@PathVariable(value = "subjectName") String subjectName,
                                                       @RequestParam("groupName") String groupName, Model model){
-        System.out.println(groupName);
+
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
+
+        subjectGroupService.create(subjectService.findSubjectByName(subjectName), groupService.findGroupByName(groupName));
         return "redirect:/admin_teacher_page_subject_info/{subjectName}";
     }
     @GetMapping("/admin_teacher_page_subject_info/{subjectName}")

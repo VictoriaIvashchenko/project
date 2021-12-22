@@ -31,6 +31,16 @@ public class Subject {
         this.test_type = test_type;
         this.teacher = teacher;
     }
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
+    }
+    public void addGroups(Group group) {
+        this.groups.add(group);
+    }
     public Integer getId() {
         return id;
     }

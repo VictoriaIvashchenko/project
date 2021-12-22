@@ -41,5 +41,8 @@ public class GroupService {
         Group group = new Group(name, faculty, speciality);
         groupRepository.save(group);
     }
+    public void update(Group group){
+        groupRepository.save(group);
+    }
 
 }
