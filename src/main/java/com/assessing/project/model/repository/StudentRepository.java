@@ -9,8 +9,10 @@ import java.util.ArrayList;
 
 public interface StudentRepository extends JpaRepository<Student, Integer> {
     Student findStudentByLogin(String login);
+
     @Query("select s.password from Student as s where s.login = :#{#login}")
     String findStudentPasswordByLogin(@Param("login") String login);
+
     ArrayList<Student> findStudentsByGroup(Group group);
     Student findStudentBySurnameAndName(String surname, String name);
     ArrayList<Student> findStudentsByCourse(Integer course);
@@ -65,4 +67,11 @@ public interface StudentRepository extends JpaRepository<Student, Integer> {
     ArrayList<Student> findStudentsByGroupAndTeacherAndLowestMark(@Param("group") Group group,
                                                                   @Param("teacher") Teacher teacher);
 
+    @Query("select distinct s from Student as s inner join s.marks as m where 95 <= " +
+            "all(select m.value from Mark as m where m.subject = :#{#subject})")
+    ArrayList<Student> findStudentsBySubjectAndHeightMark(@Param("subject") Subject subject);
+
+    @Query("select distinct s from Student as s inner join s.marks as m where 60 > " +
+            "all(select m.value from Mark as m where m.subject = :#{#subject})")
+    ArrayList<Student> findStudentsBySubjectAndLowestMark(@Param("subject") Subject subject);
 }

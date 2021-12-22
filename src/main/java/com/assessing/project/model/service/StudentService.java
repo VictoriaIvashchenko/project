@@ -70,6 +70,12 @@ public class StudentService {
     public ArrayList<Student> findStudentsByGroupAndTeacherAndLowestMark(Group group, Teacher teacher){
         return studentRepository.findStudentsByGroupAndTeacherAndLowestMark(group, teacher);
     }
+    public ArrayList<Student> findStudentsBySubjectAndHeightMark(Subject subject){
+        return studentRepository.findStudentsBySubjectAndHeightMark(subject);
+    }
+    public ArrayList<Student> findStudentsBySubjectAndLowestMark(Subject subject){
+        return studentRepository.findStudentsBySubjectAndLowestMark(subject);
+    }
     public Integer findCourse(Student student){
         return student.getCourse();
     }
