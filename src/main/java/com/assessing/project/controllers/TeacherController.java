@@ -104,12 +104,11 @@ public class TeacherController {
             String faculty = facultyService.findFacultyName(facultyService.findFacultyByGroup(group));
             Subject subject = subjectService.findSubjectNameByGroupAndTeacher(group, teacher);
             ArrayList<Student> students = studentService.findByGroup(group);
-            // получение оценок по семестру
+
             String testType = subjectService.findTestTypeBySubject(subjectService.findSubjectByName(subjectService.findSubjectName(subject)));
             ArrayList<InfoForTeacherPage> rows = new ArrayList<>();
 
             for (int i = 0; i < students.size(); i++) {
-                // получение оценок по семестру
                 InfoForTeacherPage row = new InfoForTeacherPage(i + 1,
                         studentService.findStudentName(students.get(i)),
                         markService.markGetIntegerValue(markService.findMarkByStudentAndSubjectAndSemester(students.get(i),
@@ -142,7 +141,7 @@ public class TeacherController {
         }
         else {
             model.addAttribute("tables", "something");
-            //+ по семестру
+
             ArrayList<Student> studentsHeight = studentService.findStudentsBySubjectAndSemesterAndHeightMark(subjectService.findSubjectByName(subjectName), semester);
 
 
@@ -223,7 +222,7 @@ public class TeacherController {
                 ArrayList<InfoForReport> infoStudentsHeight = new ArrayList<>();
                 int i = 1;
                 for (Student student: studentsHeight) {
-                    InfoForReport infoStudentHeight = new InfoForReport(i, studentService.findStudentName(student), markService.markGetIntegerValue(markService.findMarkByStudentAndTeacher(student, teacher)));
+                    InfoForReport infoStudentHeight = new InfoForReport(i, studentService.findStudentName(student), markService.markGetIntegerValue(markService.findMarkByStudentAndTeacherAndSemester(student, teacher, semester)));
                     if (infoStudentHeight.getMark() != 0){
                         infoStudentsHeight.add(infoStudentHeight);
                     }
@@ -250,7 +249,7 @@ public class TeacherController {
                 int i = 1;
                 for (Student student: studentsLow) {
                     InfoForReport infoStudentLow = new InfoForReport(i, studentService.findStudentName(student),
-                            markService.markGetIntegerValue(markService.findMarkByStudentAndTeacher(student, teacher)));
+                            markService.markGetIntegerValue(markService.findMarkByStudentAndTeacherAndSemester(student, teacher, semester)));
                     infoStudentsLow.add(infoStudentLow);
                     i++;
                 }
@@ -279,7 +278,7 @@ public class TeacherController {
                     studentService.findStudentName(students.get(i)),
                     markService.markGetIntegerValue(markService.findMarkByStudentAndSubjectAndSemester(students.get(i),
                             subjectService.findSubjectByName(subjectService.findSubjectName(subject)),semester)));
-            //по студенту предмету и семестру
+
             rows.add(row);
         }
         model.addAttribute("groupName", groupName);
