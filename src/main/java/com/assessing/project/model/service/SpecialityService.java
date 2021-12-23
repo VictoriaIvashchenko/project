@@ -31,6 +31,9 @@ public class SpecialityService {
     public String findSpecialityByGroup(Group group){
         return specialityRepository.findSpecialityByGroup(group);
     }
+    public String findSpecialityName(Speciality speciality){
+        return speciality.getName();
+    }
     public void create(String name){
         Speciality speciality = new Speciality(name);
         specialityRepository.save(speciality);
