@@ -25,7 +25,7 @@ public class Teacher {
 
     public Teacher() {
     }
-    public Teacher(String name, String surname, String patronymic, String login, String password){
+    public Teacher(String surname, String name, String patronymic, String login, String password){
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;

@@ -47,8 +47,8 @@ public class TeacherService {
     }
     public Teacher findTeacherBySurname(String surname){return teacherRepository.findTeacherBySurname(surname);}
     public Teacher findTeacherById(Integer id){return teacherRepository.findTeacherById(id);}
-    public void create(String name, String surname, String patronymic, String login, String password){
-        Teacher teacher = new Teacher(name, surname, patronymic, login, password);
+    public void create(String surname, String name, String patronymic, String login, String password){
+        Teacher teacher = new Teacher(surname, name, patronymic, login, password);
         teacherRepository.save(teacher);
     }
     public void update(Teacher teacher){

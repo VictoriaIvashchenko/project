@@ -628,9 +628,12 @@ public class AdminController {
     public String adminTeacherPageSubjectAddGroup(@PathVariable(value = "subjectName") String subjectName, Model model){
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
         List<Group> groups = groupService.findAllGroups();
+        List<Group> groupsTeacher = groupService.findGroupBySubject(subjectService.findSubjectByName(subjectName));
         ArrayList<String> groupNames = new ArrayList<>();
         for (Group group: groups) {
-            groupNames.add(groupService.findGroupName(group));
+            if(!groupsTeacher.contains(group)){
+                groupNames.add(groupService.findGroupName(group));
+            }
         }
         model.addAttribute("title", "Додати групу");
         model.addAttribute("groups", groupNames);
@@ -896,9 +899,15 @@ public class AdminController {
     @PostMapping("/admin_teacher_page/{teacherFullName}/delete")
     public String deleteTeacher(@PathVariable("teacherFullName") String teacherFullName){
         String[] teacherFullNameArr = teacherFullName.split("\\s");
+        System.out.println(teacherFullNameArr[0]);
+        System.out.println(teacherFullNameArr[1]);
         Teacher teacher = teacherService.findTeacherBySurnameAndName(teacherFullNameArr[0], teacherFullNameArr[1]);
-        teacherService.delete(teacher);
-        System.out.println("Викладача видалено");
+        if (teacher!= null){
+            teacherService.delete(teacher);
+        }else {
+            System.out.println("Викладача не знайдено");
+        }
+
         return "admin_teacher_page";
     }
     @GetMapping("/edit_data")
@@ -987,7 +996,7 @@ public class AdminController {
     @PostMapping("/edit_data_speciality/{specialityName}/delete")
     public String editDataSpecialityPostDelete(@PathVariable("specialityName") String specialityName, Model model){
         Speciality speciality = specialityService.findSpecialityByName(specialityName);
-//        specialityService.delete(speciality);
+        specialityService.delete(speciality);
         System.out.println("спецыальнысть видалено");
         return "redirect:/edit_data";
 
@@ -1043,7 +1052,7 @@ public class AdminController {
     @PostMapping("/edit_data_group/{groupName}/delete")
     public String editDataGroupPostDelete(@PathVariable("groupName") String groupName, Model model){
         Group group = groupService.findGroupByName(groupName);
-//        groupService.delete(group);
+        groupService.delete(group);
         System.out.println("групy видалено");
         return "redirect:/edit_data";
 
