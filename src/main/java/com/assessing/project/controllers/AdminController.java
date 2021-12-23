@@ -903,5 +903,21 @@ public class AdminController {
         System.out.println("Викладача видалено");
         return "admin_teacher_page";
     }
+    @GetMapping("/edit_data")
+    public String editData(Model model){
+        model.addAttribute("title", "Змінити дані");
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+        return "adddata";
+    }
+    @GetMapping("/edit_data_faculty")
+    public String editDataFaculty(Model model){
+        model.addAttribute("title", "Змінити дані факультету");
 
+        ArrayList<String> faculties = facultyService.findFacultyName();
+        model.addAttribute("faculties", faculties);
+        ArrayList<String> specialities = specialityService.findSpecialityName();
+        model.addAttribute("specialities", specialities);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+        return "adddata_group";
+    }
 }
