@@ -159,8 +159,8 @@ public class TeacherController {
                 for (Student student: studentsHeight) {
                     InfoForReport infoStudentHeight = new InfoForReport(i, studentService.findStudentName(student),
                             groupService.findGroupByStudent(student),
-                            markService.markGetIntegerValue(markService.findMarkByStudentAndSubject(student,
-                                    subjectService.findSubjectByName(subjectName))));
+                            markService.markGetIntegerValue(markService.findMarkByStudentAndSubjectAndSemester(student,
+                                    subjectService.findSubjectByName(subjectName), semester)));
 
                     if (infoStudentHeight.getMark() != 0){
                         infoStudentsHeight.add(infoStudentHeight);
@@ -187,7 +187,7 @@ public class TeacherController {
                 int i = 1;
                 for (Student student: studentsLow) {
                     InfoForReport infoStudentLow = new InfoForReport(i, studentService.findStudentName(student),
-                            groupService.findGroupByStudent(student), markService.markGetIntegerValue(markService.findMarkByStudentAndTeacher(student, teacher)));
+                            groupService.findGroupByStudent(student), markService.markGetIntegerValue(markService.findMarkByStudentAndSubjectAndSemester(student, subjectService.findSubjectByName(subjectName), semester)));
                     infoStudentsLow.add(infoStudentLow);
                     i++;
                 }
