@@ -34,6 +34,7 @@ public class SpecialityService {
     public String findSpecialityName(Speciality speciality){
         return speciality.getName();
     }
+
     public void create(String name){
         Speciality speciality = new Speciality(name);
         specialityRepository.save(speciality);

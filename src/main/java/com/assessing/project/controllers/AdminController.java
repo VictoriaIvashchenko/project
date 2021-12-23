@@ -994,4 +994,59 @@ public class AdminController {
         return "redirect:/edit_data";
 
     }
+    @GetMapping("/edit_data_group")
+    public String editDataGroup(Model model){
+        model.addAttribute("title", "Змінити дані групи");
+        ArrayList<String> groups = groupService.findGroupName();
+        model.addAttribute("groups", groups);
+
+
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+        return "edit_data_group";
+    }
+    @PostMapping("/edit_data_group")
+    public String editDataGroupPost( @RequestParam("groupName") String groupName, Model model){
+        model.addAttribute("title", "Змінити дані групи");
+        ArrayList<String> groups = groupService.findGroupName();
+        model.addAttribute("groups", groups);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+
+        if (groupName.equals("--")){
+            model.addAttribute("groupInfo", "nothing");
+        }else{
+            model.addAttribute("groupInfo", "something");
+            model.addAttribute("groupName", groupName);
+            ArrayList<String> faculties = facultyService.findFacultyName();
+            model.addAttribute("faculties", faculties);
+            ArrayList<String> specialities = specialityService.findSpecialityName();
+            model.addAttribute("specialities", specialities);
+            Faculty faculty =  facultyService.findFacultyByGroup(groupService.findGroupByName(groupName));
+            String speciality = specialityService.findSpecialityByGroup(groupService.findGroupByName(groupName));
+            model.addAttribute("currentFaculty", facultyService.findFacultyName(faculty));
+            model.addAttribute("currentSpeciality", speciality);
+        }
+        return "edit_data_group";
+    }
+    @PostMapping("/edit_data_group/{groupName}")
+    public String editDataGroupPostEdit(@PathVariable("groupName") String groupName, @RequestParam("name") String name,
+                                        @RequestParam("facultyName") String facultyName, @RequestParam("specialityName") String specialityName,
+                                        Model model){
+        Speciality speciality = specialityService.findSpecialityByName(specialityName);
+        Faculty faculty = facultyService.findFacultyByName(facultyName);
+        Group group = groupService.findGroupByName(groupName);
+        group.setName(name);
+        group.setFaculty(faculty);
+        group.setSpeciality(speciality);
+        groupService.update(group);
+        return "redirect:/edit_data";
+
+    }
+    @PostMapping("/edit_data_group/{groupName}/delete")
+    public String editDataGroupPostDelete(@PathVariable("groupName") String groupName, Model model){
+        Group group = groupService.findGroupByName(groupName);
+//        groupService.delete(group);
+        System.out.println("групy видалено");
+        return "redirect:/edit_data";
+
+    }
 }
