@@ -24,7 +24,7 @@
     <h2 th:text="${teacherName}"></h2>
 </section>
 <section>
-    <form th:action="'/edit_teacher/'+${teacherFullName}" method="post">
+    <form th:action="'/edit_teacher/'+${teacherId}" method="post">
         <div class="form">
             <div class="container d-flex justify-content-center form_row">
                 <label class="col-sm-2 col-form-label">Прізвище</label>

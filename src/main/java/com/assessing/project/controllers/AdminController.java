@@ -643,20 +643,19 @@ public class AdminController {
     @PostMapping("/admin_teacher_page")
     public String adminTeacherPagePost(@RequestParam("teacherName") String teacherName, Model model){
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
-        String[] teacherSurname = teacherName.split("\\s");
-        Teacher teacher = teacherService.findTeacherBySurname(teacherSurname[0]);
+        String[] teacherFullNameArr = teacherName.split("\\s");
+        Teacher teacher = teacherService.findTeacherBySurnameAndName(teacherFullNameArr[0], teacherFullNameArr[1]);
         if ( teacher == null){
             model.addAttribute("teacherInfo", "nothing");
         }
         else {
-            model.addAttribute("teacherNameAddNew", teacherSurname[0]);
+            model.addAttribute("teacherId", teacherService.findIdByTeacher(teacher));
             model.addAttribute("teacherInfo", "something");
             String teacherFullName = teacherService.findTeacherFullName(teacher);
             String teacherLogin = teacherService.findTeacherLogin(teacher);
-            String teacherPassword = teacherService.findTeacherPassword(teacher);
             model.addAttribute("teacherFullName", teacherFullName);
             model.addAttribute("teacherLogin", teacherLogin);
-            model.addAttribute("teacherPassword", teacherPassword);
+
             ArrayList<Subject> teacherSubjects = subjectService.findSubjectsByTeacher(teacher);
             if (teacherSubjects == null){
                 model.addAttribute("teacherIfExistSubjects", "nothing");
@@ -753,29 +752,31 @@ public class AdminController {
 
         return "admin_teacher_page_subject_info";
     }
-    @GetMapping("/edit_teacher/{teacherFullName}")
-    public String editTeacher(@PathVariable(value="teacherFullName") String teacherFullName, Model model){
-        model.addAttribute("teacherFullName", teacherFullName);
+    @GetMapping("/edit_teacher/{teacherId}")
+    public String editTeacher(@PathVariable(value="teacherId") Integer id, Model model){
+        model.addAttribute("teacherId", id);
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
         model.addAttribute("title", "Редагування даних викладача");
-        String[] teacher = teacherFullName.split("\\s");
+
+
+        Teacher teacher = teacherService.findTeacherById(id);
+        String teacherFullName = teacherService.findTeacherFullName(teacher);
+        String[] teacherFullNameArr = teacherFullName.split("\\s");
+        String teacherLogin = teacherService.findTeacherLogin(teacher);
+
         model.addAttribute("teacherName", teacherFullName);
-        String teacherLogin = teacherService.findTeacherLogin(teacherService.findTeacherBySurnameAndName(teacher[0], teacher[1]));
-
-
-        model.addAttribute("name", teacher[1]);
-        model.addAttribute("surname", teacher[0]);
-        model.addAttribute("patronymic", teacher[2]);
+        model.addAttribute("name", teacherFullNameArr[1]);
+        model.addAttribute("surname", teacherFullNameArr[0]);
+        model.addAttribute("patronymic", teacherFullNameArr[2]);
         model.addAttribute("login", teacherLogin);
 
         return "edit_teacher";
     }
-    @PostMapping("/edit_teacher/{teacherFullName}")
-    public String editTeacherPost(@PathVariable(value="teacherFullName") String teacherFullName,@RequestParam("name") String name,
+    @PostMapping("/edit_teacher/{teacherId}")
+    public String editTeacherPost(@PathVariable(value="teacherId") Integer id,@RequestParam("name") String name,
                                   @RequestParam("surname") String surname, @RequestParam("patronymic") String patronymic,
                                   @RequestParam("login") String login, @RequestParam("password") String password, Model model){
-        String[] teacherFullNameArr = teacherFullName.split("\\s");
-        Teacher teacher = teacherService.findTeacherBySurnameAndName(teacherFullNameArr[0], teacherFullNameArr[1]);
+        Teacher teacher = teacherService.findTeacherById(id);
         teacher.setSurname(surname);
         teacher.setName(name);
         teacher.setPatronymic(patronymic);
@@ -795,7 +796,7 @@ public class AdminController {
     @PostMapping("/admin_student_page")
     public String adminStudentPagePost( @RequestParam("studentName") String studentName, Model model){
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
-
+        model.addAttribute("title", "Робота зі студентом");
         String[] studentNameArr = studentName.split("\\s");
         Student student = studentService.findStudentBySurnameAndName(studentNameArr[0], studentNameArr[1]);
         if ( student == null){
@@ -875,12 +876,6 @@ public class AdminController {
         model.addAttribute("studentId", id);
         Student student = studentService.findById(id);
         String[] studentNameArr = studentService.findStudentName(student);
-//        String studentFullName = "";
-//        for (String s: studentNameArr){
-//            studentFullName += s;
-//            studentFullName += " ";
-//        }
-//        model.addAttribute("studentFullName", studentFullName);
 
         ArrayList<String> faculties = facultyService.findFacultyName();
         model.addAttribute("faculties", faculties);
@@ -953,12 +948,9 @@ public class AdminController {
         System.out.println("Студента видалено");
         return "redirect:/admin_student_page";
     }
-    @PostMapping("/admin_teacher_page/{teacherFullName}/delete")
-    public String deleteTeacher(@PathVariable("teacherFullName") String teacherFullName){
-        String[] teacherFullNameArr = teacherFullName.split("\\s");
-        System.out.println(teacherFullNameArr[0]);
-        System.out.println(teacherFullNameArr[1]);
-        Teacher teacher = teacherService.findTeacherBySurnameAndName(teacherFullNameArr[0], teacherFullNameArr[1]);
+    @PostMapping("/admin_teacher_page/{teacherId}/delete")
+    public String deleteTeacher(@PathVariable("teacherId") Integer id){
+        Teacher teacher = teacherService.findTeacherById(id);
         if (teacher!= null){
             teacherService.delete(teacher);
         }else {
@@ -1074,7 +1066,7 @@ public class AdminController {
     public String editDataSpecialityPostDelete(@PathVariable("specialityName") String specialityName, Model model){
         Speciality speciality = specialityService.findSpecialityByName(specialityName);
         specialityService.delete(speciality);
-        System.out.println("спецыальнысть видалено");
+        System.out.println("Спеціальність видалено");
         return "redirect:/edit_data";
 
     }

@@ -36,9 +36,11 @@ public class StudentController {
     @GetMapping("/student")
     public String student(Model model){
         model.addAttribute("title", "Інф. студента");
-        //видобуток поточного студента після авторизації
+
         SecurityUser curr = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         student = studentService.findStudentByLogin(curr.getUsername());
+
         String[] studentName = studentService.findStudentName(student);
         model.addAttribute("surname", studentName[0]);
         model.addAttribute("name", studentName[1]);
@@ -47,7 +49,7 @@ public class StudentController {
         return "student";
     }
 
-    @RequestMapping(value = "/student", method = RequestMethod.POST)
+    @PostMapping( "/student")
     public String chooseSemester(@RequestParam("semester") Integer semester, Model model){
         String[] studentName = studentService.findStudentName(student);
         model.addAttribute("surname", studentName[0]);
