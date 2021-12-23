@@ -112,12 +112,13 @@
 
 </section>
 <section>
-    <h2 class="text-center">2 семестр</h2>
     <div th:switch="${table2}">
         <div th:case="'nothing'">
+            <h2 class="text-center">2 семестр</h2>
             <h2 class="text-center">Даних немає</h2>
         </div>
         <div th:case="'something'" class="container">
+            <h2 class="text-center">2 семестр</h2>
             <div class="marks-table-div mx-auto">
                 <table class="table mytable" >
 
