@@ -796,7 +796,7 @@ public class AdminController {
                 model.addAttribute("average1", new DecimalFormat("#.##").format(average));
                 model.addAttribute("table1", "something");
             }
-            List<Mark> marks2 = markService.findByStudentAndSemester(student, 1);
+            List<Mark> marks2 = markService.findByStudentAndSemester(student, 2);
             if (marks2.size() == 0){
                 model.addAttribute("table2", "nothing");
             }
@@ -952,5 +952,46 @@ public class AdminController {
         return "redirect:/edit_data";
 
     }
+    @GetMapping("/edit_data_speciality")
+    public String editDataSpeciality(Model model){
+        model.addAttribute("title", "Змінити дані спеціальності");
+        ArrayList<String> specialities = specialityService.findSpecialityName();
+        model.addAttribute("specialities", specialities);
 
+
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+        return "edit_data_speciality";
+    }
+    @PostMapping("/edit_data_speciality")
+    public String editDataSpecialityPost( @RequestParam("specialityName") String specialityName, Model model){
+        model.addAttribute("title", "Змінити дані спеціальності");
+        ArrayList<String> specialities = specialityService.findSpecialityName();
+        model.addAttribute("specialities", specialities);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+
+        if (specialityName.equals("--")){
+            model.addAttribute("specialityInfo", "nothing");
+        }else{
+            model.addAttribute("specialityInfo", "something");
+            model.addAttribute("specialityName", specialityName);
+        }
+        return "edit_data_speciality";
+    }
+    @PostMapping("/edit_data_speciality/{specialityName}")
+    public String editDataSpecialityPostEdit(@PathVariable("specialityName") String specialityName,
+                                          @RequestParam("name") String name, Model model){
+        Speciality speciality = specialityService.findSpecialityByName(specialityName);
+        speciality.setName(name);
+        specialityService.update(speciality);
+        return "redirect:/edit_data";
+
+    }
+    @PostMapping("/edit_data_speciality/{specialityName}/delete")
+    public String editDataSpecialityPostDelete(@PathVariable("specialityName") String specialityName, Model model){
+        Speciality speciality = specialityService.findSpecialityByName(specialityName);
+//        specialityService.delete(speciality);
+        System.out.println("спецыальнысть видалено");
+        return "redirect:/edit_data";
+
+    }
 }
