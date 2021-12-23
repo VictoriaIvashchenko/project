@@ -12,9 +12,8 @@ import java.util.ArrayList;
 
 @Service
 public class SubjectService {
-    @Autowired
     private SubjectRepository subjectRepository;
-
+    @Autowired
     public SubjectService(SubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
     }

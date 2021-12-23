@@ -1,3 +1,6 @@
+*{
+    text-decoration: none !important;
+}
 .out-button{
     width: 156px;
     height: 49px;

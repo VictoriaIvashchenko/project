@@ -1,4 +1,6 @@
-
+*{
+    text-decoration: none !important;
+}
 .header_cont{
     width: 100%;
     flex: 1;
@@ -173,4 +175,7 @@ a{
 }
 .txt_decor{
     text-decoration: none;
+}
+.custom-select{
+    margin-right: 20px;
 }

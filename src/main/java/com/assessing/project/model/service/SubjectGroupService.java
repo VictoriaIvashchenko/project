@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SubjectGroupService {
 
-    GroupService groupService;
+    private GroupService groupService;
     @Autowired
     public SubjectGroupService(GroupService groupService, SubjectService subjectService) {
         this.groupService = groupService;

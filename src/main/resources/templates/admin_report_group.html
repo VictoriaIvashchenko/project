@@ -49,24 +49,25 @@
         <!--                <option class="text-center select-text">3</option>-->
         <!--            </select>-->
         <!--        </div>-->
-        <div class="d-flex">
-            <h3>Група</h3>
-            <form action="/admin_report_group" method="post">
 
+            <form action="/admin_report_group" method="post">
+                <div class="d-flex">
+                    <h3>Група</h3>
                 <select class="custom-select select-group" style="margin-left: 15px" name="groupName">
                     <option autofocus value="--"></option>
                     <option class="text-center select-text" th:each="group:${groups}"
                             th:utext="${group}"></option>
                 </select>
+                <h3>Cпеціальність</h3>
                 <select class="custom-select select-group" style="margin-left: 15px" name="semester">
                     <option value="0"></option>
                     <option class="text-center select-text" value="1">1</option>
                     <option class="text-center select-text" value="2">2</option>
 
                 </select>
-                <button class="chose-button chose-button-text" type="submit">Обрати</button>
+                    <button class="chose-button chose-button-text" type="submit">Обрати</button>
+                </div>
             </form>
-        </div>
 
     </div>
 </section>
