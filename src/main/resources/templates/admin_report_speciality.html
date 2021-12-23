@@ -32,14 +32,16 @@
     </div>
 </section>
 <section class="container">
-    <div class="d-flex justify-content-center" style="margin-top: 100px">
-        <h3>Спеціальність</h3>
+
         <form action="/admin_report_speciality" method="post">
+            <div class="d-flex justify-content-center" style="margin-top: 100px">
+            <h3>Спеціальність</h3>
             <select class="custom-select select-group" style="margin-left: 15px" name="specialityName">
                 <option autofocus value="--"></option>
                 <option class="text-center select-text" th:each="speciality:${specialities}"
                         th:utext="${speciality}"></option>
             </select>
+            <h3>Cеместр</h3>
             <select class="custom-select select-group" style="margin-left: 15px" name="semester">
                 <option value="0"></option>
                 <option class="text-center select-text" value="1">1</option>
@@ -47,8 +49,8 @@
 
             </select>
             <button class="chose-button chose-button-text" type="submit">Обрати</button>
+            </div>
         </form>
-    </div>
 </section>
 <section class="container" th:switch="${tables}">
     <div th:case="'nothing'"></div>
