@@ -516,7 +516,6 @@ public class AdminController {
                     if (infoStudent.getAverageMarkNumber() !=0){
                         infoStudents.add(infoStudent);
                     }
-                    infoStudents.add(infoStudent);
                     i++;
                 }
                 model.addAttribute("students", infoStudents);
@@ -550,7 +549,6 @@ public class AdminController {
                     if (infoStudent.getAverageMarkNumber() !=0){
                         infoStudents.add(infoStudent);
                     }
-                    infoStudents.add(infoStudent);
                     i++;
                 }
                 model.addAttribute("students", infoStudents);
@@ -997,6 +995,7 @@ public class AdminController {
     @GetMapping("/edit_data_group")
     public String editDataGroup(Model model){
         model.addAttribute("title", "Змінити дані групи");
+
         ArrayList<String> groups = groupService.findGroupName();
         model.addAttribute("groups", groups);
 
