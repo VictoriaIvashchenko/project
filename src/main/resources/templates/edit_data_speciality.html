@@ -25,13 +25,13 @@
         </div>
         <div class="input-data-div mx-auto">
             <div class="d-flex justify-content-between" style="margin-top: 37px">
-                <h3>Спеціальність</h3>
+                <h3>Спеціальність   </h3>
                 <select class="custom-select select-field"  name="specialityName">
                     <option selected value="--"></option>
                     <option  class="text-center" th:each="speciality:${specialities}"
                              th:utext="${speciality}"></option>
                 </select>
-                <button type="submit">Обрати</button>
+                <button type="submit" class="custom_button">Обрати</button>
             </div>
         </div>
     </form>

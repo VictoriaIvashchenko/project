@@ -33,9 +33,9 @@
         <div th:case="'something'">
             <div  class="teacher-information">
                 <h2 th:utext="${studentFullName}"></h2>
-                <a th:href="'/edit_student/'+${studentId}"><button>Реданувати дані</button></a>
+                <a th:href="'/edit_student/'+${studentId}"><button class="custom_button">Редагувати дані</button></a>
                 <form th:action="'/admin_student_page/'+${studentId}+'/delete'" method="post">
-                    <button type="submit">Видалити дані</button>
+                    <button type="submit" class="custom_button">Видалити дані</button>
                 </form>
                 <div>
                     <h2 th:text="${facultyName}"></h2>
@@ -71,8 +71,9 @@
 <!--</section>-->
 <section>
     <div th:switch="${table1}">
+        <h2 class="text-center">1 семестр</h2>
         <div th:case="'nothing'">
-                    <h2> no data</h2>
+                    <h2 class="text-center">Даних немає</h2>
         </div>
         <div th:case="'something'" class="container">
             <div class="marks-table-div mx-auto">

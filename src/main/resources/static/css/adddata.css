@@ -174,3 +174,20 @@ a{
 .txt_decor{
     text-decoration: none;
 }
+.custom_button{
+    width: 200px;
+    height: 49px;
+    left: 1165px;
+    top: 42px;
+
+    background: #001752;
+    border-radius: 20px;
+    margin-left: 15px;
+    color: white;
+    margin-top: -5px;
+}
+.custom_button:hover{
+    background: #ADC6FF;
+    border: 2px solid #001752;
+    color: #001752
+}

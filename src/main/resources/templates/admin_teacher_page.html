@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+ <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -32,9 +32,9 @@
         <div th:case="'something'">
             <div  class="teacher-information">
                 <h2 th:utext="${teacherFullName}"></h2>
-                <a th:href="'/edit_teacher/'+${teacherId}"><button>Реданувати дані</button></a>
+                <a th:href="'/edit_teacher/'+${teacherId}"><button class="custom_button">Редагувати дані</button></a>
                 <form th:action="'/admin_teacher_page/'+${teacherId}+'/delete'" method="post">
-                    <button type="submit">Видалити дані</button>
+                    <button type="submit" class="custom_button">Видалити дані</button>
                 </form>
                 <div class="d-flex login_and_password-div">
                     <div class="d-flex">
