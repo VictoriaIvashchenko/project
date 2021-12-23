@@ -477,8 +477,9 @@ public class AdminController {
                     InfoForReport infoStudent = new InfoForReport(i,  studentService.findCourse(student),
                             specialityService.findSpecialityByStudents(student),studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
-
-                    infoStudents.add(infoStudent);
+                    if (infoStudent.getAverageMarkNumber() !=0){
+                        infoStudents.add(infoStudent);
+                    }
                     i++;
                 }
                 model.addAttribute("students", infoStudents);
@@ -512,7 +513,9 @@ public class AdminController {
                             facultyService.findFacultyName(facultyService.findFacultyByStudent(student)),
                             studentService.findCourse(student), studentService.findStudentName(student),
                             groupService.findGroupByStudent(student), markService.findAverageMark(student, semester));
-
+                    if (infoStudent.getAverageMarkNumber() !=0){
+                        infoStudents.add(infoStudent);
+                    }
                     infoStudents.add(infoStudent);
                     i++;
                 }
@@ -544,6 +547,9 @@ public class AdminController {
                             specialityService.findSpecialityByStudents(student), studentService.findStudentName(student),
                             groupService.findGroupByStudent(student),
                             markService.findAverageMark(student, semester));
+                    if (infoStudent.getAverageMarkNumber() !=0){
+                        infoStudents.add(infoStudent);
+                    }
                     infoStudents.add(infoStudent);
                     i++;
                 }
@@ -576,6 +582,9 @@ public class AdminController {
                 for (Student student: students) {
                     InfoForReport infoStudent = new InfoForReport(i,
                             studentService.findStudentName(student), markService.findAverageMark(student, semester));
+                    if (infoStudent.getAverageMarkNumber() !=0){
+                        infoStudents.add(infoStudent);
+                    }
                     infoStudents.add(infoStudent);
                     i++;
                 }

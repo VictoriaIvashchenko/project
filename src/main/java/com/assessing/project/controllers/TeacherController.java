@@ -305,7 +305,7 @@ public class TeacherController {
                 markService.create(students.get(i),subject , marks.get(i), semester);
                 System.out.println("Оцінку створено");
             }
-            else {
+            if (mark != null){
                 mark.setValue(marks.get(i));
                 markService.update(mark);
                 System.out.println("Оцінку змінено");
