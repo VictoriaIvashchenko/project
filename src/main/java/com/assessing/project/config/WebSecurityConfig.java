@@ -36,12 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable().authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers(HttpMethod.GET,"/student").hasAuthority("STUDENT")
-                    .antMatchers(HttpMethod.GET,"/admin","/add", "/add_admin", "/add_student",
-                      "/add_teacher", "/adddata", "/adddata_faculty", "/adddata_group", "/adddata_speciality",
-                      "/admin_report", "/admin_report_course", "/admin_report_faculty", "/admin_report_group",
-                      "/admin_report_speciality", "/Admin_teacher_page", "/Admin_teacher_page_add_new_subject",
-                      "/Admin_teacher_page_subject_info", "/exams", "/exams_course", "/exams_faculty", "/exams_group",
-                      "/exams_speciality").hasAuthority("ADMIN")
+                    .antMatchers(HttpMethod.GET,"/**").hasAuthority("ADMIN")
                     .antMatchers("/teacher","/teacher_report", "/teacher_report_group",
                             "/teacher_report_subject", "/teacher_set_marks").hasAuthority("TEACHER")
                 .anyRequest()
