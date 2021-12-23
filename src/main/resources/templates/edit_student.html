@@ -19,13 +19,9 @@
     <br class="">
     <hr class="container header-line"/>
 </header>
-<div class="container d-flex justify-content-center txt">Створення нового користувача</div>
-<div class="container d-flex justify-content-around btn-group_1" style="width:100%">
-    <a href="/add_admin"><button class="btn-radius first_but">Адміністратор</button></a>
-    <a href="/add_teacher"><button class="btn-radius">Викладач</button></a>
-    <a href="/add_student"><button class="btn-radius last_but add_t">Студент</button></a>
-</div>
-<form th:action="'/edit_student/'+${sudentFullName}" method="post">
+<div class="container d-flex justify-content-center txt">Редагування даних студента</div>
+
+<form th:action="'/edit_student/'+${studentFullName}" method="post">
     <div class="form">
         <div class="container d-flex justify-content-center form_row">
             <label class="col-sm-2 col-form-label">Прізвище</label>
@@ -43,21 +39,21 @@
             <label class="col-sm-2 col-form-label">Факультет/Інститут</label>
             <select class="col-sm-4 field_style" name="facultyName">
                 <option  th:each="faculty:${faculties}"
-                         th:utext="${faculty}" th:autofocus="${facultyCurrent}"></option>
+                         th:utext="${faculty}" th:selected="${faculty == facultyCurrent}"></option>
             </select>
         </div>
         <div class="container d-flex justify-content-center form_row">
             <label class="col-sm-2 col-form-label">Група</label>
             <select class="col-sm-4 field_style" name="groupName">
                 <option th:each="group:${groups}"
-                        th:utext="${group}" name="groupS" th:autofocus="${groupCurrent}"></option>
+                        th:utext="${group}" th:selected="${group == groupCurrent}"></option>
             </select>
         </div>
         <div class="container d-flex justify-content-center form_row">
             <label class="col-sm-2 col-form-label">Курс</label>
             <select class="col-sm-4 field_style" name="course">
                 <option th:each="course:${courses}"
-                        th:utext="${course}" name="course" th:autofocus="${courseCurrent}"></option>
+                        th:utext="${course}" th:selected="${course == courseCurrent}"></option>
             </select>
         </div>
         <!--        <div class="container d-flex justify-content-center form_row">-->
@@ -72,7 +68,7 @@
             <select class="col-sm-4 field_style" name="specialityName">
 
                 <option th:each="speciality:${specialities}"
-                        th:utext="${speciality}" th:autofocus="${specialityCurrent}"></option>
+                        th:utext="${speciality}" th:selected="${speciality == specialityCurrent}"></option>
 
             </select>
         </div>
@@ -86,7 +82,7 @@
         </div>
     </div>
     <div class="container d-flex justify-content-center">
-        <button class="add_but" type="submit">Cтворити</button>
+        <button class="add_but" type="submit">Змінити</button>
     </div>
 </form>
 

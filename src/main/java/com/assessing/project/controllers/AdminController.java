@@ -739,8 +739,8 @@ public class AdminController {
     public String adminStudentPagePost( @RequestParam("studentName") String studentName, Model model){
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
 
-        //Для пошуку студента потрібно додати метод у сервіс
-        Student student = studentService.findStudentByLogin("lera");
+        String[] studentNameArr = studentName.split("\\s");
+        Student student = studentService.findStudentBySurnameAndName(studentNameArr[0], studentNameArr[1]);
         if ( student == null){
             model.addAttribute("studentInfo", "nothing");
         }
@@ -754,8 +754,7 @@ public class AdminController {
                 studentFullNameString += s ;
                 studentFullNameString += " " ;
             }
-            //додати методи у сервіс
-            String studentLogin = "login";
+            String studentLogin = studentService.findStudentLogin(student);
 
             model.addAttribute("studentFullName", studentFullNameString);
             model.addAttribute("studentLogin", studentLogin);
@@ -813,8 +812,8 @@ public class AdminController {
         return "admin_student_page";
     }
     @GetMapping("/edit_student/{studentFullName}")
-    public String editStudent(@PathVariable(value="studentFullName") String teacherFullName, Model model){
-        model.addAttribute("teacherFullName", teacherFullName);
+    public String editStudent(@PathVariable(value="studentFullName") String studentName, Model model){
+        model.addAttribute("studentFullName", studentName);
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
         model.addAttribute("title", "Редагування даних студента");
         ArrayList<String> faculties = facultyService.findFacultyName();
@@ -823,7 +822,8 @@ public class AdminController {
         model.addAttribute("groups", groups);
         ArrayList<String> specialities = specialityService.findSpecialityName();
         model.addAttribute("specialities", specialities);
-        Student student = studentService.findStudentByLogin("lera");
+        String[] studentNameArr = studentName.split("\\s");
+        Student student = studentService.findStudentBySurnameAndName(studentNameArr[0], studentNameArr[1]);
 
         String[] studentFullName = studentService.findStudentName(student);
         String  studentFullNameString = "";
@@ -832,17 +832,21 @@ public class AdminController {
             studentFullNameString += " " ;
         }
 
-        //метод получения логина студента
-        String studentLogin = "login";
+
+        String studentLogin = studentService.findStudentLogin(student);
         model.addAttribute("studentFullName", studentFullNameString);
 
 
         String facultyName = facultyService.findFacultyName(facultyService.findFacultyByStudent(student));
         String specialityName = specialityService.findSpecialityByStudents(student);
         String groupName = groupService.findGroupByStudent(student);
-//        Integer course = studentService.findCourse(student);
+        Integer course = studentService.findCourse(student);
+        ArrayList<Integer> courses = new ArrayList<>();
+        for (int i = 1; i <=6; i++){
+            courses.add(i);
+        }
 
-        int[] courses = new int[]{1, 2, 3, 4, 5,6};
+//        int[] courses = new int[]{1, 2, 3, 4, 5,6};
         model.addAttribute("courses", courses);
         model.addAttribute("facultyCurrent", facultyName);
         model.addAttribute("specialityCurrent", specialityName);
@@ -852,15 +856,17 @@ public class AdminController {
         model.addAttribute("surname", studentFullName[0]);
         model.addAttribute("patronymic", studentFullName[2]);
         model.addAttribute("login", studentLogin);
+        model.addAttribute("courseCurrent", course);
         return "edit_student";
     }
     @PostMapping("/edit_student/{studentFullName}")
-    public String editStudentPost(@PathVariable(value="studentFullName") String teacherFullName,@RequestParam("name") String name, @RequestParam("surname") String surname,
+    public String editStudentPost(@PathVariable(value="studentFullName") String studentFullName,@RequestParam("name") String name, @RequestParam("surname") String surname,
                                   @RequestParam("patronymic") String patronymic,@RequestParam("groupName") String groupName,
                                   @RequestParam("facultyName") String facultyName, @RequestParam("specialityName") String specialityName,
                                   @RequestParam("course") Integer course, @RequestParam("login") String login,
                                   @RequestParam("password") String password, Model model){
-        Student student = studentService.findStudentByLogin("lera");
+        String[] studentNameArr = studentFullName.split("\\s");
+        Student student = studentService.findStudentBySurnameAndName(studentNameArr[0], studentNameArr[1]);
         student.setSurname(surname);
         student.setName(name);
         student.setPatronymic(patronymic);
@@ -877,8 +883,9 @@ public class AdminController {
     }
     @PostMapping("/admin_student_page/{studentFullName}/delete")
     public String deleteStudent(@PathVariable("studentFullName") String studentFullName){
-//        Student student = studentService.findStudentByLogin("lera");
-//        studentService.delete(student);
+        String[] studentNameArr = studentFullName.split("\\s");
+        Student student = studentService.findStudentBySurnameAndName(studentNameArr[0], studentNameArr[1]);
+        studentService.delete(student);
         System.out.println("Студента видалено");
         return "admin_student_page";
     }
