@@ -27,6 +27,9 @@ public class StudentService {
     public Student findStudentBySurnameAndName(String surname, String name){
         return studentRepository.findStudentBySurnameAndName(surname, name);
     }
+    public Integer getIdByStudent(Student student){
+        return student.getId();
+    }
     public ArrayList<Student> findByFaculty(Faculty faculty){return studentRepository.findStudentsByFaculty(faculty);}
     public String[]findStudentName(Student student){
         String[] value = new String[3];
@@ -38,6 +41,7 @@ public class StudentService {
     public String findStudentLogin(Student student){
         return student.getLogin();
     }
+
     public ArrayList<Student> findStudentsByGroupAndHeightMark(Group group, Integer semester){
         return studentRepository.findStudentsByGroupAndHeightMark(group, semester);
     }

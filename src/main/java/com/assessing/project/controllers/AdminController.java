@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Controller
 public class AdminController {
@@ -207,21 +208,47 @@ public class AdminController {
     }
     @PostMapping("/adddata_faculty")
     public String addFaculty(@RequestParam("name") String name, Model model){
-        facultyService.create(name);
+        if (!name.isEmpty()){
+            ArrayList<String> faculties = facultyService.findFacultyName();
 
+            if (faculties.contains(name)){
+                System.out.println("Такий факутьте вже існує");
+            }
+            else {
+
+                facultyService.create(name);
+            }
+        }
         return "redirect:/adddata";
     }
     @PostMapping("/adddata_speciality")
     public String addSpeciality(@RequestParam("name") String name, Model model){
-        specialityService.create(name);
+
+        if (!name.isEmpty()){
+            ArrayList<String> specialities = specialityService.findSpecialityName();
+            if (specialities.contains(name)){
+                System.out.println("Така спеціальність вже існує");
+            }
+            else {
+                specialityService.create(name);
+            }
+        }
+
         return "redirect:/adddata";
     }
     @PostMapping("/adddata_group")
     public String addGroup(@RequestParam("name") String name, @RequestParam("facultyName") String facultyName,
                            @RequestParam("specialityName") String specialityName, Model model){
-
-        groupService.create(name, facultyService.findFacultyByName(facultyName),
-                specialityService.findSpecialityByName(specialityName));
+        if (!name.isEmpty() & !facultyName.isEmpty() & !specialityName.isEmpty()){
+            ArrayList<String> groups = groupService.findGroupName();
+            if (groups.contains(name)){
+                System.out.println("Така група вже існує");
+            }
+            else {
+                groupService.create(name, facultyService.findFacultyByName(facultyName),
+                        specialityService.findSpecialityByName(specialityName));
+            }
+        }
         return "redirect:/adddata";
     }
 
@@ -229,16 +256,31 @@ public class AdminController {
     public String addAdminPOST(@RequestParam("name") String name, @RequestParam("surname") String surname,
                                @RequestParam("patronymic") String patronymic, @RequestParam("login") String login,
                                @RequestParam("password") String password, Model model){
+        if (!name.isEmpty() & !surname.isEmpty() & !patronymic.isEmpty() & !login.isEmpty() & !password.isEmpty()){
+            if (adminService.findByLogin(login) != null){
+                System.out.println("Такий админ вже існує");
+            }
+            else{
+                adminService.create(name, surname, patronymic, login, new BCryptPasswordEncoder(12).encode(password));
+            }
+        }
 
-        adminService.create(name, surname, patronymic, login, new BCryptPasswordEncoder(12).encode(password));
         return"redirect:/add";
     }
     @PostMapping("/add_teacher")
     public String addTeacherPOST(@RequestParam("name") String name, @RequestParam("surname") String surname,
                                  @RequestParam("patronymic") String patronymic, @RequestParam("login") String login,
-                                 @RequestParam("password") String password, Model model){
+                                 @RequestParam("password") String password){
 
-        teacherService.create(surname, name, patronymic, login, new BCryptPasswordEncoder(12).encode(password));
+        if (!name.isEmpty() & !surname.isEmpty() & !patronymic.isEmpty() & !login.isEmpty() & !password.isEmpty()){
+            if (teacherService.findTeacherByLogin(login) != null){
+                System.out.println("Такий вчитель вже існує");
+            }
+            else{
+                teacherService.create(surname, name, patronymic, login, new BCryptPasswordEncoder(12).encode(password));
+            }
+        }
+
         return"redirect:/add";
     }
     @PostMapping("/add_student")
@@ -246,12 +288,19 @@ public class AdminController {
                                  @RequestParam("patronymic") String patronymic,@RequestParam("groupName") String groupName,
                                  @RequestParam("facultyName") String facultyName, @RequestParam("specialityName") String specialityName,
                                  @RequestParam("course") Integer course, @RequestParam("login") String login,
-                                 @RequestParam("password") String password, Model model){
+                                 @RequestParam("password") String password){
 
-
-        studentService.create(surname, name, patronymic, facultyService.findFacultyByName(facultyName),
-                specialityService.findSpecialityByName(specialityName),groupService.findGroupByName(groupName),course,
-                login, new BCryptPasswordEncoder(12).encode(password));
+        if (!name.isEmpty() & !surname.isEmpty() & !patronymic.isEmpty() & !login.isEmpty() & !password.isEmpty()
+                & !facultyName.equals("--") & !groupName.equals("--") & !specialityName.equals("--") & course != 0){
+            if (studentService.findStudentByLogin(login) != null){
+                System.out.println("Такий студент вже існує");
+            }
+            else{
+                studentService.create(surname, name, patronymic, facultyService.findFacultyByName(facultyName),
+                        specialityService.findSpecialityByName(specialityName),groupService.findGroupByName(groupName),course,
+                        login, new BCryptPasswordEncoder(12).encode(password));
+            }
+        }
         return"redirect:/add";
     }
     @PostMapping("/admin_teacher_page_add_new_subject/{teacherNameAddNew}")
@@ -451,7 +500,7 @@ public class AdminController {
         }
         return "admin_report_group";
     }
-//
+
     @PostMapping("/exams_faculty")
     public String examsFacultyPost(@RequestParam("facultyName") String facultyName,
                                    @RequestParam("semester") Integer semester, Model model){
@@ -754,7 +803,7 @@ public class AdminController {
         }
 
         else {
-
+            model.addAttribute("studentId", studentService.getIdByStudent(student));
             model.addAttribute("studentInfo", "something");
             String[] studentFullName = studentService.findStudentName(student);
             String  studentFullNameString = "";
@@ -819,36 +868,35 @@ public class AdminController {
         }
         return "admin_student_page";
     }
-    @GetMapping("/edit_student/{studentFullName}")
-    public String editStudent(@PathVariable(value="studentFullName") String studentName, Model model){
-        model.addAttribute("studentFullName", studentName);
+    @GetMapping("/edit_student/{studentId}")
+    public String editStudent(@PathVariable(value="studentId") Integer id, Model model){
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
         model.addAttribute("title", "Редагування даних студента");
+        model.addAttribute("studentId", id);
+        Student student = studentService.findById(id);
+        String[] studentNameArr = studentService.findStudentName(student);
+//        String studentFullName = "";
+//        for (String s: studentNameArr){
+//            studentFullName += s;
+//            studentFullName += " ";
+//        }
+//        model.addAttribute("studentFullName", studentFullName);
+
         ArrayList<String> faculties = facultyService.findFacultyName();
         model.addAttribute("faculties", faculties);
         ArrayList<String> groups = groupService.findGroupName();
         model.addAttribute("groups", groups);
         ArrayList<String> specialities = specialityService.findSpecialityName();
         model.addAttribute("specialities", specialities);
-        String[] studentNameArr = studentName.split("\\s");
-        Student student = studentService.findStudentBySurnameAndName(studentNameArr[0], studentNameArr[1]);
-
-        String[] studentFullName = studentService.findStudentName(student);
-        String  studentFullNameString = "";
-        for (String s:studentFullName) {
-            studentFullNameString += s ;
-            studentFullNameString += " " ;
-        }
-
 
         String studentLogin = studentService.findStudentLogin(student);
-        model.addAttribute("studentFullName", studentFullNameString);
 
 
         String facultyName = facultyService.findFacultyName(facultyService.findFacultyByStudent(student));
         String specialityName = specialityService.findSpecialityByStudents(student);
         String groupName = groupService.findGroupByStudent(student);
         Integer course = studentService.findCourse(student);
+
         ArrayList<Integer> courses = new ArrayList<>();
         for (int i = 1; i <=6; i++){
             courses.add(i);
@@ -859,42 +907,51 @@ public class AdminController {
         model.addAttribute("specialityCurrent", specialityName);
         model.addAttribute("courseCurrent", 1);
         model.addAttribute("groupCurrent", groupName);
-        model.addAttribute("name", studentFullName[1]);
-        model.addAttribute("surname", studentFullName[0]);
-        model.addAttribute("patronymic", studentFullName[2]);
+        model.addAttribute("name", studentNameArr[0]);
+        model.addAttribute("surname", studentNameArr[1]);
+        model.addAttribute("patronymic", studentNameArr[2]);
         model.addAttribute("login", studentLogin);
         model.addAttribute("courseCurrent", course);
         return "edit_student";
     }
-    @PostMapping("/edit_student/{studentFullName}")
-    public String editStudentPost(@PathVariable(value="studentFullName") String studentFullName,@RequestParam("name") String name, @RequestParam("surname") String surname,
+    @PostMapping("/edit_student/{studentId}")
+    public String editStudentPost(@PathVariable(value="studentId") Integer id,@RequestParam("name") String name, @RequestParam("surname") String surname,
                                   @RequestParam("patronymic") String patronymic,@RequestParam("groupName") String groupName,
                                   @RequestParam("facultyName") String facultyName, @RequestParam("specialityName") String specialityName,
                                   @RequestParam("course") Integer course, @RequestParam("login") String login,
                                   @RequestParam("password") String password, Model model){
-        String[] studentNameArr = studentFullName.split("\\s");
-        Student student = studentService.findStudentBySurnameAndName(studentNameArr[0], studentNameArr[1]);
-        student.setSurname(surname);
-        student.setName(name);
-        student.setPatronymic(patronymic);
-        student.setFaculty(facultyService.findFacultyByName(facultyName));
-        student.setCourse(course);
-        student.setSpeciality(specialityService.findSpecialityByName(specialityName));
-        student.setGroup(groupService.findGroupByName(groupName));
-        student.setLogin(login);
-        if (!password.isEmpty()){
-            student.setPassword(password);
+
+        if (!name.isEmpty() & !surname.isEmpty() & !patronymic.isEmpty() & !login.isEmpty() & !password.isEmpty()
+                & !facultyName.equals("--") & !groupName.equals("--") & !specialityName.equals("--") & course != 0){
+            Student student = studentService.findById(id);
+            if (studentService.findStudentByLogin(login) != null & !studentService.findStudentLogin(student).equals(login)){
+                System.out.println("Такий студент вже існує");
+            }
+            else{
+                student.setSurname(surname);
+                student.setName(name);
+                student.setPatronymic(patronymic);
+                student.setFaculty(facultyService.findFacultyByName(facultyName));
+                student.setCourse(course);
+                student.setSpeciality(specialityService.findSpecialityByName(specialityName));
+                student.setGroup(groupService.findGroupByName(groupName));
+                student.setLogin(login);
+                if (!password.isEmpty()){
+                    student.setPassword(password);
+                }
+                studentService.update(student);
+            }
         }
-        studentService.update(student);
+
+
         return "redirect:/admin_student_page";
     }
-    @PostMapping("/admin_student_page/{studentFullName}/delete")
-    public String deleteStudent(@PathVariable("studentFullName") String studentFullName){
-        String[] studentNameArr = studentFullName.split("\\s");
-        Student student = studentService.findStudentBySurnameAndName(studentNameArr[0], studentNameArr[1]);
+    @PostMapping("/admin_student_page/{studentId}/delete")
+    public String deleteStudent(@PathVariable("studentId") Integer id){
+        Student student = studentService.findById(id);
         studentService.delete(student);
         System.out.println("Студента видалено");
-        return "admin_student_page";
+        return "redirect:/admin_student_page";
     }
     @PostMapping("/admin_teacher_page/{teacherFullName}/delete")
     public String deleteTeacher(@PathVariable("teacherFullName") String teacherFullName){
@@ -944,9 +1001,19 @@ public class AdminController {
     @PostMapping("/edit_data_faculty/{facultyName}")
     public String editDataFacultyPostEdit(@PathVariable("facultyName") String facultyName,
                                           @RequestParam("name") String name, Model model){
-        Faculty faculty = facultyService.findFacultyByName(facultyName);
-        faculty.setName(name);
-        facultyService.update(faculty);
+        if (!name.isEmpty()){
+            ArrayList<String> faculties = facultyService.findFacultyName();
+
+            if (faculties.contains(name) & !facultyName.equals(name)){
+                System.out.println("Такий факутьте вже існує");
+            }
+            else {
+                Faculty faculty = facultyService.findFacultyByName(facultyName);
+                faculty.setName(name);
+                facultyService.update(faculty);
+            }
+        }
+
         return "redirect:/edit_data";
 
     }
@@ -987,9 +1054,19 @@ public class AdminController {
     @PostMapping("/edit_data_speciality/{specialityName}")
     public String editDataSpecialityPostEdit(@PathVariable("specialityName") String specialityName,
                                           @RequestParam("name") String name, Model model){
-        Speciality speciality = specialityService.findSpecialityByName(specialityName);
-        speciality.setName(name);
-        specialityService.update(speciality);
+        if (!name.isEmpty()){
+            ArrayList<String> specialities = specialityService.findSpecialityName();
+
+            if (specialities.contains(name) & !specialityName.equals(name)){
+                System.out.println("Така спеціальність вже існує");
+            }
+            else {
+                Speciality speciality = specialityService.findSpecialityByName(specialityName);
+                speciality.setName(name);
+                specialityService.update(speciality);
+            }
+        }
+
         return "redirect:/edit_data";
 
     }
@@ -1037,17 +1114,24 @@ public class AdminController {
     }
     @PostMapping("/edit_data_group/{groupName}")
     public String editDataGroupPostEdit(@PathVariable("groupName") String groupName, @RequestParam("name") String name,
-                                        @RequestParam("facultyName") String facultyName, @RequestParam("specialityName") String specialityName,
-                                        Model model){
-        Speciality speciality = specialityService.findSpecialityByName(specialityName);
-        Faculty faculty = facultyService.findFacultyByName(facultyName);
-        Group group = groupService.findGroupByName(groupName);
-        group.setName(name);
-        group.setFaculty(faculty);
-        group.setSpeciality(speciality);
-        groupService.update(group);
-        return "redirect:/edit_data";
+                                        @RequestParam("facultyName") String facultyName, @RequestParam("specialityName") String specialityName){
+        if (!name.isEmpty() & !facultyName.isEmpty() & !specialityName.isEmpty()){
+            ArrayList<String> groups = groupService.findGroupName();
 
+            if (groups.contains(name) & !groupName.equals(name)){
+                System.out.println("Така група вже існує");
+            }
+            else {
+                Speciality speciality = specialityService.findSpecialityByName(specialityName);
+                Faculty faculty = facultyService.findFacultyByName(facultyName);
+                Group group = groupService.findGroupByName(groupName);
+                group.setName(name);
+                group.setFaculty(faculty);
+                group.setSpeciality(speciality);
+                groupService.update(group);
+            }
+        }
+        return "redirect:/edit_data";
     }
     @PostMapping("/edit_data_group/{groupName}/delete")
     public String editDataGroupPostDelete(@PathVariable("groupName") String groupName, Model model){
