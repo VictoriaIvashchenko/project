@@ -711,8 +711,9 @@ public class AdminController {
         subjectGroupService.create(subjectService.findSubjectById(id), groupService.findGroupByName(groupName));
         return "redirect:/admin_teacher_page_subject_info/{subjectId}";
     }
-    @GetMapping("/admin_teacher_page_subject_info/{subjectId}")
-    public String adminTeacherPageSubjectInfo(@PathVariable(value = "subjectId") Integer id, Model model){
+    @GetMapping("/admin_teacher_page/{teacherId}/admin_teacher_page_subject_info/{subjectId}")
+    public String adminTeacherPageSubjectInfo(@PathVariable(value = "teacherId") Integer teacherId,
+                                              @PathVariable(value = "subjectId") Integer id, Model model){
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
         ArrayList<Group> groups = groupService.findGroupBySubject(subjectService.findSubjectById(id));
         ArrayList<String> groupNames = new ArrayList<>();
@@ -724,8 +725,9 @@ public class AdminController {
         model.addAttribute("subjectName", subjectService.findSubjectName(subjectService.findSubjectById(id)));
         return "admin_teacher_page_subject_info";
     }
-    @PostMapping("/admin_teacher_page_subject_info/{subjectId}")
-    public String adminTeacherPageSubjectInfoPost(@PathVariable(value = "subjectId") Integer id,
+    @PostMapping("/admin_teacher_page/{teacherId}/admin_teacher_page_subject_info/{subjectId}")
+    public String adminTeacherPageSubjectInfoPost(@PathVariable(value = "teacherId") Integer teacherId,
+                                                  @PathVariable(value = "subjectId") Integer id,
                                                   @RequestParam("groupName") String groupName, Model model){
         Subject subject = subjectService.findSubjectById(id);
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
@@ -1145,6 +1147,62 @@ public class AdminController {
         groupService.delete(group);
         System.out.println("групy видалено");
         return "redirect:/edit_data";
+
+    }
+    @GetMapping("/admin_teacher_page/{teacherId}/edit_subject/{subjectId}")
+    public String editSubject(@PathVariable("teacherId") Integer teacherId,
+                              @PathVariable("subjectId") Integer id,Model model){
+        model.addAttribute("title", "Змінити дані групи");
+        model.addAttribute("teacherId", teacherId);
+        model.addAttribute("subjectId", id);
+
+        Subject subject = subjectService.findSubjectById(id);
+        String subjectName = subjectService.findSubjectName(subject);
+        ArrayList<String> testTypes = new ArrayList<String>();
+        testTypes.add("Екзамен");
+        testTypes.add("Залік");
+
+        model.addAttribute("subjectName", subjectName);
+        model.addAttribute("testTypes", testTypes);
+        model.addAttribute("currentTestType", subjectService.findTestTypeBySubject(subject));
+
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+        return "edit_subject";
+    }
+    @PostMapping("/admin_teacher_page/{teacherId}/edit_subject/{subjectId}")
+    public String editSubjectPost(@PathVariable("teacherId") Integer teacherId,
+                              @PathVariable("subjectId") Integer id, @RequestParam("name") String name,
+                                  @RequestParam("testType") String testType, Model model){
+
+        model.addAttribute("teacherId", teacherId);
+        model.addAttribute("subjectId", id);
+        if (!name.isEmpty()  & !testType.isEmpty()){
+            ArrayList<Subject> subjects = subjectService.findSubjectsByTeacher(teacherService.findTeacherById(teacherId));
+            ArrayList<String> subjectsNames = new ArrayList<>();
+            for (Subject subject: subjects){
+                subjectsNames.add(subjectService.findSubjectName(subject));
+            }
+            Subject subject = subjectService.findSubjectById(id);
+            String subjectName = subjectService.findSubjectName(subject);
+
+            if (subjectsNames.contains(name) & !subjectName.equals(name)){
+                System.out.println("Така дисципліна вже існує");
+            }
+            else {
+                subject.setName(name);
+                subject.setTest_type(testType);
+                subjectService.update(subject);
+            }
+        }
+        return "redirect:/admin_teacher_page/{teacherId}/admin_teacher_page_subject_info/{subjectId}";
+    }
+    @PostMapping("/admin_teacher_page_subject_info/{subjectId}/delete")
+    public String deliteSubject(@PathVariable("subjectId") Integer id, Model model){
+
+        Subject subject = subjectService.findSubjectById(id);
+        subjectService.delete(subject);
+        System.out.println("дисципліну видалено");
+        return "redirect:/admin_teacher_page";
 
     }
 }

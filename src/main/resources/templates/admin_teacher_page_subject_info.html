@@ -51,7 +51,7 @@
             </div>
         </div>
     </form>
-    <a th:href="'/edit_subject/'+${subjectId}"><button>Реданувати дані</button></a>
+    <a th:href="'/admin_teacher_page/'+${teacherId}+'/edit_subject/'+${subjectId}"><button>Реданувати дані</button></a>
     <form th:action="'/admin_teacher_page_subject_info/'+${subjectId}+'/delete'" method="post">
         <button type="submit">Видалити дані</button>
     </form>

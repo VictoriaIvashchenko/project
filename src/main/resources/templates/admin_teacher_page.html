@@ -56,7 +56,7 @@
                     <div th:case="'something'">
                         <ul class="list-group subjects-list" th:each="subject:${teacherSubjectsNames}">
                             <li>
-                                <a th:href="'/admin_teacher_page_subject_info/'+ ${subject.getKey()}"><h3 th:utext="${subject.getValue()}" ></h3></a>
+                                <a th:href="'/admin_teacher_page/'+${teacherId}+'/admin_teacher_page_subject_info/'+ ${subject.getKey()}"><h3 th:utext="${subject.getValue()}" ></h3></a>
                             </li>
                         </ul>
                     </div>

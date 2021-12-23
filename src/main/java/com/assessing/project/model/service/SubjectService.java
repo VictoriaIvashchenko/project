@@ -39,4 +39,5 @@ public class SubjectService {
     public void update(Subject subject){
         subjectRepository.save(subject);
     }
+    public void delete(Subject subject){subjectRepository.delete(subject);}
 }
