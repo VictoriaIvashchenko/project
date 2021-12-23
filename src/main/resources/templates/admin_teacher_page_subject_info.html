@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title th:text="${title}"></title>
@@ -26,6 +26,7 @@
         <div class="text-center" style="margin-top: 80px" >
             <h2 th:text="${subjectName}" ></h2>
         </div>
+
         <div class="d-flex" style="margin-top: 102px">
             <!--            <div class="d-flex">-->
             <!--                <h3>Факультет/Інститут</h3>-->
@@ -49,6 +50,10 @@
                 </div>
             </div>
         </div>
+    </form>
+    <a th:href="'/edit_subject/'+${subjectId}"><button>Реданувати дані</button></a>
+    <form th:action="'/admin_teacher_page_subject_info/'+${subjectId}+'/delete'" method="post">
+        <button type="submit">Видалити дані</button>
     </form>
     <a th:href="'/admin_teacher_subject_add_group/'+${subjectId}"><button class="chose-button_1">Додати групу</button></a>
 </section>

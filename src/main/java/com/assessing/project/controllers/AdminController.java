@@ -971,7 +971,7 @@ public class AdminController {
             System.out.println("Викладача не знайдено");
         }
 
-        return "admin_teacher_page";
+        return "redirect:/admin_teacher_page";
     }
     @GetMapping("/edit_data")
     public String editData(Model model){
