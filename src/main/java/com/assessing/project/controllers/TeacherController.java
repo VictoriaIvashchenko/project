@@ -301,8 +301,7 @@ public class TeacherController {
         for (int i = 0; i<marks.size();i++) {
 
             Mark mark = markService.findMarkByStudentAndSubjectAndSemester(students.get(i), subject, semester);
-            if ( mark == null){
-
+            if ( mark == null & marks.get(i) != 0){
                 markService.create(students.get(i),subject , marks.get(i), semester);
                 System.out.println("Оцінку створено");
             }

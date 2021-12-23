@@ -701,16 +701,14 @@ public class AdminController {
         model.addAttribute("title", "Редагування даних викладача");
         String[] teacher = teacherFullName.split("\\s");
         model.addAttribute("teacherName", teacherFullName);
-//        Teacher teacher = teacherService.findTeacherBySurname(teacherSurname[0]);
+        String teacherLogin = teacherService.findTeacherLogin(teacherService.findTeacherBySurnameAndName(teacher[0], teacher[1]));
 
-        String teacherLogin = teacherService.findTeacherLogin(teacherService.findTeacherBySurname(teacher[0]));
-        String teacherPassword = teacherService.findTeacherPassword(teacherService.findTeacherBySurname(teacher[0]));
 
         model.addAttribute("name", teacher[1]);
         model.addAttribute("surname", teacher[0]);
         model.addAttribute("patronymic", teacher[2]);
         model.addAttribute("login", teacherLogin);
-        model.addAttribute("password", "");
+
         return "edit_teacher";
     }
     @PostMapping("/edit_teacher/{teacherFullName}")
@@ -718,12 +716,12 @@ public class AdminController {
                                   @RequestParam("surname") String surname, @RequestParam("patronymic") String patronymic,
                                   @RequestParam("login") String login, @RequestParam("password") String password, Model model){
         String[] teacherFullNameArr = teacherFullName.split("\\s");
-        Teacher teacher = teacherService.findTeacherBySurname(teacherFullNameArr[0]);
+        Teacher teacher = teacherService.findTeacherBySurnameAndName(teacherFullNameArr[0], teacherFullNameArr[1]);
         teacher.setSurname(surname);
         teacher.setName(name);
         teacher.setPatronymic(patronymic);
         teacher.setLogin(login);
-        if (!password.equals("")){
+        if (!password.isEmpty()){
             teacher.setPassword(password);
         }
         teacherService.update(teacher);
@@ -846,7 +844,6 @@ public class AdminController {
             courses.add(i);
         }
 
-//        int[] courses = new int[]{1, 2, 3, 4, 5,6};
         model.addAttribute("courses", courses);
         model.addAttribute("facultyCurrent", facultyName);
         model.addAttribute("specialityCurrent", specialityName);
@@ -891,7 +888,8 @@ public class AdminController {
     }
     @PostMapping("/admin_teacher_page/{teacherFullName}/delete")
     public String deleteTeacher(@PathVariable("teacherFullName") String teacherFullName){
-        Teacher teacher = teacherService.findTeacherBySurname("П");
+        String[] teacherFullNameArr = teacherFullName.split("\\s");
+        Teacher teacher = teacherService.findTeacherBySurnameAndName(teacherFullNameArr[0], teacherFullNameArr[1]);
         teacherService.delete(teacher);
         System.out.println("Викладача видалено");
         return "admin_teacher_page";
