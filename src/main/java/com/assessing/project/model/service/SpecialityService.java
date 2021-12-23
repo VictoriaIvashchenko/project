@@ -30,4 +30,10 @@ public class SpecialityService {
         Speciality speciality = new Speciality(name);
         specialityRepository.save(speciality);
     }
+    public void update(Speciality speciality){
+        specialityRepository.save(speciality);
+    }
+    public void delete(Speciality speciality){
+        specialityRepository.delete(speciality);
+    }
 }

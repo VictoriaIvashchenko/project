@@ -907,17 +907,50 @@ public class AdminController {
     public String editData(Model model){
         model.addAttribute("title", "Змінити дані");
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
-        return "adddata";
+        return "edit_data";
     }
     @GetMapping("/edit_data_faculty")
     public String editDataFaculty(Model model){
         model.addAttribute("title", "Змінити дані факультету");
-
         ArrayList<String> faculties = facultyService.findFacultyName();
         model.addAttribute("faculties", faculties);
-        ArrayList<String> specialities = specialityService.findSpecialityName();
-        model.addAttribute("specialities", specialities);
+
+
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
-        return "adddata_group";
+        return "edit_data_faculty";
     }
+    @PostMapping("/edit_data_faculty")
+    public String editDataFacultyPost( @RequestParam("facultyName") String facultyName, Model model){
+        model.addAttribute("title", "Змінити дані факультету");
+        ArrayList<String> faculties = facultyService.findFacultyName();
+        model.addAttribute("faculties", faculties);
+        model.addAttribute("adminName", adminService.findAdminFullName(admin));
+
+        if (facultyName.equals("--")){
+            model.addAttribute("facultyInfo", "nothing");
+        }else{
+            model.addAttribute("facultyInfo", "something");
+            model.addAttribute("facultyName", facultyName);
+        }
+        return "edit_data_faculty";
+    }
+    @PostMapping("/edit_data_faculty/{facultyName}")
+    public String editDataFacultyPostEdit(@PathVariable("facultyName") String facultyName,
+                                          @RequestParam("name") String name, Model model){
+        Faculty faculty = facultyService.findFacultyByName(facultyName);
+        faculty.setName(name);
+        facultyService.update(faculty);
+        return "redirect:/edit_data";
+
+    }
+    @PostMapping("/edit_data_faculty/{facultyName}/delete")
+    public String editDataFacultyPostDelete(@PathVariable("facultyName") String facultyName, Model model){
+        Faculty faculty = facultyService.findFacultyByName(facultyName);
+
+        facultyService.delete(faculty);
+        System.out.println("Факультет видалено");
+        return "redirect:/edit_data";
+
+    }
+
 }

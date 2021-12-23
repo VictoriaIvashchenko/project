@@ -44,5 +44,8 @@ public class GroupService {
     public void update(Group group){
         groupRepository.save(group);
     }
+    public void delete(Group group){
+        groupRepository.delete(group);
+    }
 
 }

@@ -25,6 +25,12 @@ public class FacultyService {
         Faculty faculty = new Faculty(name);
         facultyRepository.save(faculty);
     }
+    public void update(Faculty faculty){
+        facultyRepository.save(faculty);
+    }
+    public void delete(Faculty faculty){
+        facultyRepository.delete(faculty);
+    }
     public ArrayList<String> findFacultyName() {
         return facultyRepository.findFacultyName();
 
