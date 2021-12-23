@@ -1,9 +1,11 @@
 package com.assessing.project.model.service;
 
+import com.assessing.project.model.entity.Group;
 import com.assessing.project.model.entity.Speciality;
 import com.assessing.project.model.entity.Student;
 import com.assessing.project.model.repository.SpecialityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,6 +27,9 @@ public class SpecialityService {
     }
     public String findSpecialityByStudents(Student student){
         return specialityRepository.findSpecialityByStudent(student);
+    }
+    public String findSpecialityByGroup(Group group){
+        return specialityRepository.findSpecialityByGroup(group);
     }
     public void create(String name){
         Speciality speciality = new Speciality(name);
