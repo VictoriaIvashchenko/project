@@ -101,6 +101,7 @@
                         <tbody>
                         <tr th:each="student:${studentsLow}">
                             <th th:utext="${student.getNumber()}"></th>
+                            <th class="text-center " th:utext="${student.getGroup()}"></th>
                             <th class="text-center " th:utext="${student.getStudentName()}"></th>
                             <th class="text-center table-text" th:utext="${student.getMark()}"></th>
                         </tr>
