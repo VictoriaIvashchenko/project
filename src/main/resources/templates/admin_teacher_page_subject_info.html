@@ -51,9 +51,9 @@
             </div>
         </div>
     </form>
-    <a th:href="'/admin_teacher_page/'+${teacherId}+'/edit_subject/'+${subjectId}"><button>Реданувати дані</button></a>
+    <a th:href="'/admin_teacher_page/'+${teacherId}+'/edit_subject/'+${subjectId}"><button class="custom-button">Редагувати дані</button></a>
     <form th:action="'/admin_teacher_page_subject_info/'+${subjectId}+'/delete'" method="post">
-        <button type="submit">Видалити дані</button>
+        <button type="submit" class="custom-button">Видалити дані</button>
     </form>
     <a th:href="'/admin_teacher_subject_add_group/'+${subjectId}"><button class="chose-button_1">Додати групу</button></a>
 </section>

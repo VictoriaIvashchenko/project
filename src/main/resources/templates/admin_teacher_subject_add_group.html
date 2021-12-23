@@ -14,14 +14,17 @@
 </head>
 
 <body>
-<form th:action="'/admin_teacher_subject_add_group/'+${subjectId}" method="post" >
+<div class="mx-auto">
+    <form th:action="'/admin_teacher_subject_add_group/'+${subjectId}" method="post" >
 
-    <select class="custom-select select-group" style="margin-left: 15px" name="groupName">
-        <option autofocus value="--"></option>
-        <option class="text-center select-text" th:each="group:${groups}"
-                th:utext="${group}"></option>
-    </select>
-    <button class="chose-button chose-button-text" type="submit">Обрати</button>
-</form>
+        <select class="custom-select select-group" style="margin-left: 15px" name="groupName">
+            <option autofocus value="--"></option>
+            <option class="text-center select-text" th:each="group:${groups}"
+                    th:utext="${group}"></option>
+        </select>
+        <button class="chose-button chose-button-text" type="submit">Обрати</button>
+    </form>
+</div>
+
 </body>
 </html>
