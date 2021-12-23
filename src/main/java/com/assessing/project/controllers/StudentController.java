@@ -1,7 +1,7 @@
 package com.assessing.project.controllers;
 
 import com.assessing.project.config.SecurityUser;
-import com.assessing.project.model.entity.Admin;
+
 import com.assessing.project.model.entity.Mark;
 import com.assessing.project.model.entity.Student;
 

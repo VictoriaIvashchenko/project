@@ -1,6 +1,5 @@
 package com.assessing.project.controllers;
 
-import com.assessing.project.additional.GettingWrapper;
 import com.assessing.project.additional.InfoForReport;
 import com.assessing.project.additional.InfoForTeacherPage;
 import com.assessing.project.config.SecurityUser;
@@ -10,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 @Controller
 public class TeacherController {
@@ -39,8 +38,7 @@ public class TeacherController {
 
         //видобуток поточного вчителя після авторизації
         SecurityUser curr = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Teacher currentTeacher = teacherService.findTeacherByLogin(curr.getUsername());
-        teacher = currentTeacher;
+        teacher = teacherService.findTeacherByLogin(curr.getUsername());
         ArrayList<Group> groups = groupService.findGroupsByTeacher(teacher);
         ArrayList<String> groupNames = new ArrayList<>();
         for (Group group: groups) {
@@ -286,8 +284,8 @@ public class TeacherController {
 //        model.addAttribute("faculty", faculty);
 //        model.addAttribute("subject", subject);
         model.addAttribute("marksTable", rows);
-        GettingWrapper wrapper = new GettingWrapper();
-        model.addAttribute("wrapper", wrapper);
+//        GettingWrapper wrapper = new GettingWrapper();
+//        model.addAttribute("wrapper", wrapper);
         return "teacher_set_marks";
     }
     @PostMapping("/teacher_set_marks/{groupName}/{semester}")

@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.Map;
+
 
 @Controller
 public class AdminController {
@@ -47,8 +49,7 @@ public class AdminController {
         model.addAttribute("title", "Сторінка адміністратора");
         //видобуток поточного адміністратора після авторизації
         SecurityUser curr = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Admin currentAdmin = adminService.findByLogin(curr.getUsername());
-        admin = currentAdmin;
+        admin = adminService.findByLogin(curr.getUsername());
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "admin";
     }
@@ -60,10 +61,11 @@ public class AdminController {
         return "admin_teacher_page";
     }
 
-    @GetMapping("/admin_teacher_page_add_new_subject/{teacherNameAddNew}")
-    public String adminAddSubject(@PathVariable("teacherNameAddNew") String teacherName, Model model){
+    @GetMapping("/admin_teacher_page_add_new_subject/{teacherId}")
+    public String adminAddSubject(@PathVariable("teacherId") Integer id, Model model){
+        model.addAttribute("teacherId", id);
         model.addAttribute("title", "Додати новий предмет");
-        model.addAttribute("teacherNameAddNew", teacherName);
+        model.addAttribute("teacherId", id);
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
         return "admin_teacher_page_add_new_subject";
     }
@@ -207,7 +209,7 @@ public class AdminController {
         return "adddata_group";
     }
     @PostMapping("/adddata_faculty")
-    public String addFaculty(@RequestParam("name") String name, Model model){
+    public String addFaculty(@RequestParam("name") String name){
         if (!name.isEmpty()){
             ArrayList<String> faculties = facultyService.findFacultyName();
 
@@ -222,7 +224,7 @@ public class AdminController {
         return "redirect:/adddata";
     }
     @PostMapping("/adddata_speciality")
-    public String addSpeciality(@RequestParam("name") String name, Model model){
+    public String addSpeciality(@RequestParam("name") String name){
 
         if (!name.isEmpty()){
             ArrayList<String> specialities = specialityService.findSpecialityName();
@@ -238,7 +240,7 @@ public class AdminController {
     }
     @PostMapping("/adddata_group")
     public String addGroup(@RequestParam("name") String name, @RequestParam("facultyName") String facultyName,
-                           @RequestParam("specialityName") String specialityName, Model model){
+                           @RequestParam("specialityName") String specialityName){
         if (!name.isEmpty() & !facultyName.isEmpty() & !specialityName.isEmpty()){
             ArrayList<String> groups = groupService.findGroupName();
             if (groups.contains(name)){
@@ -255,7 +257,7 @@ public class AdminController {
     @PostMapping("/add_admin")
     public String addAdminPOST(@RequestParam("name") String name, @RequestParam("surname") String surname,
                                @RequestParam("patronymic") String patronymic, @RequestParam("login") String login,
-                               @RequestParam("password") String password, Model model){
+                               @RequestParam("password") String password){
         if (!name.isEmpty() & !surname.isEmpty() & !patronymic.isEmpty() & !login.isEmpty() & !password.isEmpty()){
             if (adminService.findByLogin(login) != null){
                 System.out.println("Такий админ вже існує");
@@ -303,16 +305,28 @@ public class AdminController {
         }
         return"redirect:/add";
     }
-    @PostMapping("/admin_teacher_page_add_new_subject/{teacherNameAddNew}")
-    public String adminAddSubjectPost(@PathVariable("teacherNameAddNew") String teacherName,
+    @PostMapping("/admin_teacher_page_add_new_subject/{teacherId}")
+    public String adminAddSubjectPost(@PathVariable("teacherId") Integer id,
                                       @RequestParam("name") String name, @RequestParam("testType") String testType,
                                       Model model){
         model.addAttribute("title", "Додати новий предмет");
-        Teacher teacher = teacherService.findTeacherBySurname(teacherName);
-        System.out.println(teacherService.findTeacherFullName(teacher));
-        subjectService.create(name, testType, teacher);
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
-        return "admin_teacher_page";
+
+        Teacher teacher = teacherService.findTeacherById(id);
+        ArrayList<Subject> subjects = subjectService.findSubjectsByTeacher(teacher);
+        ArrayList<String> subjectsName = new ArrayList<>();
+        for (Subject subject: subjects){
+            subjectsName.add(subjectService.findSubjectName(subject));
+        }
+        if (!name.isEmpty() & !testType.isEmpty()){
+            if (subjectsName.contains(name)){
+                System.out.println("Такий предмет вже э");
+            }
+            else {
+                subjectService.create(name, testType, teacher);
+            }
+        }
+        return "redirect:/admin_teacher_page";
     }
     @PostMapping("/admin_report_faculty")
     public String adminReportFacultyPost(@RequestParam("facultyName") String facultyName,
@@ -661,9 +675,9 @@ public class AdminController {
                 model.addAttribute("teacherIfExistSubjects", "nothing");
             }else {
                 model.addAttribute("teacherIfExistSubjects", "something");
-                ArrayList<String> teacherSubjectsNames = new ArrayList<>();
+                HashMap<Integer, String> teacherSubjectsNames = new HashMap<>();
                 for (Subject subject:teacherSubjects){
-                    teacherSubjectsNames.add(subjectService.findSubjectName(subject));
+                    teacherSubjectsNames.put(subjectService.findIdBySubject(subject), subjectService.findSubjectName(subject));
                 }
                 model.addAttribute("teacherSubjectsNames", teacherSubjectsNames);
             }
@@ -672,11 +686,11 @@ public class AdminController {
         return "admin_teacher_page";
     }
 
-    @GetMapping("/admin_teacher_subject_add_group/{subjectName}")
-    public String adminTeacherPageSubjectAddGroup(@PathVariable(value = "subjectName") String subjectName, Model model){
+    @GetMapping("/admin_teacher_subject_add_group/{subjectId}")
+    public String adminTeacherPageSubjectAddGroup(@PathVariable(value = "subjectId") Integer id, Model model){
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
         List<Group> groups = groupService.findAllGroups();
-        List<Group> groupsTeacher = groupService.findGroupBySubject(subjectService.findSubjectByName(subjectName));
+        List<Group> groupsTeacher = groupService.findGroupBySubject(subjectService.findSubjectById(id));
         ArrayList<String> groupNames = new ArrayList<>();
         for (Group group: groups) {
             if(!groupsTeacher.contains(group)){
@@ -685,44 +699,44 @@ public class AdminController {
         }
         model.addAttribute("title", "Додати групу");
         model.addAttribute("groups", groupNames);
-        model.addAttribute("subjectName", subjectName);
+        model.addAttribute("subjectName", subjectService.findSubjectName(subjectService.findSubjectById(id)));
         return "admin_teacher_subject_add_group";
     }
-    @PostMapping("/admin_teacher_subject_add_group/{subjectName}")
-    public String adminTeacherPageSubjectAddGroupPost(@PathVariable(value = "subjectName") String subjectName,
+    @PostMapping("/admin_teacher_subject_add_group/{subjectId}")
+    public String adminTeacherPageSubjectAddGroupPost(@PathVariable(value = "subjectId") Integer id,
                                                       @RequestParam("groupName") String groupName, Model model){
 
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
 
-        subjectGroupService.create(subjectService.findSubjectByName(subjectName), groupService.findGroupByName(groupName));
-        return "redirect:/admin_teacher_page_subject_info/{subjectName}";
+        subjectGroupService.create(subjectService.findSubjectById(id), groupService.findGroupByName(groupName));
+        return "redirect:/admin_teacher_page_subject_info/{subjectId}";
     }
-    @GetMapping("/admin_teacher_page_subject_info/{subjectName}")
-    public String adminTeacherPageSubjectInfo(@PathVariable(value = "subjectName") String subjectName, Model model){
+    @GetMapping("/admin_teacher_page_subject_info/{subjectId}")
+    public String adminTeacherPageSubjectInfo(@PathVariable(value = "subjectId") Integer id, Model model){
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
-        ArrayList<Group> groups = groupService.findGroupBySubject(subjectService.findSubjectByName(subjectName));
+        ArrayList<Group> groups = groupService.findGroupBySubject(subjectService.findSubjectById(id));
         ArrayList<String> groupNames = new ArrayList<>();
         for (Group group: groups) {
             groupNames.add(groupService.findGroupName(group));
         }
         model.addAttribute("title", "Дисціпліна");
         model.addAttribute("groups", groupNames);
-        model.addAttribute("subjectName", subjectName);
+        model.addAttribute("subjectName", subjectService.findSubjectName(subjectService.findSubjectById(id)));
         return "admin_teacher_page_subject_info";
     }
-    @PostMapping("/admin_teacher_page_subject_info/{subjectName}")
-    public String adminTeacherPageSubjectInfoPost(@PathVariable(value = "subjectName") String subjectName,
+    @PostMapping("/admin_teacher_page_subject_info/{subjectId}")
+    public String adminTeacherPageSubjectInfoPost(@PathVariable(value = "subjectId") Integer id,
                                                   @RequestParam("groupName") String groupName, Model model){
-        System.out.println(subjectName);
+        Subject subject = subjectService.findSubjectById(id);
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
-        model.addAttribute("subjectName", subjectName);
-        ArrayList<Group> groups = groupService.findGroupBySubject(subjectService.findSubjectByName(subjectName));
+        model.addAttribute("subjectName", subjectService.findSubjectName(subject));
+        ArrayList<Group> groups = groupService.findGroupBySubject(subject);
         ArrayList<String> groupNames = new ArrayList<>();
         for (Group group: groups) {
             groupNames.add(groupService.findGroupName(group));
         }
         model.addAttribute("groups", groupNames);
-        model.addAttribute("subjectName", subjectName);
+
         if (groupName.equals("--")) {
             model.addAttribute("subjectGroupInfo", "nothing");
         }
@@ -730,7 +744,7 @@ public class AdminController {
             model.addAttribute("subjectGroupInfo", "something");
             Group group = groupService.findGroupByName(groupName);
             String facultyName = facultyService.findFacultyName(facultyService.findFacultyByGroup(group));
-            String testType = subjectService.findTestTypeBySubject(subjectService.findSubjectByName(subjectName));
+            String testType = subjectService.findTestTypeBySubject(subject);
             model.addAttribute("subjectGroupInfoFaculty", facultyName);
             model.addAttribute("subjectGroupInfoGroup", groupName);
             model.addAttribute("subjectGroupInfoTestType", testType);
@@ -740,8 +754,8 @@ public class AdminController {
             int i = 1;
             for (Student student: students) {
                 InfoForReport infoStudent = new InfoForReport(i,
-                        studentService.findStudentName(student), markService.markGetIntegerValue(markService.findMarkByStudentAndSubject(student,
-                        subjectService.findSubjectByName(subjectName))));
+                        studentService.findStudentName(student),
+                        markService.markGetIntegerValue(markService.findMarkByStudentAndSubject(student, subject)));
 
                 infoStudents.add(infoStudent);
                 i++;
@@ -775,7 +789,7 @@ public class AdminController {
     @PostMapping("/edit_teacher/{teacherId}")
     public String editTeacherPost(@PathVariable(value="teacherId") Integer id,@RequestParam("name") String name,
                                   @RequestParam("surname") String surname, @RequestParam("patronymic") String patronymic,
-                                  @RequestParam("login") String login, @RequestParam("password") String password, Model model){
+                                  @RequestParam("login") String login, @RequestParam("password") String password){
         Teacher teacher = teacherService.findTeacherById(id);
         teacher.setSurname(surname);
         teacher.setName(name);
@@ -807,14 +821,14 @@ public class AdminController {
             model.addAttribute("studentId", studentService.getIdByStudent(student));
             model.addAttribute("studentInfo", "something");
             String[] studentFullName = studentService.findStudentName(student);
-            String  studentFullNameString = "";
+            StringBuilder studentFullNameString = new StringBuilder();
             for (String s:studentFullName) {
-                studentFullNameString += s ;
-                studentFullNameString += " " ;
+                studentFullNameString.append(s);
+                studentFullNameString.append(" ");
             }
             String studentLogin = studentService.findStudentLogin(student);
 
-            model.addAttribute("studentFullName", studentFullNameString);
+            model.addAttribute("studentFullName", studentFullNameString.toString());
             model.addAttribute("studentLogin", studentLogin);
 
 
@@ -914,7 +928,7 @@ public class AdminController {
                                   @RequestParam("patronymic") String patronymic,@RequestParam("groupName") String groupName,
                                   @RequestParam("facultyName") String facultyName, @RequestParam("specialityName") String specialityName,
                                   @RequestParam("course") Integer course, @RequestParam("login") String login,
-                                  @RequestParam("password") String password, Model model){
+                                  @RequestParam("password") String password){
 
         if (!name.isEmpty() & !surname.isEmpty() & !patronymic.isEmpty() & !login.isEmpty() & !password.isEmpty()
                 & !facultyName.equals("--") & !groupName.equals("--") & !specialityName.equals("--") & course != 0){

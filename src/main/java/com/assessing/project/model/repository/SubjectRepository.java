@@ -25,4 +25,5 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
     String findTestTypeBySubject(@Param("subject") Subject subject);
 
     Subject findSubjectByName(String name);
+    Subject findSubjectById(Integer id);
 }

@@ -22,6 +22,12 @@ public class SubjectService {
     public Subject findSubjectNameByGroupAndTeacher(Group group, Teacher teacher){
         return subjectRepository.findSubjectByGroupsAndTeacher(group, teacher);
     }
+    public Subject findSubjectById(Integer id){
+        return subjectRepository.findSubjectById(id);
+    }
+    public Integer findIdBySubject(Subject subject){
+        return subject.getId();
+    }
     public ArrayList<Subject> findSubjectsByTeacher(Teacher teacher){return subjectRepository.findSubjectsByTeacher(teacher);}
     public String findSubjectName(Subject subject){return subject.getName();}
     public String findTestTypeBySubject(Subject subject){return subjectRepository.findTestTypeBySubject(subject);}

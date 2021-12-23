@@ -25,7 +25,7 @@
     <hr class="container header-line"/>
 </header>
 <section class="container">
-    <form th:action="'/admin_teacher_page_add_new_subject/'+${teacherNameAddNew}" method="post" >
+    <form th:action="'/admin_teacher_page_add_new_subject/'+${teacherId}" method="post" >
         <div class="text-center" style="margin-top: 80px">
             <h2>Додавання нової дисципліни</h2>
         </div>
@@ -41,26 +41,6 @@
                     <option class="text-center">Залік</option>
                 </select>
             </div>
-<!--            <div class="d-flex justify-content-between" style="margin-top: 37px">-->
-<!--                <h3>Факультет/Інститут</h3>-->
-<!--                <select class="custom-select select-field">-->
-<!--                    <option autofocus></option>-->
-<!--                    <option class="text-center">ТЕФ</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="d-flex justify-content-between" style="margin-top: 37px">-->
-<!--                <h3>Група</h3>-->
-<!--                <select class="custom-select select-field">-->
-<!--                    <option autofocus></option>-->
-<!--                    <option class="text-center">ТІ-91</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="d-flex" style="margin-top: 37px">-->
-<!--                <h3>Додати групу</h3>-->
-<!--                <div class="group-add-icon">-->
-<!--                    <img src="akar-icons_plus.png">-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
         <div class="d-flex justify-content-center" style="margin-top: 87px">
             <button class="btn btn-add" type="submit">Додати</button>
