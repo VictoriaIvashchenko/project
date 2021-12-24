@@ -21,41 +21,37 @@
     <br class="">
     <hr class="container header-line"/>
 </header>
-<section class="container">
-    <form method="post" >
+<section class="container ">
+
         <div class="text-center" style="margin-top: 80px" >
             <h2 th:text="${subjectName}" ></h2>
         </div>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex" style="margin-top: 102px">
+                <div class="d-flex " style="margin-left: 55px">
+                    <h3>Група</h3>
+                    <div  style="margin-left: 21px">
+                        <form method="post" >
+                            <select class="custom-select faculty-group-select-box" name="groupName">
+                                <option autofocus value="--"></option>
+                                <option class="text-center select-text" th:each="group:${groups}" th:utext="${group}"></option>
 
-        <div class="d-flex" style="margin-top: 102px">
-            <!--            <div class="d-flex">-->
-            <!--                <h3>Факультет/Інститут</h3>-->
-            <!--                <div style="margin-left: 21px">-->
-            <!--                    <select class="custom-select faculty-group-select-box">-->
-            <!--                        <option autofocus></option>-->
-            <!--                        <option class="text-center">ТЕФ</option>-->
-            <!--                    </select>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <div class="d-flex " style="margin-left: 55px">
-                <h3>Група</h3>
-                <div  style="margin-left: 21px">
-                    <select class="custom-select faculty-group-select-box" name="groupName">
-                        <option autofocus value="--"></option>
-                        <option class="text-center select-text" th:each="group:${groups}" th:utext="${group}"></option>
-
-                    </select>
-                    <button class="chose-button chose-button-text" type="submit">Обрати</button>
-
+                            </select>
+                            <button class="chose-button chose-button-text" type="submit">Обрати</button>
+                        </form>
+                    </div>
                 </div>
             </div>
+
+            <div class="d-flex" style="margin-top: 100px">
+                <a th:href="'/admin_teacher_page/'+${teacherId}+'/edit_subject/'+${subjectId}"><button class="custom-button">Редагувати дані</button></a>
+                <form th:action="'/admin_teacher_page_subject_info/'+${subjectId}+'/delete'" method="post">
+                    <button type="submit" class="custom-button" style="margin-left: 30px">Видалити дані</button>
+                </form>
+                <a th:href="'/admin_teacher_page/'+${teacherId}+'/admin_teacher_page_subject_info/'+${subjectId}+'/admin_teacher_subject_add_group'"><button class="chose-button_1" style="margin-left: 30px">Додати групу</button></a>
+            </div>
         </div>
-    </form>
-    <a th:href="'/admin_teacher_page/'+${teacherId}+'/edit_subject/'+${subjectId}"><button class="custom-button">Редагувати дані</button></a>
-    <form th:action="'/admin_teacher_page_subject_info/'+${subjectId}+'/delete'" method="post">
-        <button type="submit" class="custom-button">Видалити дані</button>
-    </form>
-    <a th:href="'/admin_teacher_subject_add_group/'+${subjectId}"><button class="chose-button_1">Додати групу</button></a>
+
 </section>
 <section class="container" th:switch="${subjectGroupInfo}">
     <div th:case="'nothing'"></div>

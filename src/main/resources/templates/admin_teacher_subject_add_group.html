@@ -14,17 +14,35 @@
 </head>
 
 <body>
-<div class="mx-auto">
-    <form th:action="'/admin_teacher_subject_add_group/'+${subjectId}" method="post" >
+<header>
+    <div class="container d-flex justify-content-between header-div">
+        <a href="/admin" class="txt_decor"><h1 class="user-name" th:text="${adminName}"></h1></a>
+        <form method="post" action="/logout">
+            <button class="btn out-button out-button-text" type="submit">Вийти</button>
+        </form>
+    </div>
+    <br class="">
+    <hr class="container header-line"/>
+</header>
+<section>
 
-        <select class="custom-select select-group" style="margin-left: 15px" name="groupName">
-            <option autofocus value="--"></option>
-            <option class="text-center select-text" th:each="group:${groups}"
-                    th:utext="${group}"></option>
-        </select>
-        <button class="chose-button chose-button-text" type="submit">Обрати</button>
-    </form>
-</div>
+    <form th:action="'/admin_teacher_page/'+${teacherId}+'/admin_teacher_page_subject_info/'+${subjectId}+'/admin_teacher_subject_add_group'" method="post" >
+        <div class=" container d-flex justify-content-center" style="margin-top: 100px">
+            <div>
+                <select class="custom-select select-group" style="margin-left: 15px" name="groupName">
+                    <option autofocus value="--"></option>
+                       <option class="text-center select-text" th:each="group:${groups}"
+                               th:utext="${group}"></option>
+                    </select>
+                </div>
+                <div style="margin-left: 30px; margin-top: -15px" >
+                    <button class="chose-button chose-button-text" type="submit">Обрати</button>
+                </div>
+
+            </div>
+        </form>
+</section>
+
 
 </body>
 </html>

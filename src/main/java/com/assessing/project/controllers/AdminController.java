@@ -686,8 +686,8 @@ public class AdminController {
         return "admin_teacher_page";
     }
 
-    @GetMapping("/admin_teacher_subject_add_group/{subjectId}")
-    public String adminTeacherPageSubjectAddGroup(@PathVariable(value = "subjectId") Integer id, Model model){
+    @GetMapping("/admin_teacher_page/{teacherId}/admin_teacher_page_subject_info/{subjectId}/admin_teacher_subject_add_group")
+    public String adminTeacherPageSubjectAddGroup(@PathVariable(value = "subjectId") Integer id,@PathVariable(value = "teacherId") Integer teacherId, Model model){
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
         List<Group> groups = groupService.findAllGroups();
         List<Group> groupsTeacher = groupService.findGroupBySubject(subjectService.findSubjectById(id));
@@ -699,17 +699,20 @@ public class AdminController {
         }
         model.addAttribute("title", "Додати групу");
         model.addAttribute("groups", groupNames);
+        model.addAttribute("teacherId", teacherId);
         model.addAttribute("subjectName", subjectService.findSubjectName(subjectService.findSubjectById(id)));
         return "admin_teacher_subject_add_group";
     }
-    @PostMapping("/admin_teacher_subject_add_group/{subjectId}")
-    public String adminTeacherPageSubjectAddGroupPost(@PathVariable(value = "subjectId") Integer id,
+    @PostMapping("/admin_teacher_page/{teacherId}/admin_teacher_page_subject_info/{subjectId}/admin_teacher_subject_add_group")
+    public String adminTeacherPageSubjectAddGroupPost(@PathVariable(value = "subjectId") Integer id,@PathVariable(value = "teacherId") Integer teacherId,
                                                       @RequestParam("groupName") String groupName, Model model){
-
+        if (!groupName.equals("--")){
+            subjectGroupService.create(subjectService.findSubjectById(id), groupService.findGroupByName(groupName));
+        }
         model.addAttribute("adminName", adminService.findAdminFullName(admin));
 
-        subjectGroupService.create(subjectService.findSubjectById(id), groupService.findGroupByName(groupName));
-        return "redirect:/admin_teacher_page_subject_info/{subjectId}";
+
+        return "redirect:/admin_teacher_page/{teacherId}/admin_teacher_page_subject_info/{subjectId}";
     }
     @GetMapping("/admin_teacher_page/{teacherId}/admin_teacher_page_subject_info/{subjectId}")
     public String adminTeacherPageSubjectInfo(@PathVariable(value = "teacherId") Integer teacherId,

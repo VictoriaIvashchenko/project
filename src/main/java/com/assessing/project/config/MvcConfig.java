@@ -25,9 +25,9 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/admin_report_faculty").setViewName("add");
         registry.addViewController("/admin_report_group").setViewName("add");
         registry.addViewController("/admin_report_speciality").setViewName("add");
-        registry.addViewController("/Admin_teacher_page").setViewName("add");
-        registry.addViewController("/Admin_teacher_page_add_new_subject").setViewName("add");
-        registry.addViewController("/Admin_teacher_page_subject_info").setViewName("add");
+        registry.addViewController("/admin_teacher_page").setViewName("add");
+        registry.addViewController("/admin_teacher_page_add_new_subject").setViewName("add");
+        registry.addViewController("/admin_teacher_page_subject_info").setViewName("add");
         registry.addViewController("/exams").setViewName("add");
         registry.addViewController("/exams_course").setViewName("add");
         registry.addViewController("/exams_faculty").setViewName("add");
@@ -37,6 +37,16 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/teacher_report").setViewName("teacher");
         registry.addViewController("/teacher_report_group").setViewName("teacher");
         registry.addViewController("/teacher_report_subject").setViewName("teacher");
+        registry.addViewController("/teacher_set_marks").setViewName("teacher");
+        registry.addViewController("/admin_student_page").setViewName("add");
+        registry.addViewController("/admin_teacher_subject_add_group").setViewName("add");
+        registry.addViewController("/edit_data").setViewName("add");
+        registry.addViewController("/edit_data_faculty").setViewName("add");
+        registry.addViewController("/edit_data_group").setViewName("add");
+        registry.addViewController("/edit_data_speciality").setViewName("add");
+        registry.addViewController("/edit_student").setViewName("add");
+        registry.addViewController("/edit_teacher").setViewName("add");
+        registry.addViewController("/edit_subject").setViewName("add");
         registry.addViewController("/teacher_set_marks").setViewName("teacher");
     }
 

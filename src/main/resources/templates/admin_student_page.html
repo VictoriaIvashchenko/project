@@ -31,44 +31,42 @@
         <div th:case="'nothing'"><h2 class="txt_nothing">Оберіть студента</h2></div>
 
         <div th:case="'something'">
-            <div  class="teacher-information">
+            <div class="d-flex justify-content-between" style="margin-top: 60px">
                 <h2 th:utext="${studentFullName}"></h2>
-                <a th:href="'/edit_student/'+${studentId}"><button class="custom_button">Редагувати дані</button></a>
-                <form th:action="'/admin_student_page/'+${studentId}+'/delete'" method="post">
-                    <button type="submit" class="custom_button">Видалити дані</button>
-                </form>
-                <div>
-                    <h2 th:text="${facultyName}"></h2>
-                    <h2 th:text="${specialityName}"></h2>
-                    <h2 th:text="${course}"></h2>
-                    <h2 th:text="${groupName}"></h2>
+                <div class="d-flex" style="margin-top: -25px">
+                    <a th:href="'/edit_student/'+${studentId}"><button class="custom_button">Редагувати дані</button></a>
+                    <form th:action="'/admin_student_page/'+${studentId}+'/delete'" method="post" style="margin-left: 30px">
+                        <button type="submit" class="custom_button">Видалити дані</button>
+                    </form>
                 </div>
-                <div class="d-flex login_and_password-div">
+
+            </div>
+
+                <div style="margin-top: 50px">
+                    <div class="d-flex">
+                        <h3>Факультет/Інститут: </h3>
+                        <h3 th:text="${facultyName}"></h3>
+                    </div>
+                    <div class="d-flex">
+                        <h3>Спеціальність: </h3>
+                        <h3 th:text="${specialityName}"></h3>
+                    </div>
+                    <div class="d-flex">
+                        <h3>Курс: </h3>
+                        <h3 th:text="${course}"></h3>
+                    </div>
+                    <div class="d-flex">
+                        <h3>Група: </h3>
+                        <h3 th:text="${groupName}"></h3>
+                    </div>
                     <div class="d-flex">
                         <h3>Логін:</h3>
                         <h3 class="login_and_password-input" th:utext="${studentLogin}"></h3>
                     </div>
-
                 </div>
-            </div>
-
         </div>
-
-
     </div>
-
-
 </section>
-<!--<section>-->
-<!--    <form method="post">-->
-<!--        <select name="semester" id="semester" >-->
-<!--            <option value="0"></option>-->
-<!--            <option value="1">1</option>-->
-<!--            <option value="2">2</option>-->
-<!--        </select>-->
-<!--        <button class="chose-button chose-button-text" type="submit">Обрати</button>-->
-<!--    </form>-->
-<!--</section>-->
 <section>
     <div th:switch="${table1}">
         <div th:case="'nothing'">
@@ -143,7 +141,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="avarage">
+            <div class="avarage" >
                 <span>Середній бал:</span>
                 <span th:text="${average2}"></span>
 
